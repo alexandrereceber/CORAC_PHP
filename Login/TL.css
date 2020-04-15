@@ -1,0 +1,86 @@
+body{
+    overflow: hidden;
+    background-color: #9298e429;
+}
+.Caixa_Fundo{
+    background: -webkit-linear-gradient(left, #6a11cb, #2575fc);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    text-align: -webkit-center;
+    margin: auto;
+}
+
+@media only screen and (max-width: 1540px) {
+    .Caixa_Flutuante{
+        background: #ffffff;
+        border: solid 1px;
+        border-color: #6448f9;
+        width: 50vw;
+        display: inline-block;
+        border-radius: 20px;
+        border-left-width: 22px;
+        border-left-color: #6448f9;
+        margin: auto;
+    }
+    
+    .LoginUser{
+        font-size: 7vw;
+        color: #2802f7b8; 
+     }
+}
+
+@media only screen and (max-width: 640px) {
+    .Caixa_Flutuante{
+        background-color: #ffffff;
+        border: solid 1px;
+        border-color: #6448f9;
+        width: 100vw;
+        display: inline-block;
+        border-radius: 20px;
+        border-left-width: 22px;
+        border-left-color: #6448f9;
+        margin: auto;
+    }
+    .LoginUser{
+        font-size: 20vw;
+        color: #2802f7b8; 
+     }
+     
+     .Usuario, .Senha{
+         width: 60vw !important;
+     }
+}
+
+
+
+.Caixa_User_Pass{
+}
+
+.mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab{
+    background-color: #2802f7b8;
+    margin-bottom: 20px;
+}
+.mdl-textfield{
+    width: 30vw;
+}
+
+.Linha_BotaoEnvio{
+    padding: 5px;
+}
+
+.mdl-dialog{
+    background-color: #4181e0fc;
+    color: white;
+    /* width: 30vw; */
+    /* border-top-left-radius: 50px; */
+    /* border-bottom-right-radius: 50px; */
+}
+.mdl-dialog__content{
+    color: white;
+}
+
+.Linha_CPassword{
+    display: none;
+}
+

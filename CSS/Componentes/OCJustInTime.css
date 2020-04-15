@@ -1,0 +1,12 @@
+/*
+    Cria o visual da caixa de ferramenta de edição de site.
+*/
+/* 
+    Created on : 14/12/2018, 15:35:12
+    Author     : Alexandre José da Silva Marques
+*/
+
+#CxFerramentaWEBDesign{
+    position: absolute;
+    border: solid 2px;
+}

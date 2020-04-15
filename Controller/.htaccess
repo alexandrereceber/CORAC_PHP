@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+Options -Indexes
+
+#Proíbe acesso direto aos arquivos via URL. ex.: http://10.56.32.78/CORAC/Controller/Controllers.php
+
+#Redireciona todas as requisições de tabela para os arquivos Tabelas.php
+RewriteCond %{QUERY_STRING} URL=ControladorTabelas/
+RewriteRule (.*) TBL/Tabelas.php?p=%{QUERY_STRING} [L]
+
+RewriteCond %{QUERY_STRING} URL=ControladorPages/
+RewriteRule (.*) LP/LoadPages.php?p=%{QUERY_STRING} [L]
+
+#Verifica se o usuário esta logado no sistema
+RewriteCond %{QUERY_STRING} URL=ValidarLogin/
+RewriteRule (.*) Credencial/ValidarLogin.php?p=%{QUERY_STRING} [L]
+
+RewriteCond %{REQUEST_URI} .*
+RewriteRule (.*) - [F]
+</IfModule>
+

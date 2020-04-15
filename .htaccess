@@ -1,0 +1,49 @@
+<IfModule mod_rewrite.c>
+Options -Indexes
+
+RewriteEngine On
+RewriteBase /CORAC
+
+#Redireciona qualquer pedido de pasta raiz para páginas WEB
+RewriteCond %{REQUEST_URI} ^/CORAC/$
+RewriteRule (.*) pgweb/table-vs-div-o-bom [R]
+#
+
+RewriteCond %{REQUEST_URI} ^/CORAC/Logar$
+RewriteRule (.*) Login/login.php?D=%{REQUEST_URI}&URL=%{QUERY_STRING} [L]
+
+#RewriteCond %{REQUEST_URI} ^.*/editpg
+#RewriteRule (.*) EditPages/index.php?editpgweb=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS}&sendChaves=%{QUERY_STRING} [L]
+
+#RewriteCond %{REQUEST_URI} ^.*/pgweb/.*
+#RewriteRule (.*) LoadPages/index.php?pgweb=%{REQUEST_URI}&URL=%{QUERY_STRING} [L]
+
+RewriteCond %{REQUEST_URI} /ControladorTabelas/$
+RewriteRule (.*) Controller/TBL/Tabelas.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+#Realiza a verificação sobre a validade do login do usuário.
+RewriteCond %{REQUEST_URI} /ValidarLogin/$
+RewriteRule (.*) Credencial/ValidarLogin.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+#RewriteCond %{REQUEST_URI} /ControladorPages/$
+#RewriteRule (.*) Controller/LP/LoadPages.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+#----------------------------------------------------------
+
+RewriteCond %{REQUEST_URI} /Gerente
+RewriteCond %{QUERY_STRING} ^s=[a-z|A-z]+
+RewriteRule (.*) TiposUsuarios/Gerente/tmp1/Gerente.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS}&sendChaves=%{QUERY_STRING} [L]
+
+#----------------------------------------------------------
+
+
+RewriteCond %{REQUEST_URI} /Validar/$
+RewriteRule (.*) Login/verify.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+RewriteCond %{REQUEST_URI} /Cadastrar/$
+RewriteRule (.*) CadastrarUsuario/cadastrar.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+
+</IfModule>
+
+

@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+Options -Indexes
+
+#Proíbe acesso direto aos arquivos via URL. ex.: http://10.56.32.78/CORAC/Controller/Controllers.php
+RewriteCond %{QUERY_STRING} URL=Controlador/
+RewriteRule (.*) Controllers.php?p=%{QUERY_STRING} [L]
+
+RewriteCond %{REQUEST_URI} .*
+RewriteRule (.*) - [F]
+</IfModule>
+

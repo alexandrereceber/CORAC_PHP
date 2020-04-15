@@ -1,0 +1,86 @@
+.CxFerramentaWEB{
+    border: solid 2px #0000001c;
+    width: 250px;
+    border-radius: 7px;
+    position: fixed;
+    top: 8px;
+    background-color: cornflowerblue;
+    box-shadow: 0px 0px 8px 0px;
+    z-index: 9999999;
+}
+
+ .CxPropriedadesWEB{
+    border: solid 2px #0000002e;
+    width: fit-content;
+    border-radius: 7px;
+    position: absolute;
+    right: 1%;
+    background-color: rgb(100, 149, 237);
+    box-shadow: 2px 3px 5px 0px;
+}
+
+#CxFInterna, #CxPInterna{
+    height: 600px;
+}
+
+#BTCxFerramenta, #BTCxPropriedades{
+    border: solid 1px #00000008;
+    border-radius: 2px;
+    color: white;
+    text-align: center;
+    font-style: italic;
+    font-family: initial;
+    font-size: initial;
+}
+
+#CxBotoesFerramenta{
+    border: solid 1px #6190e6;
+    width: inherit;
+    height: 93%;
+    background-color: #6495edcc;
+    border-radius: 6px;
+    margin-top: 1px;
+}
+
+#CxBotoesPropriedades{
+    /* border: solid 1px #faead2; */
+    width: inherit;
+    height: 94%;
+    background-color: #fcfcfc8f;
+    border-radius: 6px;
+    margin-top: 1px;
+}
+
+.CxBtoes{
+    border: solid 1px #616cb055;
+    box-shadow: 1px 4px 5px 0px #111111b8;
+    padding: 7px;
+    display: inline-block;
+    border-radius: 5px;
+    margin: 6px;
+    background-color: #f3f3f3;
+    border-color: black;
+}
+
+.CxBtoes:hover{
+    background-color: #7afa67f7;
+    cursor: pointer;
+}
+
+.buttonPropriedades:hover{
+    color: red;
+    cursor: pointer;
+}
+
+.NEW{
+    border: solid 0px;
+    width: 100%;
+    height: 10px;
+    background-color: #8a2be259;
+}
+
+.SobreObjeto:hover{
+    background-color: #ff000012;
+    border: solid 1px;
+    border-color: #edd9d9 !important;
+}
