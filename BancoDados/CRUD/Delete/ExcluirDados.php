@@ -20,7 +20,7 @@
                 
             $ExcluirDados = new $Tabela();
             $ExcluirDados->StartClock();
-            $ExcluirDados->setUsuario("Alexandre");
+            $ExcluirDados->setUsuario("CORAC");
             $ExcluirDados->ExcluirDadosTabela($ChavesPrimarias);
             $ExcluirDados->EndClock();
             $ResultRequest["Modo"]             = "D";

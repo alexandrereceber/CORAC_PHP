@@ -20,7 +20,7 @@ try{
 
     $AtualizarDados = new $Tabela();
     $AtualizarDados->StartClock();
-    $AtualizarDados->setUsuario("Alexandre");
+    $AtualizarDados->setUsuario("CORAC");
     $AtualizarDados->AtualizarDadosTabela($ChavesPrimarias, $Dados);
     
     $AtualizarDados->EndClock();

@@ -26,7 +26,7 @@ try{
      * Se a sessão for anônima deverá ser devinido um usuario e privilégios de acesso na tabela através
      * da variável privilegios em cada classe que representa a tabela.
      */
-    $InserirDados->setUsuario("Alexandre");
+    $InserirDados->setUsuario("CORAC");
     $Result = $InserirDados->InserirDadosTabela($Dados);
     
     if($Result == false) throw new PDOException("A instrução SQL para inserir dados retornou erros.", 2001);

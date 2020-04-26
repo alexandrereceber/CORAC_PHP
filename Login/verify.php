@@ -80,7 +80,7 @@ try {
 
     $SelecionarDados = new login();
 
-    $SelecionarDados->setUsuario("alexandre");
+    $SelecionarDados->setUsuario("CORAC");
     /**
      * Instrução que verifica se o sistema irá autenticar o usuário pelo conjunto usuário e senha ou somente usuário.
      */

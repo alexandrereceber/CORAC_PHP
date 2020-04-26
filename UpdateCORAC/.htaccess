@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+Options -Indexes
+
+#Proíbe acesso direto aos arquivos via URL. ex.: http://10.56.32.78/CORAC/Controller/Controllers.php
+
+#Realiza a verificação de atualizações CORAC.
+RewriteCond %{QUERY_STRING} URL=Update/
+RewriteRule (.*) update_CORAC.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+RewriteCond %{REQUEST_URI} .*
+RewriteRule (.*) - [F]
+</IfModule>
+

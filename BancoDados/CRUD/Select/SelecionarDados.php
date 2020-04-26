@@ -32,7 +32,7 @@ try{
     $SelecionarDados = new $Tabela();
     $SelecionarDados->StartClock();
 
-    $SelecionarDados->setUsuario("Alexandre");
+    $SelecionarDados->setUsuario("CORAC");
     $SelecionarDados->setFiltros($FiltroCampos);
     $SelecionarDados->setOrderBy($Ordem);
     $SelecionarDados->setPagina($Pagina);

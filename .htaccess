@@ -25,17 +25,30 @@ RewriteRule (.*) Controller/TBL/Tabelas.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{
 RewriteCond %{REQUEST_URI} /ValidarLogin/$
 RewriteRule (.*) Credencial/ValidarLogin.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
+#Realiza a verificação do login de usuários através do CORAC.
+RewriteCond %{REQUEST_URI} /CheckedUser/$
+RewriteRule (.*) Credencial/CheckedUser.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+#Realiza a verificação do sistema CORAC nos clientes desktops.
+RewriteCond %{REQUEST_URI} /Checked/$
+RewriteRule (.*) Credencial/Checked.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+#Realiza a verificação de atualizações CORAC.
+RewriteCond %{REQUEST_URI} /Update/$
+RewriteRule (.*) UpdateCORAC/update_CORAC.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+
 #RewriteCond %{REQUEST_URI} /ControladorPages/$
 #RewriteRule (.*) Controller/LP/LoadPages.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
 #----------------------------------------------------------
 
+#Redireciona página para o perfil de sistema gerente.
 RewriteCond %{REQUEST_URI} /Gerente
 RewriteCond %{QUERY_STRING} ^s=[a-z|A-z]+
-RewriteRule (.*) TiposUsuarios/Gerente/tmp1/Gerente.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS}&sendChaves=%{QUERY_STRING} [L]
+RewriteRule (.*) TiposUsuarios/Gerente/tmp2/html/ltr/Gerente.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS}&sendChaves=%{QUERY_STRING} [L]
 
 #----------------------------------------------------------
-
 
 RewriteCond %{REQUEST_URI} /Validar/$
 RewriteRule (.*) Login/verify.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]

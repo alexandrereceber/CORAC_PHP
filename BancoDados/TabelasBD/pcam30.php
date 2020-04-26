@@ -437,7 +437,8 @@ class login extends ModeloTabelas{
                "OrdemBY"        => true
            ]
         ];
-    private $Privilegios = [["Alexandre","Select/Insert/Update/Delete"],["Pedro","Select"]];
+    //private $Privilegios = [["CORAC","Select/Insert/Update/Delete"]];
+    private $Privilegios = [["CORAC","Select/Insert/Update/Delete"]];
     private $TipoPaginacao = ["Simples"=>false, "SaltoPagina"=> true, "Filtros"=>true, "BRefresh"=>true];
     
     public function ModoPaginacao() {
