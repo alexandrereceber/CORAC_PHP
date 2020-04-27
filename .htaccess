@@ -53,6 +53,9 @@ RewriteRule (.*) TiposUsuarios/Gerente/tmp2/html/ltr/Gerente.php?URL=$1&Req=%{HT
 RewriteCond %{REQUEST_URI} /Validar/$
 RewriteRule (.*) Login/verify.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
+RewriteCond %{REQUEST_URI} /Logoff/$
+RewriteRule (.*) Login/logoff.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
 RewriteCond %{REQUEST_URI} /Cadastrar/$
 RewriteRule (.*) CadastrarUsuario/cadastrar.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 

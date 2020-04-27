@@ -1,4 +1,6 @@
 <?php
+
+
 if(@!include_once __DIR__ . "/../../Config/Configuracao.php"){ //Include que contém configurações padrões do sistema.
     $ResultRequest["Modo"]        = "Include";
     $ResultRequest["Error"]    = true;
@@ -100,7 +102,7 @@ if($Sessao){
             exit;
 
         }else{
-            echo "<script>alert('". $exc->getMessage() ."'); window.location='". ConfigSystema::getHttp_Systema() ."'</script>";
+            echo "<script>alert('". $exc->getMessage() ."'); window.location='". ConfigSystema::getHttp_Systema() . "Logar" ."'</script>";
             exit;
         }
     }
