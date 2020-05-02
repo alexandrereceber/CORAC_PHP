@@ -217,7 +217,9 @@ class TabelaBancoDadosMD5{
      * @var array Nome das tabela mapeadas no sistema 
      */
     private static $Tabelas = [
-                                ["bb22afd6fd3058670dbdf0bcc064ddde",["computadores", false]],
+                                ["bb22afd6fd3058670dbdf0bcc064ddde",["computadores", true]],
+                                ["e78169c2553f6f5abe6e35fe042b792a",["vagentesautonomos", false]],
+                                ["235695028862ff50fe8435b7693abb27",["CheckedAgenteAutonomo", false]],
 
                             ];
     

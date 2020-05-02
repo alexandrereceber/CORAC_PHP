@@ -464,7 +464,7 @@ abstract class ModeloTabelas extends BDSQL{
                         return true;
                     }else{
                         if($Tipo == "Select"){
-                            throw new Exception("Usuário definido não possui privilégios nessa tabela($this->NomeTabela) para essa operação: $Tipo", 6003);
+                            throw new Exception("Usuário definido não possui privilégios nessa tabela(".md5($this->NomeTabela).") para essa operação: $Tipo", 6003);
                         }else{
                             return false;
                         }                        
@@ -476,7 +476,7 @@ abstract class ModeloTabelas extends BDSQL{
                         return true;
                     }else{
                         if($Tipo == "Select"){
-                            throw new Exception("Usuário definido não possui privilégios nessa tabela($this->NomeTabela) para essa operação: $Tipo", 6004);
+                            throw new Exception("Usuário definido não possui privilégios nessa tabela(".md5($this->NomeTabela).") para essa operação: $Tipo", 6004);
                         }else{
                             return false;
                         }
@@ -484,7 +484,7 @@ abstract class ModeloTabelas extends BDSQL{
                 }
             }
             //Para evitar perguntas ao sistema a mensagem foi definida como padrão.
-            throw new Exception("Usuário definido não possui privilégios nessa tabela($this->NomeTabela) para essa operação: $Tipo", 6005);
+            throw new Exception("Usuário definido não possui privilégios nessa tabela(".md5($this->NomeTabela).") para essa operação: $Tipo", 6005);
 
         }else{
             throw new Exception("Nenhum usuário foi definido para que possa ser verificado o acesso.", 6006);
@@ -735,6 +735,7 @@ abstract class ModeloTabelas extends BDSQL{
      * Verifica se o campo ChvExt enviará os dados já carregado.
      */
     private function getDadosTBLExtrangeira(&$ChvExtrangeira) {
+        if($ChvExtrangeira["TExt"] === false) return $ChvExtrangeira;
         if($ChvExtrangeira["Funcao"] === false){
             $ChvExtrangeira["DadosTblExt"] = $this->LoadCamposTableExtrangeira($ChvExtrangeira["Tabela"], $ChvExtrangeira["CamposTblExtrangeira"]);
         

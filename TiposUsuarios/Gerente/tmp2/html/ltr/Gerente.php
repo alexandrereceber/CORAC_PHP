@@ -158,7 +158,7 @@ echo "<script>var Chave='$sendChave'</script>"
                             <ul aria-expanded="false" class="collapse  first-level">
                                 <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-cellphone-link"></i><span class="hide-menu"> Equipamentos </span></a></li>
                                 <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-account-multiple-outline"></i><span class="hide-menu"> Usuários </span></a></li>
-                                <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="fas fa-cogs"></i><span class="hide-menu"> Agentes Autônomos </span></a></li>
+                                <li class="sidebar-item"><a id="AgentesAutonomos" href="#" class="sidebar-link"><i class="fas fa-cogs"></i><span class="hide-menu"> Agentes Autônomos </span></a></li>
                             </ul>
                         </li>
                         
