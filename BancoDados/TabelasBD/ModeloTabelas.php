@@ -184,6 +184,7 @@ abstract class ModeloTabelas extends BDSQL{
      * com a regex o sistema aborta a ação.
      */
     abstract public function validarConteudoCampoRegex(&$Dados);
+
     
     public function __construct() {
         parent::__construct();
@@ -692,7 +693,7 @@ abstract class ModeloTabelas extends BDSQL{
                 $Cabecalho[$Chave][16] = "Vazio"  ;
                 $Cabecalho[$Chave][17] = $this->getInforCampoBD($InfoCamposBD, $Valor["Field"]); //Busca informações do campo no banco de dados; Uso futuro, esta implementado, mas não esta em uso
                 $Cabecalho[$Chave][18] = $Valor["TypeConteudo"];
-                $Cabecalho[$Chave][19] = $Valor["ChvExt"];
+                $Cabecalho[$Chave][19] = $this->getDadosTBLExtrangeira($Valor["ChvExt"]);
                 $Cabecalho[$Chave][20] = $Valor["Filter"];
                 
                 if($Valor["Key"][0] === true){
@@ -704,6 +705,43 @@ abstract class ModeloTabelas extends BDSQL{
         }
         $Cabecalho[0] = "";
         return $Cabecalho;
+    }
+    /**
+     * Carrega os dados da tabela estrangeira e apenas os campos informados no campo ChvExt["Tabela"]
+     * @param type $Tabela
+     * @param type $Campos
+     */
+    private function LoadCamposTableExtrangeira($Tabela, $Campos) {
+        $cmp = "";
+        $count = 0;
+
+        foreach ($Campos as $key => $value) {
+            if($count == 0){
+                $cmp = $value;
+                $count++;
+            }else{
+                $cmp .= ", " . $value;
+            }
+        }
+        
+        $SqTbl = "select " . $cmp . " from " . $Tabela . " limit 50";
+        
+        $DadosTblExt = $this->query($SqTbl, PDO::FETCH_NUM);
+        $DadosTblExt = $DadosTblExt->fetchAll();
+        return $DadosTblExt;
+    }
+    
+    /**
+     * Verifica se o campo ChvExt enviará os dados já carregado.
+     */
+    private function getDadosTBLExtrangeira(&$ChvExtrangeira) {
+        if($ChvExtrangeira["Funcao"] === false){
+            $ChvExtrangeira["DadosTblExt"] = $this->LoadCamposTableExtrangeira($ChvExtrangeira["Tabela"], $ChvExtrangeira["CamposTblExtrangeira"]);
+        
+            return $ChvExtrangeira;
+        }else{
+            return $ChvExtrangeira;
+        }
     }
     
     public function getPaginacao(){

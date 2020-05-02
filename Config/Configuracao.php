@@ -181,7 +181,7 @@ class ConfigSystema {
 class AcessoBancoDados {
     private static $EngineSQL = "mysql"; //Banco de dados MYSQL|PostgreSQL|ORACLE
     private static $Host = "localhost";
-    private static $NomeBancoDados = "pcam30";
+    private static $NomeBancoDados = "corac";
     private static $Usuario = "root";
     private static $Senha = "";
     private static $UTF = "utf8";
@@ -217,23 +217,7 @@ class TabelaBancoDadosMD5{
      * @var array Nome das tabela mapeadas no sistema 
      */
     private static $Tabelas = [
-                                ["e8dea8de71c5c357c2cc3c6fd3c6f7f0",["historico", false]],
-                                ["c258c5ff249499cba616a87265044965",["maquinas", false]],
-                                ["8b55f2ec606954f1401c8936e4e85dfb",["rhist", false]],
-                                ["a868a1388d958fb560eb17f2d71cbb9e",["bancoimagem", false]],
-                                ["1a5d1c2453714152ec9ce690d1f73a3c",["innodb_table_stats", false]],
-                                ["e0ea97a6018c6c7a04ff7b4401035b07",["cardvenda", false]],
-                                ["42b90196b487c54069097a68fe98ab6f",["post", false]],
-                                
-                                ["52c1592330d80979c6df1f8bd9d27be3",["Exemplo1", false]],
-                                ["64b99121f7e18c0f8586f30bf78062e0",["Exemplo2", false]],
-                                ["64b99121f7e18c0f8586f30bf7806211",["Exemplo3", false]],
-                                ["64b99121f7e18c0f8586f30bf7806212",["Exemplo4", false]],
-                                ["64b99121f7e18c0f8586f30bf7806213",["Exemplo5", false]],
-                                
-                                ["9e9524af7942ab2ca5efc37ea3738659",["paginaweb", false]],
-                                ["8c6a97b2251d1d31c56e919458172e7f",["paginawebeditar", true]],
-                                ["d7227c5ee4543a7972360a111fa2305f",["produtos", false]],
+                                ["bb22afd6fd3058670dbdf0bcc064ddde",["computadores", false]],
 
                             ];
     

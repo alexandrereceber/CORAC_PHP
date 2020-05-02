@@ -272,6 +272,10 @@ class TabelaHTML extends JSController{
         this.show();
     }
     
+    setDefaultOrderBy(Campo, Ordem){
+        this.DadosEnvio.sendOrdemBY = [Campo, Ordem]
+    }
+    
     getCampoExistFiltro(F,V){
         var Filtros = F, Valor = [];
         for(var i in Filtros){
@@ -335,7 +339,7 @@ class TabelaHTML extends JSController{
                                         '<div class="input-group-prepend"><div class="input-group-text"><i class="fa fa-search"></i></div></div>'+
                                         '<input type="text" class="form-control" data-idn="'+ Cabecalho +'" id="'+ this.NomeInstancia + "_"+ this.ResultSet.Indexador + "_" + Cabecalho + '">'+
                                     '</div>': "")+
-                                    (this.ResultSet.Campos[Cabecalho][15] == true ? '<div style=\"margin-top: 10px; text-align: center\"><button type=\"button\" data-tipoOrdemby=\"asc\" data-ordem=\"crescente\" class=\"btn btn-primary\">ASC <i class=\"fa fa-sort-amount-asc\"></i></button> <button type=\"button\"  data-tipoOrdemby=\"desc\"  data-ordem=\"crescente\" class="btn btn-primary\">DESC <i class=\"fa fa-sort-amount-desc\"></i></button></div>': "") +
+                                    (this.ResultSet.Campos[Cabecalho][15] == true ? '<div style=\"margin-top: 10px; text-align: center\"><button type=\"button\" data-tipoOrdemby=\"asc\" data-ordem=\"crescente\" class=\"btn btn-primary\">ASC <i class=\" fas fa-sort-amount-up\"></i></button> <button type=\"button\"  data-tipoOrdemby=\"desc\"  data-ordem=\"crescente\" class="btn btn-primary\">DESC <i class=\" fas fa-sort-amount-down\"></i></button></div>': "") +
                                 '</div>';
         var Content = '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>';
                             
@@ -447,9 +451,9 @@ class TabelaHTML extends JSController{
                 if(GetCabecalho.OrdemBy[0] == GetCabecalho.Campos[indx][0]){
                     
                     if(GetCabecalho.OrdemBy[1] == "asc"){
-                        Ordered = ' <i id="Ordered" data-toggle="tooltip" title="Crescente" class="fa fa-sort-amount-asc" style="font-size:14px; color: red; cursor: pointer"></i>';
+                        Ordered = ' <i id="Ordered" data-toggle="tooltip" title="Crescente" class="fas fa-sort-amount-up" style="font-size:14px; color: red; cursor: pointer"></i>';
                     }else {
-                        Ordered = ' <i id="Ordered" data-toggle="tooltip" title="Decrescente" class="fa fa-sort-amount-desc" style="font-size:14px; color: red; cursor: pointer"></i>';
+                        Ordered = ' <i id="Ordered" data-toggle="tooltip" title="Decrescente" class=" fas fa-sort-amount-down" style="font-size:14px; color: red; cursor: pointer"></i>';
                     }
                 }else{
                     Ordered = '';
@@ -523,17 +527,17 @@ class TabelaHTML extends JSController{
             Refresh     = "";
     
         if(InfPag.ModoPaginacao.Simples){
-            TH = "<tr><th colspan=4>"+ InfPag.TotalLinhas + " Registro(s) - "+ InfPag.TotaldePaginas + " Página(s)</th></tr>";
+            TH = "<tr ><th colspan=20>"+ InfPag.TotalLinhas + " Registro(s) - "+ InfPag.TotaldePaginas + " Página(s)</th></tr>";
         }else{
             var Inicio = 1, Fim = 0;
             Inicio = InfPag.Deslocamento + 1;
             Fim = InfPag.Deslocamento + this.ResultSet.ResultDados.length
             
-            TH = "<tr><th colspan=4>Página atual: <i class='fa fa-file-text-o'></i> "+ InfPag.PaginaAtual +"/"+ InfPag.TotaldePaginas  +"  <br>Registro: "+ Inicio +" até "+ Fim +"</th></tr><tr><th>"+ InfPag.TotalLinhas + " Total registro(s) - "+ InfPag.TotaldePaginas + " Página(s)</th></tr>";
+            TH = "<tr><th colspan=20>Página atual: <i class='fa fa-file'></i> "+ InfPag.PaginaAtual +"/"+ InfPag.TotaldePaginas  +"  <br>Registro: "+ Inicio +" até "+ Fim +"</th></tr><tr><th colspan=20>"+ InfPag.TotalLinhas + " Total registro(s) - "+ InfPag.TotaldePaginas + " Página(s)</th></tr>";
         }
 
         if(InfPag.ModoPaginacao.BRefresh){
-            Refresh ='<td><div style="text-align: center;"><button type="button" class="btn btn-primary" onclick="'+ this.NomeInstancia +'.Refresh()"><i class="fa fa-refresh" style="font-size:18px;"></i></button></div></td>';
+            Refresh ='<td><div style="text-align: center;"><button type="button" class="btn btn-primary" onclick="'+ this.NomeInstancia +'.Refresh()"><i class=" fas fa-sync-alt" style="font-size:18px;"></i></button></div></td>';
         }
         
         /**
@@ -820,7 +824,12 @@ class TabelaHTML extends JSController{
     Tipo            = Campo[8].TypeConteudo;
     Leitura         = Campo[8].readonly == true ? "readonly" : "";
     Botao           = Campo[19].NomeBotao;
-    Func            = Campo[19].Funcao;
+    /**
+     * Campo muito importante para o sistema de chave extrangeira, fica configurado lá no arquivo de php. Caso
+     * seu valor seja false, significa que os dados da tabela extrangeira foram incorporados ao dados da tabela atual.
+     * e que estão localizados no campo DadosTblExt pra tratamento.
+     */
+    Func            = Campo[19].Funcao; 
     
     if(this.FrameWork == "bootstrap"){
         if(Campo[8].TypeComponente == "button"){
@@ -836,19 +845,61 @@ class TabelaHTML extends JSController{
         }   
             
         if(Campo[8].TypeComponente == "select"){
-                
-                Template = ' \n\
-                                <div class="input-group mb-3">' +
-                                    '<div class="input-group-prepend">' +
-                                        '<span class="input-group-text">'+ Label +':</span>' +
-                                    '</div>' +
-                                    '<select class="form-control"  name="'+ FNome +'" >'+ await this.setFExecuteChv(Func) +'</select>' +
-                                '</div>';
+                if(Func !== false){
+                    Template = ' \n\
+                                    <div class="input-group mb-3">' +
+                                        '<div class="input-group-prepend">' +
+                                            '<span class="input-group-text">'+ Label +':</span>' +
+                                        '</div>' +
+                                        '<select class="form-control"  name="'+ FNome +'" >'+ 
+
+                                            await this.setFExecuteChv(Func) 
+
+                                        +'</select>' +
+                                    '</div>';
+                    
+                }else{
+                    Template = ' \n\
+                                    <div class="input-group mb-3">' +
+                                        '<div class="input-group-prepend">' +
+                                            '<span class="input-group-text">'+ Label +':</span>' +
+                                        '</div>' +
+                                        '<select class="form-control"  name="'+ FNome +'" >'+ 
+
+                                            await this.getSelectChExtrangeira(Campo, Valor) 
+
+                                        +'</select>' +
+                                    '</div>';
+                    
+                }
                 return Template;
             }  
     }
                     
                     
+}
+/**
+ * Método que gera as opções da caixa de select para as janalas do botão inserir e editar
+ * @param {Array} Dados
+ * @param {Text} Valor
+ * @returns {String}
+ */
+    async getSelectChExtrangeira(Dados, Valor){
+        let Selects = '<option value=""></option>',
+            Selected = '';
+
+        for (var i in Dados[19].DadosTblExt) {
+            for(var c in Dados[19].DadosTblExt[i]){
+                
+                if(c == Dados[19].IdxCampoVinculado) continue;
+                
+                Selected = Dados[19].DadosTblExt[i][Dados[19].IdxCampoVinculado] == Valor ? "selected" : "";
+                
+                Selects += '<option '+ Selected + ' value="'+ Dados[19].DadosTblExt[i][Dados[19].IdxCampoVinculado] + '">'+ Dados[19].DadosTblExt[i][c] + '</option>';
+            }
+        }
+       
+        return Selects;
     }
     /**
      * Cria um formulário com os campos que podem ser enviado.
@@ -876,7 +927,7 @@ class TabelaHTML extends JSController{
         }
         //Chave extrangeira.
         if(Campo[19].TExt){
-            Valor = Modo == "Atualizar" ? this.getObterValorCampos(Campo[19].IdxCampoVinculado) : ""; //IdxCampoVinculado -> Vem do banco de dados e é o vínculo entre a chave extrangeira
+            Valor = Modo == "Atualizar" ? this.getObterValorCampos(Campo[0]) : ""; //IdxCampoVinculado -> Vem do banco de dados e é o vínculo entre a chave extrangeira
             return await this.getCamposChaveExtrangeira(Campo, Valor);
         }
         
@@ -893,7 +944,7 @@ class TabelaHTML extends JSController{
                 Patterns        = Campo[8].Patterns;
                 Leitura         = Campo[8].readonly == true ? "readonly" : "";
                 Formenctype     = Campo[8].formenctype == "" ? "" : "formenctype='"+ Campo[8].formenctype + "'";
-                
+                //TabelaBD - Campos valores padrões, devem ter uma definição para cada uma
                 if(Campo[2].Exist && Modo != "Atualizar"){
                     Valor = Campo[2].Valor;
                     if(Campo[2].Readonly){
@@ -1238,7 +1289,7 @@ class TabelaHTML extends JSController{
         //this.r;
         var o = this;
         var Janela = {
-                                    Janela: {Nome: "myJanelas", Tipo: "modal-sm", Tamanho: false},
+                                    Janela: {Nome: "myJanelas", Tipo: "modal-sm", Tamanho: "400px"},
                                     Header: {Title: "<i class='fa fa-trash-o' style='font-size:36px'></i> Excluir", CorTexto: "white", backgroundcolor: "#dc3545"}, 
                                     Body:   {Conteudo: Mensagem}, 
                                     Footer: {

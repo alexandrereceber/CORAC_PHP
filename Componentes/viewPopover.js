@@ -63,18 +63,17 @@ $.prototype.viewPopover = function(Cf){
                                 width: 87%;'>{{Title}}\n\
                             </div>\n\
                             <div style='margin: auto;display: inline-block;\n\
-                                width: 10%; cursor: pointer'><i class='material-icons close' id='Close_"+ Componente.dataset.idn +"'>highlight_off</i></div></div>\n\
+                                width: 10%; cursor: pointer'><i class='far fa-window-close' id='Close_"+ Componente.dataset.idn +"'></i></div></div>\n\
                         <div>{{PopoverConteudo}}</div>\n\
                         <div>\n\
                             <i \n\
-                                class='material-icons' \n\
+                                class='fas fa-angle-down' \n\
                                 style=' \n\
-                                        font-size: 24px;\n\
-                                        left: 43%;\n\
+                                        font-size: 31px;\n\
+                                        left: 47%;\n\
                                         position: absolute;\n\
-                                        color: #cdcdcd'\n\
+                                        color: #9c9494'\n\
                             >\n\
-                                keyboard_arrow_down\n\
                             </i>\n\
                         </div>\n\
                     </div>",
