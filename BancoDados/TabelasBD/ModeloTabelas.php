@@ -178,14 +178,20 @@ abstract class ModeloTabelas extends BDSQL{
      * ser criada com o mecanismo de funções anônimas.
      * Obs.: As chamada dentro das funções devem ser $this->Jobs(__FUNCTION__, $Variavel)
      */
-    abstract public function Jobs($Tipo, &$ConjuntoDados);
+    abstract public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado);
     /**
      * Verifica, para cada campo, o conteúdo do campo antes de inserí-lo no banco de dados e caso não esteja de acordo
      * com a regex o sistema aborta a ação.
      */
     abstract public function validarConteudoCampoRegex(&$Dados);
 
-    
+    /**
+     * Antes de realizar qualquer filtro na tabela poderá ser utilizada uma função para normalizar ou
+     * verificar ou até corrigir entradas de Filtro;
+     */
+    abstract public function NormalizarFiltro($Func);
+
+
     public function __construct() {
         parent::__construct();
         $this->setNomeTabela();
@@ -342,15 +348,15 @@ abstract class ModeloTabelas extends BDSQL{
                 ];
      * 
          */
-    private function setPreparaFiltro() {//$this->Filtros = $this->Filtros != null ? "" : " WHERE ";
+    private function setPreparaFiltro($Filtros) {//$this->Filtros = $this->Filtros != null ? "" : " WHERE ";
         $Chv = 0;
         $Count2 = 0;
         $W = NULL;
         
-        if(is_array($this->Filtros)){
+        if(is_array($Filtros)){
             $Count = 0; //Inicia o contador
             
-            foreach ($this->Filtros as $key => $value) {
+            foreach ($Filtros as $key => $value) {
                 if(($value) == "false") continue;
                 foreach ($value as $Chave => $Valores) {
                         $NomeCampo = $this->idx_NomeCampo($Valores[0]);
@@ -515,11 +521,12 @@ abstract class ModeloTabelas extends BDSQL{
         $this->obterPrivilegios();
         $this->getVerificarPrivilegios("Select");
         /**
-         * Executa funções anônimas.
+         * Executa funções anônimas no filtro.
          */
-        //$Saida = $this->Jobs(__FUNCTION__);
-        
-        $Filtro = $this->setPreparaFiltro();
+        $Filters = $this->NormalizarFiltro(__FUNCTION__);
+        $Filtros = $Filters == null ? $this->Filtros : $Filters;
+        $Filtro = $this->setPreparaFiltro($Filtros);
+
         /**
          * Define que tipo de retorno será enviado pelo filtroPadrões, uma vez que, na existência de filtros, vindos do sistema,
          * o retorno será diferente, sendo AND caso já existe filtro e WHERE caso não exista filtro pré-existente.
@@ -556,7 +563,10 @@ abstract class ModeloTabelas extends BDSQL{
      * @return integer
      */
     protected function getTotalLinhas() {
-        $Filtro = $this->setPreparaFiltro();
+        $Filters = $this->NormalizarFiltro(__FUNCTION__);
+        $Filtros = $Filters == null ? $this->Filtros : $Filters;
+        
+        $Filtro = $this->setPreparaFiltro($Filtros);
         $FiltrosPadroes = $Filtro === "" ? $this->FiltrosPadroes(false) : $this->FiltrosPadroes(true) ;
         
         $StringSQL = "Select count(*) as TotalLinhas from $this->NomeTabela $Filtro $FiltrosPadroes"; //Páginas e deslocamentos
@@ -584,7 +594,7 @@ abstract class ModeloTabelas extends BDSQL{
      */
     public function getArrayDados() {
         $Dados = $this->getArrayResultado();
-        $this->Jobs(__FUNCTION__, $Dados);
+        $this->Jobs(__FUNCTION__, $Dados, "BeforeSelect", null);
         return $Dados;
     }
     /**
@@ -898,7 +908,7 @@ abstract class ModeloTabelas extends BDSQL{
         /**
          * Executa funções anônimas.
          */
-        $Saida = $this->Jobs(__FUNCTION__, $Dados);
+        $Saida = $this->Jobs(__FUNCTION__, $Dados, "AfterInsert", null);
        
         $SqlCampos = $this->gerarStringCamposSQLInsert($Dados);
         
@@ -915,7 +925,10 @@ abstract class ModeloTabelas extends BDSQL{
         $rst = $this->ExecutarSQL($SqlCampos[2]);
         if($rst == false){
             $this->GerarError();
-        }        
+        }    
+        
+        $Saida = $this->Jobs(__FUNCTION__, $Dados, "BeforeInsert", $rst);
+
         return true;
     }
     
@@ -1014,7 +1027,7 @@ abstract class ModeloTabelas extends BDSQL{
         /**
          * Executa funções anônimas.
          */
-        $Saida = $this->Jobs(__FUNCTION__, $Dados);
+        $Saida = $this->Jobs(__FUNCTION__, $Dados, "AfterUpdate", null);
 
         $SqlCampos = $this->gerarStringCamposSQLEditar($Dados);
         $Where = $this->gerarStringWhereCHPrimaria($ChavesPrimarias);
@@ -1031,7 +1044,8 @@ abstract class ModeloTabelas extends BDSQL{
         if($rst == false){
             $this->GerarError();
         }
-        
+        $Saida = $this->Jobs(__FUNCTION__, $Dados, "BeforeUpdate", $rst);
+
         return true;
     }
 
@@ -1065,20 +1079,12 @@ abstract class ModeloTabelas extends BDSQL{
     public function ExcluirDadosTabela($ChavesPrimarias) {
         $this->obterPrivilegios();
         $this->getVerificarPrivilegios("Delete");
-
-        $this->beginTransaction(); //Inicia uma transação
-        
-        foreach ($ChavesPrimarias as $key => $value) {
-            /**
-             * Executa funções anônimas.
-             */
-            $Saida = $this->Jobs(__FUNCTION__, $ChavesPrimarias);
-            $Saida = $Saida == NULL ? true : $Saida;
-            /**
-             * Se o Jobs falhar um rollback será executado. Por isso o retorno do Jobs deve ser boolean
-             */
-            if(!$Saida) $this->rollBack();
+        /**
+         * Executa funções anônimas.
+         */
+        $Saida = $this->Jobs(__FUNCTION__, $ChavesPrimarias, "BeforeDelete", null);
             
+        foreach ($ChavesPrimarias as $key => $value) {
             $Where = $this->gerarStringWhereCHPrimariaExcluir($value);
 
             if($this->getVirtual()){
@@ -1090,13 +1096,14 @@ abstract class ModeloTabelas extends BDSQL{
             
             $rst = $this->ExecutarSQL($Where[1]);            
             if($rst == false){
-                $this->rollBack(); //Desfaz toda a transação
                 $this->GerarError();
-
             }
+            $Saida = $this->Jobs(__FUNCTION__, $ChavesPrimarias, "LoopDelete", $rst);
+
         }
-        $this->commit();
         
+        $Saida = $this->Jobs(__FUNCTION__, $ChavesPrimarias, "AfterDelete", $rst);
+
         return true;
     }
     /**

@@ -515,7 +515,7 @@ class login extends ModeloTabelas{
         
     }
 
-    public function Jobs($Tipo, &$ConjuntoDados) {
+    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
         
     }
 
@@ -532,6 +532,10 @@ class login extends ModeloTabelas{
             }
 
         }
+    }
+
+    public function NormalizarFiltro($Tipo) {
+        
     }
 
 }
@@ -1026,7 +1030,7 @@ class Computadores extends ModeloTabelas{
         
     }
 
-    public function Jobs($Tipo, &$ConjuntoDados) {
+    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
         
     }
 
@@ -1036,6 +1040,10 @@ class Computadores extends ModeloTabelas{
 
     public function validarConteudoCampoRegex(&$Dados) {
 
+    }
+
+    public function NormalizarFiltro($Tipo) {
+        
     }
 
 }
@@ -1281,8 +1289,8 @@ class vagentesautonomos extends ModeloTabelas{
                "Formulario"     => [
                                         "Exibir"=> true,
                                         "Placeholder"=> "", 
-                                        "TypeComponente"=>"inputbox", 
-                                        "TypeConteudo"=> ["text"], 
+                                        "TypeComponente"=>"select", 
+                                        "TypeConteudo"=> ["","Ativado","Desativado"], 
                                         "Name" => "Status", 
                                         "Patterns"=> "", 
                                         "Titles" => "",
@@ -1456,7 +1464,7 @@ class vagentesautonomos extends ModeloTabelas{
         
     }
 
-    public function Jobs($Tipo, &$ConjuntoDados) {
+    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
         
     }
 
@@ -1468,172 +1476,8 @@ class vagentesautonomos extends ModeloTabelas{
 
     }
 
-}
-
-class CheckedAgenteAutonomo extends ModeloTabelas{
-    /**
-     * Mapeia os campos da tabela - Muito importante caso se queira visualizar somente campo necessários
-     */
-    private $Campos =  [
-               
-            [
-               "Index"          => 0,                                   //Ordem dos campos
-               "Field"          => "Nome",                       //Nome original do campo (String)
-               "CodNome"        => "Nome",                       //Codnome do campo, o que será visualizado pelo usuário (String)
-               "TypeConteudo"   => ["text"],                           //Tipo de conteudo exibido na tabela HTML
-               "Filter"         => false,                               //Habilita a visualização da caixa popv para filtro e classificação
-               "Key"            => [false, false],                       //Chave primária (boolean)
-               "ChvExt"         => [        
-                                        "TExt" => false,                 //Indica que existe chave extrangeira
-                                        "Tabela"=> "",  //nome da tabela extrangeira
-                                        /**
-                                         * Informa o índice do campo que será utilizado para recuperar o valor que será enviado para armazenamento
-                                         * na chave extrangeira. 
-                                         */
-                                        "IdxCampoVinculado"=> 0,
-                                        /*
-                                         * Campo que desempenha uma função muito importante em relação às chaves extrangeiras.
-                                         * Caso esteja com seu valor false, significa que os dados da tabela extrangeira serão
-                                         * resgatadas por uma função interna a classe ModeloTabelas.php e disponibilizado´s em um variável interna de
-                                         * Nome: DadosTblExt.
-                                         * Caso sejá informado um número inteiro, será utilizada uma função pré-definada no componente tabelas.js.
-                                         */
-                                        "Funcao"=> false,                   
-                                        "NomeBotao"=> "",            //texto do botão que será visualizado na página
-                                        /**
-                                         * Informa o nome real dos campos da tabela extrangeira que serão recuperados para envio
-                                         * à tabela html.
-                                         */
-                                        "CamposTblExtrangeira"=>[""]
-                                    ],
-               "Mask"           => false,                               // Máscara (String) Contém a máscara que será utilizada pelo campo
-               "Editar"         => false,                               //Editável - (boolean)  
-               "Visible"        => true,                                //Mostrar na tabela HTML (boolean)
-               "Regex"          => [Exist=> false, Regx=> ""],                               //Regex que será utilizada.
-               "Formulario"     => [
-                                        "Exibir"=> false,
-                                        "Placeholder"=> "", 
-                                        "TypeComponente"=>"", 
-                                        "TypeConteudo"=> ["text"], 
-                                        "Name" => "", 
-                                        "Patterns"=> "", 
-                                        "Titles" => "",
-                                        "Required" => "",
-                                        "width" => "",
-                                        "height"=>"",
-                                        "step"=>"",
-                                        "size"=>"",
-                                        "min"=>"",
-                                        "max"=>"",
-                                        "maxlength"=>"",
-                                        "form"=>"",
-                                        "formaction"=>"",
-                                        "formenctype"=>"",
-                                        "formmethod"=>"",
-                                        "formnovalidate"=>"",
-                                        "formtarget"=>"",
-                                        "align"=>"",
-                                        "alt"=>"",
-                                        "autocomplete"=>"",
-                                        "autofocus"=>"",
-                                        "checked"=>"",
-                                        "dirname"=>"",
-                                        "readonly"=>""
-                                    ],                                  //Informa se o campo fará parte do formulários
-               "OrdemBY"        => false
-           ]
-        ];
-    //private $Privilegios = [["CORAC","Select/Insert/Update/Delete"]];
-    private $Privilegios = [["CORAC","Select///"]];
-    private $TipoPaginacao = ["Simples"=>false, "SaltoPagina"=> true, "Filtros"=>true, "BRefresh"=>true];
-    
-    public function ModoPaginacao() {
-        return $this->TipoPaginacao;
-    }
-    /**
-     * Método utilizado pelas function Inserir, Update e Delete
-     * @return boolean
-     */
-    public function getVirtual() {
-        return true;
-    }
-    /**
-     * Utilizado na consulta de dados
-     * @return string
-     */
-    public function getNomeReal() {
-        return "vagentesautonomos";
-    }
-
-    public function setNomeTabela() {
-        $this->NomeTabela = "vagentesautonomos" ;
-    }
-
-    public function getCampos() {
-        return $this->Campos;
-    }
-
-    public function getPrivilegios() {
-        return $this->Privilegios;
-    }
-
-    public function getTituloTabela() {
-        return false;
-    }
-
-    public function getLimite() {
-        return 30;
-    }
-
-    public function getMostrarContador() {
-        return false;
-    }
-
-    public function showColumnsIcones() {
-        $Habilitar = false;
-        $Icones = [
-                        //["NomeColuna"=> "<i class='fa fa-bluetooth' style='font-size:20px'></i>","NomeBotao"=>"Localizar", "Icone" => "fa fa-search", "Func" => 0, "Tipo" => "Bootstrap", "tooltip"=> "busca"]
-                    ];
-        $ShowColumns[0] = $Habilitar;
-        $ShowColumns[1] = $Icones;
+    public function NormalizarFiltro($Tipo) {
         
-        return $ShowColumns;
-        
-    }
-    /**
-     * A idéia do método é possibilitar o retorno de valor padrão baseado em qualquer outro método.
-     * @param int $idx
-     * @return boolean
-     */
-    public function getValorPadrao($idx) {
-        $ValorPadraoCampos[0] = [Exist=>false, Valor=>"sim"];
-
-        return $ValorPadraoCampos[$idx];
-    }
-
-    public function getPrivBD() {
-        
-    }
-    /**
-     * Método muito importante para o sistema. 
-     * Através deste método, podemos criar os filtros padrões de cada campo.
-     * O método foi criado com o intuito de se poder criar qualquer tipo de filtro padrão.
-     * Ex.: $Filtro[0] = ["like","%fd%"]
-     */
-    public function getFiltrosCampo() {
-        
-    }
-
-    public function Jobs($Tipo, &$ConjuntoDados) {
-        
-    }
-
-    public function getTotalPageVisible() {
-        
-    }
-
-    public function validarConteudoCampoRegex(&$Dados) {
-
     }
 
 }
