@@ -926,7 +926,7 @@ class Computadores extends ModeloTabelas{
                                         "Name" => "Ligada", 
                                         "Patterns"=> "", 
                                         "Titles" => "",
-                                        "Required" => "",
+                                        "Required" => true,
                                         "width" => "",
                                         "height"=>"",
                                         "step"=>"",
@@ -1031,7 +1031,28 @@ class Computadores extends ModeloTabelas{
     }
 
     public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
-        
+        switch ($Tipo){
+            case "InserirDadosTabela":
+                if($Action == "BeforeInsert"){
+                    $this->beginTransaction();
+                }
+                if($Action == "AfterInsert"){
+                    if($Resultado){
+                        $lastID_Insert = $this->GetUltimoID();
+                        $t = $this->GetLinhasAtingidas();  
+                        $this->commit();
+
+                    }else{
+                        $this->rollBack();
+                    }
+
+                }
+                
+                break;
+            default :
+                
+                break;
+        }
     }
 
     public function getTotalPageVisible() {

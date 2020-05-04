@@ -92,6 +92,22 @@ class BDSQL extends PDO{
     }
 
     /**
+     * Método que retorna o total de linhas atingidas pelos métodos DML(Insert, Update, Delete)
+     * @return inteiro
+     * /
+     */
+    protected function GetLinhasAtingidas() {
+       return $this->Estado->rowCount();
+    }
+    
+    /**
+     * Retorno o último ID inserido na tabela.
+     * @return type
+     */
+    protected function GetUltimoID() {
+        return $this->lastInsertId();
+    }
+    /**
      * Executa a SQL da variável $this->SQLPrepare. Também obtém o total de linhas afetadas
      * pela consulta.
      * 

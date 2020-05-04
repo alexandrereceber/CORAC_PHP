@@ -817,13 +817,15 @@ class TabelaHTML extends JSController{
             Tipo = "",
             Leitura = "",
             Botao = "",
-            Func = "";
+            Func = "",
+            Required = "";
                 
     Label           = Campo[1];
     FNome           = Campo[8].Name;
     Tipo            = Campo[8].TypeConteudo;
     Leitura         = Campo[8].readonly == true ? "readonly" : "";
     Botao           = Campo[19].NomeBotao;
+    Required        = Campo[8].Required == true ? "required='true'" : "";
     /**
      * Campo muito importante para o sistema de chave extrangeira, fica configurado lá no arquivo de php. Caso
      * seu valor seja false, significa que os dados da tabela extrangeira foram incorporados ao dados da tabela atual.
@@ -839,7 +841,7 @@ class TabelaHTML extends JSController{
                                     '<div class="input-group-prepend">' +
                                         '<span class="input-group-text">'+ Label +':</span>' +
                                     '</div>' +
-                                    '<input type="'+ Tipo +'" '+ Leitura +' class="form-control" name="'+ FNome +'" value="'+ Valor +'"><button type="button" onclick="'+ this.NomeInstancia +'.setFExecuteChv('+ Func +', this)" class="btn btn-primary Bt_ChvExt_'+ this.ResultSet.Indexador +'">'+ Botao +'</button>' +
+                                    '<input '+ Required +' type="'+ Tipo +'" '+ Leitura +' class="form-control" name="'+ FNome +'" value="'+ Valor +'"><button type="button" onclick="'+ this.NomeInstancia +'.setFExecuteChv('+ Func +', this)" class="btn btn-primary Bt_ChvExt_'+ this.ResultSet.Indexador +'">'+ Botao +'</button>' +
                                 '</div>';
                 return Template;
         }   
@@ -851,7 +853,7 @@ class TabelaHTML extends JSController{
                                         '<div class="input-group-prepend">' +
                                             '<span class="input-group-text">'+ Label +':</span>' +
                                         '</div>' +
-                                        '<select class="form-control"  name="'+ FNome +'" >'+ 
+                                        '<select  '+ Required +'  class="form-control"  name="'+ FNome +'" >'+ 
 
                                             await this.setFExecuteChv(Func) 
 
@@ -864,7 +866,7 @@ class TabelaHTML extends JSController{
                                         '<div class="input-group-prepend">' +
                                             '<span class="input-group-text">'+ Label +':</span>' +
                                         '</div>' +
-                                        '<select class="form-control"  name="'+ FNome +'" >'+ 
+                                        '<select  '+ Required +'  class="form-control"  name="'+ FNome +'" >'+ 
 
                                             await this.getSelectChExtrangeira(Campo, Valor) 
 
@@ -939,7 +941,7 @@ class TabelaHTML extends JSController{
                 Placeholder     = Campo[8].Placeholder;
                 FNome           = Campo[8].Name;
                 Tipo            = Campo[8].TypeConteudo[0];
-                Required        = Campo[8].Required;
+                Required        = Campo[8].Required == true ? "required='true'" : "";;
                 Title           = Campo[8].Titles;
                 Patterns        = Campo[8].Patterns;
                 Leitura         = Campo[8].readonly == true ? "readonly" : "";
@@ -966,6 +968,7 @@ class TabelaHTML extends JSController{
                 Label           = Campo[1];
                 FNome           = Campo[8].Name;
                 Tipo            = Campo[8].TypeConteudo;
+                Required        = Campo[8].Required == true ? "required='true'" : "";
                 
                 Tipo.forEach(function(v,i,p){
                     var S = v == Valor ? "selected" : "";
@@ -977,7 +980,7 @@ class TabelaHTML extends JSController{
                                     '<div class="input-group-prepend">' +
                                         '<span class="input-group-text">'+ Label +':</span>' +
                                     '</div>' +
-                                    '<select class="form-control"  name="'+ FNome +'">'+ Opcoes +'</select>' +
+                                    '<select  '+ Required +' class="form-control"  name="'+ FNome +'">'+ Opcoes +'</select>' +
                                 '</div>';
                 return Template;
             }           

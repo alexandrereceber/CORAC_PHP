@@ -594,7 +594,7 @@ abstract class ModeloTabelas extends BDSQL{
      */
     public function getArrayDados() {
         $Dados = $this->getArrayResultado();
-        $this->Jobs(__FUNCTION__, $Dados, "BeforeSelect", null);
+        $this->Jobs(__FUNCTION__, $Dados, "AfterSelect", null);
         return $Dados;
     }
     /**
@@ -908,7 +908,7 @@ abstract class ModeloTabelas extends BDSQL{
         /**
          * Executa funções anônimas.
          */
-        $Saida = $this->Jobs(__FUNCTION__, $Dados, "AfterInsert", null);
+        $Saida = $this->Jobs(__FUNCTION__, $Dados, "BeforeInsert", null);
        
         $SqlCampos = $this->gerarStringCamposSQLInsert($Dados);
         
@@ -923,11 +923,13 @@ abstract class ModeloTabelas extends BDSQL{
          * para obter os detalhes dos erros.
          */
         $rst = $this->ExecutarSQL($SqlCampos[2]);
+
+        $Saida = $this->Jobs(__FUNCTION__, $Dados, "AfterInsert", $rst);
+
         if($rst == false){
             $this->GerarError();
         }    
         
-        $Saida = $this->Jobs(__FUNCTION__, $Dados, "BeforeInsert", $rst);
 
         return true;
     }
@@ -1027,7 +1029,7 @@ abstract class ModeloTabelas extends BDSQL{
         /**
          * Executa funções anônimas.
          */
-        $Saida = $this->Jobs(__FUNCTION__, $Dados, "AfterUpdate", null);
+        $Saida = $this->Jobs(__FUNCTION__, $Dados, "BeforeUpdate", null);
 
         $SqlCampos = $this->gerarStringCamposSQLEditar($Dados);
         $Where = $this->gerarStringWhereCHPrimaria($ChavesPrimarias);
@@ -1040,11 +1042,12 @@ abstract class ModeloTabelas extends BDSQL{
         $StringSQL = "UPDATE $this->NomeTabela set $SqlCampos[0] where $Where[0]";
         $this->stringSQLExecutar($StringSQL);
         $rst = $this->ExecutarSQL($SqlArray);
+        
+        $Saida = $this->Jobs(__FUNCTION__, $Dados, "AfterUpdate", $rst);
 
         if($rst == false){
             $this->GerarError();
         }
-        $Saida = $this->Jobs(__FUNCTION__, $Dados, "BeforeUpdate", $rst);
 
         return true;
     }
@@ -1094,11 +1097,12 @@ abstract class ModeloTabelas extends BDSQL{
             $StringSQL = "DELETE FROM $this->NomeTabela WHERE $Where[0]";
             $this->stringSQLExecutar($StringSQL);
             
-            $rst = $this->ExecutarSQL($Where[1]);            
+            $rst = $this->ExecutarSQL($Where[1]);  
+            $Saida = $this->Jobs(__FUNCTION__, $ChavesPrimarias, "LoopDelete", $rst);
+
             if($rst == false){
                 $this->GerarError();
             }
-            $Saida = $this->Jobs(__FUNCTION__, $ChavesPrimarias, "LoopDelete", $rst);
 
         }
         
@@ -1113,12 +1117,16 @@ abstract class ModeloTabelas extends BDSQL{
      */
     private function GerarError(){
         $Numero = $this->getErros()[1];
+        $Descricao = $this->getErros()[3];
         switch ($Numero) {
             case "HY093":
                 throw new Exception("Inválido o número de parâmetros.");
 
                 break;
 
+            case 23000:
+                throw new Exception("Violação de integridade - " . $Descricao);
+                break;
             default:
                 throw new Exception("Ocorreram erros que não foram tratador, favor verificar o arquivo ModelosTabela.php para tratá-los");
                 break;
