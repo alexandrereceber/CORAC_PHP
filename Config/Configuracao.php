@@ -219,7 +219,8 @@ class TabelaBancoDadosMD5{
     private static $Tabelas = [
                                 ["bb22afd6fd3058670dbdf0bcc064ddde",["computadores", true]],
                                 ["e78169c2553f6f5abe6e35fe042b792a",["vagentesautonomos", false]],
-                                ["235695028862ff50fe8435b7693abb27",["CheckedAgenteAutonomo", false]],
+                                ["df6f026ac09d686436e9c5333c32503f",["TipoEquipamentos_VCplusplus", false]],
+                                ["334644edbd3aecbe746b32f4f2e8e5fb",["computadores", false]],
 
                             ];
     

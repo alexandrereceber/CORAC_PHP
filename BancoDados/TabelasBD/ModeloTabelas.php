@@ -174,9 +174,12 @@ abstract class ModeloTabelas extends BDSQL{
      */
     abstract public function getFiltrosCampo();
     /**
-     * Objetivo é criar a possibilidade de extensão, uma vez que qualquer funcionalidade personalizada para cada tabela, poderá
+     * Objetivo é criar a possibilidade de extensão, uma vez que, qualquer funcionalidade personalizada para cada tabela, poderá
      * ser criada com o mecanismo de funções anônimas.
      * Obs.: As chamada dentro das funções devem ser $this->Jobs(__FUNCTION__, $Variavel)
+     * Nos métodos Select, depois da execução, Insert, Update e delete possuem uma chamada, exceto a select,
+     * antes da chamada      * propriamente dita e outra depois da execução das determinadas instruções mysql, 
+     * viabilizando assim a possibilidade de lidar com transações. Begintransaction, roolback e commit.
      */
     abstract public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado);
     /**
@@ -929,7 +932,6 @@ abstract class ModeloTabelas extends BDSQL{
         if($rst == false){
             $this->GerarError();
         }    
-        
 
         return true;
     }
@@ -1128,7 +1130,7 @@ abstract class ModeloTabelas extends BDSQL{
                 throw new Exception("Violação de integridade - " . $Descricao);
                 break;
             default:
-                throw new Exception("Ocorreram erros que não foram tratador, favor verificar o arquivo ModelosTabela.php para tratá-los");
+                throw new Exception("Ocorreram erros que não foram tratador, favor verificar o arquivo ModelosTabela.php para tratá-los. - " . $Descricao);
                 break;
         }
     }

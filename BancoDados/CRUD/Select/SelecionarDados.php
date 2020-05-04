@@ -90,7 +90,7 @@ try{
     $ResultRequest["Error"]     = true;
     $ResultRequest["Codigo"]    = $ex->getCode();
     $ResultRequest["Mensagem"]  = $ex->getMessage();
-    $ResultRequest["Tracer"]     = $ex->getTraceAsString();
+    $ResultRequest["Tracer"]    = $ex->getTraceAsString();
     $ResultRequest["File"]      = $ex->getFile();
 
     echo json_encode($ResultRequest);
