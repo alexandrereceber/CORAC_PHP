@@ -145,6 +145,7 @@ if($Sessao && $SessaoTabela){
             $ResultRequest["Mensagem"]  = $exc->getMessage();
             $ResultRequest["File"]      = "Cabecalho_Tabelas.php";
             $ResultRequest["Tracer"]    = "Linha 132";
+            $ResultRequest["Dominio"]   =   ConfigSystema::getHttp_Systema();
             /**
              * Esse array armazena o endereço da página de login caso o usuário esteja tentando acesso sem esta logado via componente.
              */

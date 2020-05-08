@@ -9201,7 +9201,8 @@ sidebar navigation
          Small cap
          ******************/ }
   .sidebar-nav ul .sidebar-item {
-    width: 250px;
+      margin-left: 10px;
+      width: 250px;
     /*******************
            First level
            ******************/ }

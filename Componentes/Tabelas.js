@@ -1023,7 +1023,15 @@ class TabelaHTML extends JSController{
      * @returns {void}
      */
     TratarErros(Erros){
-        bootbox.alert("<h3>"+ Erros.Mensagem +"</h3>")
+        switch(Erros.Codigo){
+            case 12006:
+                bootbox.alert("<h3>"+ Erros.Mensagem +"</h3>");
+                window.location = Erros.Dominio;
+                break;
+            default:
+                bootbox.alert("<h3>"+ Erros.Mensagem +"</h3>");
+                break;
+        }
     }
 //####################MÓDULO INSERIR###########################    
 
