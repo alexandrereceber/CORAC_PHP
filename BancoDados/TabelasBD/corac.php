@@ -1190,9 +1190,9 @@ class Computadores extends ModeloTabelas{
     }
 
     public function showColumnsIcones() {
-        $Habilitar = false;
+        $Habilitar = true;
         $Icones = [
-                        //["NomeColuna"=> "<i class='fa fa-bluetooth' style='font-size:20px'></i>","NomeBotao"=>"Localizar", "Icone" => "fa fa-search", "Func" => 0, "Tipo" => "Bootstrap", "tooltip"=> "busca"]
+                        ["Visible"=>true,"NomeColuna"=> "<i class='mdi mdi-information-outline' style='font-size:20px'></i>","NomeBotao"=>"Localizar", "Icone" => "mdi mdi-information-variant", "Func" => 0, "Tipo" => "Bootstrap", "tooltip"=> "Informações da Máquina"]
                     ];
         $ShowColumns[0] = $Habilitar;
         $ShowColumns[1] = $Icones;

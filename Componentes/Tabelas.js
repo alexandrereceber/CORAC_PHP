@@ -1238,7 +1238,7 @@ class TabelaHTML extends JSController{
                      + Paginacao 
         $("#" + this.Recipiente).html(ComponentCompleto);
         //$("*").popover('hide');
-        //$("*").tooltip();
+        $("*").tooltip();
         
         if(this.Funcoes.Linhas != false){
             $(".tr_" + this.ResultSet.Indexador).click(this.FAnonimas.Linha).css("cursor","pointer");

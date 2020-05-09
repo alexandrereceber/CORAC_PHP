@@ -52,6 +52,7 @@ echo "<script>var Chave='$sendChave'</script>"
     <link href="./TiposUsuarios/Gerente/tmp2/assets/extra-libs/calendar/calendar.css" rel="stylesheet" />
     <link href="./TiposUsuarios/Gerente/tmp2/dist/css/style.min.css?t=<?php echo time(); ?>" rel="stylesheet">
     <link href="./TiposUsuarios/Gerente/tmp2/dist/css/CORAC/Corac_Custom.css?t=<?php echo time(); ?>" rel="stylesheet">
+    <link href="./TiposUsuarios/Gerente/tmp2/dist/css/Terceiros/slicknav/navigation-dark.css?t=<?php echo time(); ?>" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -180,6 +181,10 @@ echo "<script>var Chave='$sendChave'</script>"
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
+            <div id="Container1-MenuInforFlash" class="">
+
+
+            </div>
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
