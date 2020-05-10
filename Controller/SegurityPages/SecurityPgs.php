@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Date: 09/05/1981
+ * Busca as informações relativas à máquina que está sendo requisitada.
+ */
 
 if(@!include_once __DIR__ . "/../../Config/Configuracao.php"){ //Include que contém configurações padrões do sistema.
     $ResultRequest["Modo"]        = "Include";
@@ -94,6 +97,7 @@ if($Sessao){
             $ResultRequest["Error"]    = true;
             $ResultRequest["Codigo"]   = $exc->getCode();
             $ResultRequest["Mensagem"] = $exc->getMessage();
+            $ResultRequest["Dominio"] = ConfigSystema::getHttp_Systema();
             /**
              * Esse array armazena o endereço da página de login caso o usuário esteja tentando acesso sem esta logado via componente.
              */

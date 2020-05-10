@@ -159,12 +159,8 @@ echo "<script>var Chave='$sendChave'</script>"
                             <ul aria-expanded="false" class="collapse  first-level">
                                 <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-cellphone-link"></i><span class="hide-menu"> Equipamentos </span></a></li>
                                 <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-account-multiple-outline"></i><span class="hide-menu"> Usuários </span></a></li>
-                                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-image-filter-center-focus-weak"></i><span class="hide-menu">Agentes Autônomos </span></a>
-                                    <ul aria-expanded="false" class="collapse  first-level ">
-                                        <li class="sidebar-item"><a id="AgentesAutonomos" href="#" class="sidebar-link"><i class="mdi mdi-format-list-bulleted-type"></i><span class="hide-menu"> Listar </span></a></li>
-                                        <li class="sidebar-item"><a id="ConfigAgAuto" href="#" class="sidebar-link"><i class="mdi mdi-settings"></i><span class="hide-menu"> Configurações </span></a></li>
-                                    </ul>
-                                </li>
+                                <li class="sidebar-item"><a id="AgentesAutonomos" href="#" class="sidebar-link"><i class="mdi mdi-format-list-bulleted-type"></i><span class="hide-menu"> Agentes Autônomos </span></a></li>
+
                             </ul>
                         </li>
                         
@@ -283,6 +279,7 @@ echo "<script>var Chave='$sendChave'</script>"
         <script src="/CORAC/Scripts/bootbox/bootbox.min.js?t=<?php echo time(); ?>"></script>
 
     <script src="/CORAC/Scripts/jsControlador/jsConstroller.js?t=<?php echo time(); ?>"></script>
+    <script src="/CORAC/Componentes/CMD_CORAC.js?t=<?php echo time(); ?>"></script>
     <script src="/CORAC/Componentes/viewPopover.js?t=<?php echo time(); ?>" defer=""></script>
     <script src="/CORAC/Componentes/Tabelas.js?t=<?php echo time(); ?>"></script>
     <script src="./TiposUsuarios/Gerente/tmp2/dist/js/ExecMenus.js?t=<?php echo time(); ?>"></script>

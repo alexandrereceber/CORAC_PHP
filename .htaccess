@@ -59,6 +59,8 @@ RewriteRule (.*) Login/logoff.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_ME
 RewriteCond %{REQUEST_URI} /Cadastrar/$
 RewriteRule (.*) CadastrarUsuario/cadastrar.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
+RewriteCond %{REQUEST_URI} /getInformacoesMaquinas/$
+RewriteRule (.*) AgentesCORAC/InfoAgentesCORAC.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
 </IfModule>
 

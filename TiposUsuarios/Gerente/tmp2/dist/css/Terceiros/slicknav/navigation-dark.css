@@ -77,7 +77,7 @@
 
 div#Container1-MenuInforFlash{
     position: absolute;
-    z-index: 999;
+    z-index: 99;
     display: flex;
     width: -webkit-fill-available;
 }
@@ -86,6 +86,10 @@ div#Container2-MenuInforFlash{
     width: max-content;
 }
 /*#------------------Configuração Caixa Informações da Maquina-----------------*/
+
+.dropdown-menu{
+    z-index: 900;
+}
 
 @media (max-width: 800px) {
     .menu-navigation-dark{

@@ -347,3 +347,26 @@ class AmbienteCall {
     
     
 }
+
+/**
+ * Classe utilizada para enviar comandos e receber o resultaado.
+ */
+class ConfigPowershell {
+    private static $Protocolo = "http", $Servidor = "192.168.15.10", $Porta = 1199, $Pasta = "Pacotes/";
+    
+    public static function getProtocolo() {
+        return self::$Protocolo;
+    }
+    
+    public static function getServidor() {
+        return self::$Servidor;
+    }
+
+    public static function getPasta() {
+        return self::$Pasta;
+    }
+    
+    public static function getPorta() {
+        return self::$Porta;
+    } 
+}
