@@ -37,7 +37,9 @@ class SessaoDados{
         }
         
         @session_id($this->getID());
+        //session_cache_expire(60);
         if(@session_start()){
+            
             /**
              * Transforma em um objeto o conteúdo da variável $_session ID.
              */

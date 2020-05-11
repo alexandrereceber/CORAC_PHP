@@ -29,11 +29,13 @@ class Commands extends JSController{
     TratarErros(Erros){
 
         switch(Erros.Codigo){
-            case 12006 || 11005:
+            case 11005:
+            case 12006:
                 bootbox.alert("<h3>"+ Erros.Mensagem +"</h3>");
-                window.location = Erros.Dominio;
+                window.location = Erros.Dominio + "Logar";
                 break;
                 
+          
             default:
                 bootbox.alert("<h3>"+ Erros.Mensagem +"</h3>");
                 break;

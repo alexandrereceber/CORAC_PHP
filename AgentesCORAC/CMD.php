@@ -50,7 +50,7 @@ class CMD {
             $this->Protocol = $Protocolo;
         }
         
-        $this->Key = $sendChave;
+        $this->Key = $Chave;
         
     }
     
@@ -58,7 +58,7 @@ class CMD {
         
         $SubPacote = addslashes(json_encode($Pacote));
         
-        $Pacote_Base = ["Pacote" => 1, "Remetente" => 0, "Conteudo" => $SubPacote];
+        $Pacote_Base = ["Pacote" => $Pacote["Pacote"], "Remetente" => 0, "Conteudo" => $SubPacote];
         $postdata = stripcslashes(json_encode($Pacote_Base));
 
         $opts = array('http' =>
@@ -72,7 +72,7 @@ class CMD {
         $context = stream_context_create($opts);
         $result =  (file_get_contents("$this->Protocol://$this->Servidor:$this->Porta/$this->Folder", false, $context));
         
-        if($result == "") throw new Exception("O agente autônomo não respondeu!");
+        if($result == "" || $result == false) throw new Exception("O agente autônomo não respondeu!");
         
         $Pacote_Base = json_decode($result);
         
@@ -92,7 +92,7 @@ class CMD {
         }else{
             $this->Comando = $CMD;
         }
-        $Pacote_Comando = ["Pacote" => 3,"Comando" => false, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
+        $Pacote_Comando = ["Pacote" => 3,"Comando" => $this->Comando, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
         return $this->EnviarPacote($Pacote_Comando);
     }
 }
