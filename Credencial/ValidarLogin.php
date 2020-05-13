@@ -212,6 +212,7 @@ try {
     $Pacote_Auth["Usuario"]=$Usuario;
     $Pacote_Auth["Dominio"]=6;
     $Pacote_Auth["Senha"]=$Senha;
+    $Pacote_Auth["Habilitado"]= $Saida[3] == 1 ? true : false;
     $Pacote_Auth["Autenticado"]=true;
     $Pacote_Auth["Token"] = $SD->getID();
     $Pacote_Auth["TempoSessao"] = $SD->getTimeChave();

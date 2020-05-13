@@ -7,8 +7,9 @@ class Commands extends JSController{
     constructor(Caminho){
         super(Caminho);
     }
-
-    async getCommand(Comando){
+    
+    async get_InformacoesMaquina(Maquina, Comando){
+        this.DadosEnvio.ServidorCorac = Maquina;
         this.DadosEnvio.Command = Comando;
 
         let TratarResposta = await this.Atualizar();
@@ -17,7 +18,16 @@ class Commands extends JSController{
             this.TratarErros(TratarResposta);
             return false;
         }
+        TratarResposta = JSON.parse(TratarResposta.RST_AG);
+        let ArrayUser = (TratarResposta[0].Usuario).split("-");
+
         
+        TratarResposta[0].Usuario = ArrayUser[ArrayUser.length - 1];
+        TratarResposta[0].SOCaption = (TratarResposta[0].SOCaption).replace("Windows","");
+        TratarResposta[0].Memoria = Number((TratarResposta[0].Memoria) / (1024 * 1024)).toFixed(2) + " GB";
+        let Regx = /(i[0-5]|Celerom).*/ig
+        
+        TratarResposta[0].Processador = Regx.exec(TratarResposta[0].Processador)[0];
         return TratarResposta;
     }
     

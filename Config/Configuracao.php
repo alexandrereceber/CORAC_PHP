@@ -21,7 +21,7 @@ class ConfigSystema {
             $StartClock = [], 
             $EndClock = [],
             $vrf_Password = true, //Validar Senha no sistema
-            $vrf_Habilitado = false, //Habilita a verificação de usuário esta habilitado no sistema.
+            $vrf_Habilitado = true, //Habilita a verificação de usuário esta habilitado no sistema.
             $vrf_Tentativas = true, //Habilita a verificação do número de tentativas de acesso antes que a senha seja bloqueada.
             $Tentativas = 5, //Informa o total de tentativas que serão aceitas antes de bloquear o usuário.
             $vrf_Dispositivo = false, // Verificar qual dispositivo o sistema esta logando
@@ -357,11 +357,18 @@ class ConfigPowershell {
     public static function getProtocolo() {
         return self::$Protocolo;
     }
-    
+    /**
+     * Retorna o nome do computador servidor, que roda o desktop CORAC, para enviar os comandos.
+     * @return string
+     */
     public static function getServidor() {
         return self::$Servidor;
     }
 
+    public static function setServidor($Server) {
+        
+        self::$Servidor = gethostbyname($Server);
+    }
     public static function getPasta() {
         return self::$Pasta;
     }

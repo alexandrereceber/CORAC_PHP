@@ -5,7 +5,9 @@
  * Arrays definidos CGeral[15] - Pesquisa gerada pelo campo localizar da tabela
  */
 class TabelaHTML extends JSController{
+    
     constructor(Caminho){
+        
         super(Caminho);
         this.Recipiente = null; //Nome do recipiente que receberá o componente com os dados.
         this.NomeInstancia = null; //Nome do objeto instanciado na memória.
@@ -715,6 +717,13 @@ class TabelaHTML extends JSController{
         this.DadosEnvio.sendPagina = p;
         this.show();
     }
+    
+    setChavesPrimaria(Chvs){
+        var Chaves = Chvs || false;
+        if(!Chaves) throw "Chaves não foram informadas!";
+        this.ChavesPrimarias[0] = Chaves;
+    }
+    
     /**
      * Quebra as chaves em modo texto para modo array
      * @param {string} Chp

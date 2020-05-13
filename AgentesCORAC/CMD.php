@@ -25,7 +25,7 @@ class CMD {
      * @param type $CMD - > Comando que será executado no agente autônomo
      * @throws Exception
      */
-    public function __construct($Srv, $porta ,$Protocolo = "http", $Pasta , $Chave = null) {
+    public function __construct($Srv, $porta ,$Protocolo = "http", $Pasta, $Chave = null) {
         if($Srv == null || $Srv == ""){
             throw new Exception("Não foi definido nenhum endereço de agente autônomo para estabelecer conexão.", 34000);
         }else{
@@ -33,7 +33,7 @@ class CMD {
         }
         
         if($porta == null|| $porta == ""){
-            throw new Exception("Não foi definido nenhuma porta para estabelecer conexão com o agente autônomo.", 34000);
+            throw new Exception("Não foi definido nenhuma porta para estabelecer conexão com o agente autônomo.", 34001);
         }else{
             $this->Porta = $porta;
         }
@@ -45,7 +45,7 @@ class CMD {
         }
       
         if($Protocolo == null|| $Protocolo == ""){
-            throw new Exception("Não foi encontrado nenhuma definição de protocolo para o agente autônomo.", 34002);
+            throw new Exception("Não foi encontrado nenhuma definição de protocolo para o agente autônomo.", 34003);
         }else{
             $this->Protocol = $Protocolo;
         }
@@ -65,26 +65,44 @@ class CMD {
             array(
                 'method'  => 'POST',
                 'header'  => 'Content-type: application/x-www-form-urlencoded',
-                'content' => $postdata
+                'content' => $postdata,
+                'timeout' => 1200
             )
         );
 
         $context = stream_context_create($opts);
-        $result =  (file_get_contents("$this->Protocol://$this->Servidor:$this->Porta/$this->Folder", false, $context));
+        $Resultado_CORAC_Desktop =  (file_get_contents("$this->Protocol://$this->Servidor:$this->Porta/$this->Folder", false, $context));
         
-        if($result == "" || $result == false) throw new Exception("O agente autônomo não respondeu!");
+        if($Resultado_CORAC_Desktop == "" || $Resultado_CORAC_Desktop == false) throw new Exception("O agente autônomo não respondeu!", 34304);
         
-        $Pacote_Base = json_decode($result);
-        
-        $JSON_Result = json_decode($Pacote_Base->{'Conteudo'});
-        return $JSON_Result;
+        /**
+         * Remover a conversão para json -> $Pacote_Base->{'Conteudo'}
+         */
+        $Pacote_Base = json_decode($Resultado_CORAC_Desktop);
+        $Resultado_CORAC_Desktop = json_decode($Pacote_Base->{'Conteudo'}); //Remove o pacote base
+
+        if($Resultado_CORAC_Desktop->{"Pacote"} == 8) {
+            $Mensagem = $Resultado_CORAC_Desktop->{"Mensagem"};
+            throw new Exception($Mensagem, 34305);
+        }
+        return $Resultado_CORAC_Desktop->{"Resposta"};
     }
+    
+    /**
+     * Envia um pedido de confirmação para saber se a unidade autônoma esta ativa.
+     * @return type
+     */
     public function Ping_AgenteAutonomo() {
         $Pacote_PingReplay = ["Pacote" => 1,"Validado" => false, "TempoInicio" => time()];
         return $this->EnviarPacote($Pacote_PingReplay);
 
     }
-    
+    /**
+     * Envia um comando para o agente.
+     * @param type $CMD
+     * @return type
+     * @throws Exception
+     */
     public function Executar_CMD($CMD) {
                 
         if($CMD == null|| $CMD == ""){
@@ -92,7 +110,41 @@ class CMD {
         }else{
             $this->Comando = $CMD;
         }
+        
+        /**
+         * Pacote: Tipo de pacote que será entregue ao agente autônomo.
+         * Comando: Comando em powershell ou personalizado, dentro do CORAC desktop, que será executado.
+         * Resposta: Campo que conterá a resposta do AA.
+         * Formato: O formato de saída na resposta. Ex: json, xml, http e outros.
+         * Chave: Identificador do usuário que está logado, o AA chegará se o usuário esta validado, bloqueado ou outro status.
+         */
         $Pacote_Comando = ["Pacote" => 3,"Comando" => $this->Comando, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
-        return $this->EnviarPacote($Pacote_Comando);
+        $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_Comando);
+        
+        $Normalizar = $this->Normalizar($this->Comando, $Pacote_Recebido_CORAC_Desk);
+        
+        return $Normalizar;
+    }
+    
+    /**
+     * Método que, caso precise, modifica o conteúdo da resposta do AA antes de entregá-lo à página requisitante.
+     * @param type $CMD
+     * @param type $Dados
+     * @return type
+     */
+    protected function Normalizar($CMD, &$Dados){
+        $CMD = preg_split("/ /", $CMD)[0];
+        
+        switch ($Dados) {
+            case "":
+
+
+                break;
+
+            default:
+                break;
+        }
+        
+        return $Dados;
     }
 }

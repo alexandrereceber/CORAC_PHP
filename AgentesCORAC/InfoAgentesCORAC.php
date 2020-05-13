@@ -10,7 +10,7 @@
  */
 
 error_reporting(0);
-
+set_time_limit(0);
 if(@!include_once "../Config/Configuracao.php"){ //Include que contém configurações padrões do sistema.
     $ResultRequest["Erros"]["Modo"]        = "Include";
     $ResultRequest["Erros"][0]             = true;
@@ -50,6 +50,9 @@ $Metodo         = $_REQUEST["Metodo"];
 $SSL            = $_REQUEST["SSL"];
 $Formato        = $_REQUEST["sendRetorno"]  == "" ? "JSON" : $_REQUEST["sendRetorno"]; //Atribui um formato padrão
 $CMD            = $_REQUEST["Command"];
+$ServidorCorac  = "192.168.15.10";//$_REQUEST["ServidorCorac"];
+
+ConfigPowershell::setServidor($ServidorCorac);
 
 try{
         switch ($Formato) {
@@ -63,8 +66,11 @@ try{
             $ResultRequest["Modo"]      = "Switch";
             $ResultRequest["Error"]     = false;
             
-            $Agente_Atonomos_PACOTES = new CMD(ConfigPowershell::getServidor(), ConfigPowershell::getPorta(), ConfigPowershell::getProtocolo(), ConfigPowershell::getPasta(), $sendChave);
-            $ResultRequest[RST_AG] = $Agente_Atonomos_PACOTES->Executar_CMD($CMD);
+          /**
+           * Armazena o resultado da resposta do AA.
+           */ 
+            $Agente_Autonomos_PACOTES = new CMD(ConfigPowershell::getServidor(), ConfigPowershell::getPorta(), ConfigPowershell::getProtocolo(), ConfigPowershell::getPasta(), $sendChave);
+            $ResultRequest[RST_AG] = $Agente_Autonomos_PACOTES->Executar_CMD($CMD);
             
            /**
             * Armazena o tempo gasto com o processamento até esse ponto. Select
@@ -83,12 +89,12 @@ try{
 
 
         default:
-            throw new Exception("O retorno não foi informado");
+            throw new Exception("O retorno não foi informado.");
             break;
     }
     
 } catch (Exception $ex) {
-    $ResultRequest["Modo"]      = "Default Break";
+    $ResultRequest["Modo"]      = "Informação Servidor CORAC WEB";
     $ResultRequest["Error"]     = true;
     $ResultRequest["Codigo"]    = $ex->getCode();
     $ResultRequest["Mensagem"]  = $ex->getMessage();

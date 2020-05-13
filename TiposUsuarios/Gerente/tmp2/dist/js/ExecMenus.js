@@ -23,23 +23,37 @@ class MenuLateral{
             
         }
         Tabela_Computadores.FuncoesIcones[0] = async function(){
+            try{
+                var Tbl_CPU = arguments[0],
+                Idx = 0,
+                Maquina = null;
+
+                Idx = arguments[1].attributes["data-chaveprimaria"].nodeValue;
+                Tbl_CPU.setChavesPrimaria(Idx);
+                Maquina = Tbl_CPU.getObterValorCampos(3);
+
+                let Rst_AA = await Comandos_CORAC.get_InformacoesMaquina(Maquina, "get_InfoGeral");
+
+                
+                if(Rst_AA == false) return false;
+
+                $("#Container1-MenuInforFlash").html(  
+                                "<div id='Container2-MenuInforFlash' class='row' data-original-title='' title=''>"+
+                                    "<div id='MenuInforFlash' class='col-12 d-flex no-block align-items-center' data-original-title='' title=''>"+
+                                        "<nav class='menu-navigation-dark'>"+
+                                            "<a href='#'><i class='fas fa-user'></i><span>"+ Rst_AA[0].Usuario +"</span></a>"+
+                                            "<a href='#'><i class='mdi mdi-desktop-mac'></i><span>"+ Rst_AA[0].PlacaMae +"</span></a>"+
+                                            "<a href='#' class=''><i class='fas fa-cogs'></i><span>"+ Rst_AA[0].SOCaption +"</span></a>"+
+                                            "<a href='#' class=''><i class='mdi mdi-memory'></i><span>"+ Rst_AA[0].Processador +"</span></a>"+
+                                            "<a href='#'><i class='fas fa-microchip'></i><span>"+ Rst_AA[0].Memoria +"</span></a>"+
+                                        "</nav>"+
+                                    "</div>"+
+                                "</div>").css("display","none");
+                $("#Container1-MenuInforFlash").fadeIn("slow");
+            }catch(ex){
+                bootbox.alert(ex);
+            }
             
-            let Rst = await Comandos_CORAC.getCommand("get-date");
-            if(Rst == false) return false;
-            
-            $("#Container1-MenuInforFlash").html(  
-                            "<div id='Container2-MenuInforFlash' class='row' data-original-title='' title=''>"+
-                                "<div id='MenuInforFlash' class='col-12 d-flex no-block align-items-center' data-original-title='' title=''>"+
-                                    "<nav class='menu-navigation-dark'>"+
-                                        "<a href='#'><i class='fas fa-user'></i><span>Usuário</span></a>"+
-                                        "<a href='#'><i class='mdi mdi-desktop-mac'></i><span>Placa Mãe</span></a>"+
-                                        "<a href='#' class=''><i class='fas fa-cogs'></i><span>Sistema Op</span></a>"+
-                                        "<a href='#' class=''><i class='mdi mdi-memory'></i><span>Processador</span></a>"+
-                                        "<a href='#'><i class='fas fa-microchip'></i><span>Memória</span></a>"+
-                                    "</nav>"+
-                                "</div>"+
-                            "</div>").css("display","none");
-            $("#Container1-MenuInforFlash").fadeIn("slow");
         };
 
         Tabela_Computadores.show();
