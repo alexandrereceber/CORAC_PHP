@@ -2,3 +2,11 @@
     width: 100%;
     font-family: monospace;
 }
+
+.Tabela_Geral tr:hover{
+    background-color: #b6c0ff8a !important;
+}
+
+.LinhaSelecionada{
+    background-color: #c3e6cb !important;
+}

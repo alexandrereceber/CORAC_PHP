@@ -51,8 +51,8 @@ class TabelaHTML extends JSController{
                 Linha: {
                     Color: "",
                     Fonte: "",
-                    Select_Color: "red",
-                    Unselect_Color: "blue"
+                    Select_Color: false, /*Realiza a mudança de cor da linha ao selecionar um checked. Obs.: Utilize a classe Linha selecionada para realizar essa alteração sempre que a linha deva voltar à cor original.*/ 
+                    Unselect_Color: false /*Realiza a mudança de cor da linha ao remover a checked*/
                 },
                 Celula: {
                     Color: "",
@@ -1270,7 +1270,7 @@ class TabelaHTML extends JSController{
             this.ResultSet.ShowColumnsIcones[1].forEach(function(v, i, p){
                 var o = v
                 $("." + v.NomeBotao + "_" + InstanciaTabela.ResultSet.Indexador).click(function(){
-                    InstanciaTabela.FuncoesIcones[v.Func](InstanciaTabela, this)
+                     InstanciaTabela.FuncoesIcones[v.Func](InstanciaTabela, this)
                 });
             });
         }
@@ -1386,6 +1386,82 @@ class TabelaHTML extends JSController{
         
         $("#" + Componentes.Janela.Nome).modal(Componentes.Modal);
         
+    }
+    
+    /**
+     * Método que limpa as variáveis da classe que poderá ser utilizada para outra trabela.
+     * @return {undefined}
+     */
+    Destroy(){
+        this.Recipiente = null; //Nome do recipiente que receberá o componente com os dados.
+        this.NomeInstancia = null; //Nome do objeto instanciado na memória.
+        this.ChavesPrimarias = []; //Array que armazena, de uma determinada instância, as chaves primárias de uma tabela HTML
+        this.FrameWork = "bootstrap"; //Informa com qual framework o componente mostrará os dados.
+        this.DadosEnvio.sendPagina = 1;
+        this.DadosEnvio.sendFiltros = [false, false, false];
+        /**
+         * Variável que armazena as funções anônimas das linhas, células e conteúdo.
+         * Obs.: Conteudo é a variável que armazena a função anônima que é executada durante a apresentação da tabela HTML. Está
+         * variável esta na função .getLinhas();
+         */
+        this.Funcoes = {
+                            Linhas: false, 
+                            Celulas: false, 
+                            Conteudo: false
+                        };
+
+        /*
+         * Ao ser chamada, a função recebe esses paramentros.
+         * InstanciaTabela.FuncoesIcones[v.Func](InstanciaTabela, this);
+         */
+        this.FuncoesIcones = []; //Armazena as funções, criadas manualmente, para a execução dos ícones da tabela HTML, a função recebe os parâmetros Instância da tabela e o próprio objeto 
+        this.FuncoesChvExt = []; //Armazena as funções para as chaves extrangeiras. São identificadas pelo numero da função. Esse número vem do ModeloTabela.php que fica no campo.
+        this.StatusGeral = [];   //Amazena informações gerais como por exemplo se ja foi buscado os dados no banco. É a variável de estado do objeto.
+        
+        this.GeralTableClass = "table",
+        this.GeralDivClass = "",
+        this.GeralThClass = "",
+        this.GeralTdClass = "",
+        this.GeralTrClass = "",
+        this.GeralLiClass = "page-item",
+        this.GeralAClass = "page-link",
+        this.GeralUClass = "pagination",
+        this.GeralButtonClass = "btn btn-primary",
+        this.visibleChavePrimaria = false,
+        this.VisibleDetalhesUpdate = true;
+
+        this.Configuracao = {
+            Tabela: {
+                Linha: {
+                    Color: "",
+                    Fonte: "",
+                    Select_Color: "red",
+                    Unselect_Color: "blue"
+                },
+                Celula: {
+                    Color: "",
+                    Fonte: ""
+                }
+            },
+            
+        }
+        
+        this.PageModel = {Inicial: 0, Final: 0}
+        var Instancia = this;
+        /**
+         * 
+         */
+        this.FAnonimas = {
+            Linha: function(){
+                Instancia.Funcoes.Linhas(Instancia, this);
+            }, 
+            Celulas: function(){
+                Instancia.Funcoes.Celulas(Instancia, this);
+            }, 
+            Conteudo: function(Index, VConteudo){
+                return Instancia.Funcoes.Conteudo(Instancia, Index, VConteudo);
+            }
+        }
     }
 }
 

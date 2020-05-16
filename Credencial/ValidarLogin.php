@@ -208,44 +208,46 @@ try {
         throw new Exception("Usuário ou senha inválidos.", 14006);
     }
     
-    $Pacote_Auth["Pacote"]=6;
-    $Pacote_Auth["Usuario"]=$Usuario;
-    $Pacote_Auth["Dominio"]=6;
-    $Pacote_Auth["Senha"]=$Senha;
-    $Pacote_Auth["Habilitado"]= $Saida[3] == 1 ? true : false;
-    $Pacote_Auth["Autenticado"]=true;
-    $Pacote_Auth["Token"] = $SD->getID();
-    $Pacote_Auth["TempoSessao"] = $SD->getTimeChave();
-    $Pacote_Auth["RenovarSessao"]=0;
-    $Pacote_Auth["Error"]=false;
-    $Pacote_Auth["EMensagem"]=0;
-    $Pacote_Auth["TEndPointClient"]=0;
-    $Pacote_Auth["TEndPointServer"]=0;
-    $Pacote_Auth["DominioCliente"]=0;
-    $Pacote_Auth["Autenticacao"] = "BD";
-    $Pacote_Auth["Dispositivo"] = $Dispositivo;
-    $Pacote_Auth["DominioServidor"]=0;
+    $Pacote_Auth["Pacote"]              = 6;
+    $Pacote_Auth["Usuario"]             = $Usuario;
+    $Pacote_Auth["Dominio"]             = 6;
+    $Pacote_Auth["Senha"]               = $Senha;
+    $Pacote_Auth["Habilitado"]          = $Saida[3] == 1 ? true : false;
+    $Pacote_Auth["Autenticado"]         = true;
+    $Pacote_Auth["Token"]               = $SD->getID();
+    $Pacote_Auth["TempoSessao"]         = $SD->getTimeChave();
+    $Pacote_Auth["RenovarSessao"]       = 0;
+    $Pacote_Auth["Error"]               = false;
+    $Pacote_Auth["EMensagem"]           = 0;
+    $Pacote_Auth["TEndPointClient"]     = 0;
+    $Pacote_Auth["TEndPointServer"]     = 0;
+    $Pacote_Auth["DominioCliente"]      = 0;
+    $Pacote_Auth["Autenticacao"]        = "BD";
+    $Pacote_Auth["Dispositivo"]         = $Dispositivo;
+    $Pacote_Auth["DominioServidor"]     = 0;    
+    $Pacote_Auth["Servico"]             = 0;
+
 
     $SaidaJson = json_encode($Pacote_Auth);
         
-    $PacoteBase["Pacote"] = 6;
-    $PacoteBase["Conteudo"] = "$SaidaJson";
-    $Pacote_Base["Remetente"] = 2;
+    $PacoteBase["Pacote"]               = 6;
+    $PacoteBase["Conteudo"]             = "$SaidaJson";
+    $Pacote_Base["Remetente"]           = 2;
 
     echo json_encode($PacoteBase);
 
 
 } catch (Exception $ex) {
     
-    $Pacote_Error["Pacote"]    = 8;
-    $Pacote_Error["Error"]     = true;
-    $Pacote_Error["Mensagem"]  = $ex->getMessage();
+    $Pacote_Error["Pacote"]             = 8;
+    $Pacote_Error["Error"]              = true;
+    $Pacote_Error["Mensagem"]           = $ex->getMessage();
 
     $SaidaJson = json_encode($Pacote_Error);
         
-    $Pacote_Base["Pacote"] = 8;
-    $Pacote_Base["Conteudo"] = "$SaidaJson";
-    $Pacote_Base["Remetente"] = 2;
+    $Pacote_Base["Pacote"]              = 8;
+    $Pacote_Base["Conteudo"]            = "$SaidaJson";
+    $Pacote_Base["Remetente"]           = 2;
 
     
     echo json_encode($Pacote_Base);

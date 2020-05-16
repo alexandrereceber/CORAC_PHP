@@ -28,42 +28,17 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" defer=""></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" defer=""></script>
 
-        <script src="./Scripts/CKEditor/ckeditor.js" ></script>
-        
-        <script  src="Scripts/bootbox/bootbox.js?5a" defer="defer"></script>
-        <script  src="Scripts/jsControlador/jsConstroller.js?ddss3" defer="defer"></script>     
-        <script  src="Componentes/jsControladorPWeb.js?d5ssd63" defer="defer"></script>     
+        <script src="./index.js" ></script>
+   
         
     </head>
     <body>
 
 
-<!-- The Modal -->
-  <div class="modal fade" id="myJanelas">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Título</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-          
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn  cancelar" data-dismiss="modal"></button><button type="button" class="btn  ok" data-dismiss="modal"></button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-<div id="toolbar-container"></div>
-<div id="editor"></div>
-<div id="dados" onload=""></div>
+        <button value="Teste" onclick="webServicos()">Conectar WebSocke</button>
+        <input id="dadosenv" type="text"/><button onclick="enviardados(dadosenv)" value="envia">enviar</button>
+        <img id="ImgG" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
+    AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
+        9TXL0Y4OHwAAAABJRU5ErkJggg=="/>
     </body>
 </html>

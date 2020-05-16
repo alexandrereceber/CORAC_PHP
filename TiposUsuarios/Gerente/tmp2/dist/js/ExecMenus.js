@@ -1,6 +1,7 @@
 /* 
  * Executa ações ligadas a cada menu lateral
  */
+'use strict';
 var Tabela_Computadores = new TabelaHTML("http://"+ Padrao.getHostServer() +"/CORAC/ControladorTabelas/");
 var Comandos_CORAC = new Commands("http://"+ Padrao.getHostServer() +"/CORAC/getInformacoesMaquinas/");
 
@@ -11,19 +12,66 @@ class MenuLateral{
 
     }
     MenuLateral_Computadores(){
+        
         $(".page-title").html("Computadores Gerenciados")
+        Tabela_Computadores.Destroy();
         Tabela_Computadores.setTabela = "bb22afd6fd3058670dbdf0bcc064ddde";
         Tabela_Computadores.setRecipiente = "Conteudo_1";
         Tabela_Computadores.GeralDivClass = "Tabela_Geral table-striped table-bordered";
         Tabela_Computadores.Name = "Tabela_Computadores";
-        Tabela_Computadores.Configuracao.Tabela.Linha.Select_Color="#c3e6cb";
-        Tabela_Computadores.Configuracao.Tabela.Linha.Unselect_Color="initial";
+        //Tabela_Computadores.Configuracao.Tabela.Linha.Select_Color="#c3e6cb";
+        //Tabela_Computadores.Configuracao.Tabela.Linha.Unselect_Color="initial";
         Tabela_Computadores.setDefaultOrderBy(3,"ASC")
         Tabela_Computadores.FuncoesChvExt[0] = function(){
             
         }
+        Tabela_Computadores.Funcoes.Conteudo = function(i, v, p){
+            v = parseInt(v);
+            switch (v) {
+                case 4:
+                    if(p == "Ligada"){
+                        return '<i class="fa fas fa-check" style="color: #10aa06"></i>';
+                    }else{
+                        return '<i class="fas fa-times" style="color: red"></i>';
+                    }
+                    break;
+                    
+                case 5:
+                    if(p == 1){
+                        return '<i class="fa fas fa-check" style="color: #10aa06"></i>';
+                    }else{
+                        return '<i class="fas fa-times" style="color: red"></i>';
+                    }
+                    break;
+
+                                    
+                case 6:
+                    if(p == 1){
+                        return '<i class="fa fas fa-check" style="color: #10aa06"></i>';
+                    }else{
+                        return '<i class="fas fa-times" style="color: red"></i>';
+                    }
+                    break;
+
+                    
+                case 7:
+                    if(p == 1){
+                        return '<i class="fa fas fa-check" style="color: #10aa06"></i>';
+                    }else{
+                        return '<i class="fas fa-times" style="color: red"></i>';
+                    }
+                    break;
+
+                default:
+                    return p;
+                    break;
+            };
+        }
         Tabela_Computadores.FuncoesIcones[0] = async function(){
+            
             try{
+                let Executar = confirm("Tem certeza que deseja executar essa operação?")
+                if(Executar == false) return false;
                 var Tbl_CPU = arguments[0],
                 Idx = 0,
                 Maquina = null;
@@ -32,7 +80,7 @@ class MenuLateral{
                 Tbl_CPU.setChavesPrimaria(Idx);
                 Maquina = Tbl_CPU.getObterValorCampos(3);
 
-                let Rst_AA = await Comandos_CORAC.get_InformacoesMaquina(Maquina, "get_InfoGeral");
+                let Rst_AA =  await Comandos_CORAC.get_InformacoesMaquina(Maquina, "get_InfoGeral");
 
                 
                 if(Rst_AA == false) return false;
@@ -55,6 +103,9 @@ class MenuLateral{
             }
             
         };
+        Tabela_Computadores.FuncoesIcones[1] = function(){
+            
+        }
 
         Tabela_Computadores.show();
         window.onscroll = function(){
@@ -84,6 +135,7 @@ class MenuLateral{
         };
     }
     MenuLateral_Submenu_Controler_Auto(){
+        Tabela_Computadores.Destroy();
         $(".page-title").html("Agentes Autônomos")
         Tabela_Computadores.setTabela = "e78169c2553f6f5abe6e35fe042b792a";
         Tabela_Computadores.setRecipiente = "Conteudo_1";

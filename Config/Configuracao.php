@@ -377,3 +377,33 @@ class ConfigPowershell {
         return self::$Porta;
     } 
 }
+
+/**
+ * Classe utilizada para enviar comandos e receber o resultaado.
+ */
+class ConfigAcessoRemoto {
+    private static $Protocolo = "http", $Servidor = "192.168.15.10", $Porta = 1199, $Pasta = "AcessoRemoto/";
+    
+    public static function getProtocolo() {
+        return self::$Protocolo;
+    }
+    /**
+     * Retorna o nome do computador servidor, que roda o desktop CORAC, para enviar os comandos.
+     * @return string
+     */
+    public static function getServidor() {
+        return self::$Servidor;
+    }
+
+    public static function setServidor($Server) {
+        
+        self::$Servidor = gethostbyname($Server);
+    }
+    public static function getPasta() {
+        return self::$Pasta;
+    }
+    
+    public static function getPorta() {
+        return self::$Porta;
+    } 
+}

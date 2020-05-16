@@ -276,7 +276,7 @@ echo "<script>var Chave='$sendChave'</script>"
     <script src="./TiposUsuarios/Gerente/tmp2/dist/js/sidebarmenu.js?t=<?php echo time(); ?>"></script>
     
     <!-- Custom Theme JavaScript -->
-        <script src="/CORAC/Scripts/bootbox/bootbox.min.js?t=<?php echo time(); ?>"></script>
+        <script src="/CORAC/Scripts/bootbox/bootbox.js?t=<?php echo time(); ?>"></script>
 
     <script src="/CORAC/Scripts/jsControlador/jsConstroller.js?t=<?php echo time(); ?>"></script>
     <script src="/CORAC/Componentes/CMD_CORAC.js?t=<?php echo time(); ?>"></script>

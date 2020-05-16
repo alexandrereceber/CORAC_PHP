@@ -5,8 +5,8 @@ RewriteEngine On
 RewriteBase /CORAC
 
 #Redireciona qualquer pedido de pasta raiz para páginas WEB
-RewriteCond %{REQUEST_URI} ^/CORAC/$
-RewriteRule (.*) pgweb/table-vs-div-o-bom [R]
+#RewriteCond %{REQUEST_URI} ^/CORAC/$
+#RewriteRule (.*) pgweb/table-vs-div-o-bom [R]
 #
 
 RewriteCond %{REQUEST_URI} ^/CORAC/Logar$
@@ -61,6 +61,9 @@ RewriteRule (.*) CadastrarUsuario/cadastrar.php?URL=$1&Req=%{HTTP_REFERER}&Metod
 
 RewriteCond %{REQUEST_URI} /getInformacoesMaquinas/$
 RewriteRule (.*) AgentesCORAC/InfoAgentesCORAC.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
+RewriteCond %{REQUEST_URI} /AA_AcessoRemoto/$
+RewriteRule (.*) AgentesCORAC/CAR_CORAC.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
 </IfModule>
 

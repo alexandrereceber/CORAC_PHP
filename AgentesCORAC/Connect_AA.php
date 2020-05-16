@@ -9,7 +9,7 @@
  *
  * @author Alexandre José da Silva Marques
  */
-class CMD {
+class Connect_AA {
     
     private $Comando = null;
     private $Servidor = null;
@@ -121,7 +121,7 @@ class CMD {
         $Pacote_Comando = ["Pacote" => 3,"Comando" => $this->Comando, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
         $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_Comando);
         
-        $Normalizar = $this->Normalizar($this->Comando, $Pacote_Recebido_CORAC_Desk);
+        $Normalizar = $this->Normalizar($this->Comando, $Pacote_Recebido_CORAC_Desk, __FUNCTION__);
         
         return $Normalizar;
     }
@@ -132,7 +132,7 @@ class CMD {
      * @param type $Dados
      * @return type
      */
-    protected function Normalizar($CMD, &$Dados){
+    protected function Normalizar($CMD, &$Dados, $Function){
         $CMD = preg_split("/ /", $CMD)[0];
         
         switch ($Dados) {
@@ -146,5 +146,28 @@ class CMD {
         }
         
         return $Dados;
+    }
+    
+        public function AcessoRemoto($CMD) {
+                
+        if($CMD == null|| $CMD == ""){
+            throw new Exception("Não foi encontrado nenhum comando.", 34001);
+        }else{
+            $this->Comando = $CMD;
+        }
+        
+        /**
+         * Pacote: Tipo de pacote que será entregue ao agente autônomo.
+         * Comando: Comando em powershell ou personalizado, dentro do CORAC desktop, que será executado.
+         * Resposta: Campo que conterá a resposta do AA.
+         * Formato: O formato de saída na resposta. Ex: json, xml, http e outros.
+         * Chave: Identificador do usuário que está logado, o AA chegará se o usuário esta validado, bloqueado ou outro status.
+         */
+        $Pacote_Comando = ["Pacote" => 10,"Comando" => $this->Comando, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
+        $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_Comando);
+        
+        $Normalizar = $this->Normalizar($this->Comando, $Pacote_Recebido_CORAC_Desk, __FUNCTION__);
+        
+        return $Normalizar;
     }
 }
