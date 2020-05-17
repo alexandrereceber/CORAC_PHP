@@ -28,7 +28,7 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" defer=""></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" defer=""></script>
 
-        <script src="./index.js" ></script>
+        <script src="./index.js?l=3" ></script>
    
         
     </head>

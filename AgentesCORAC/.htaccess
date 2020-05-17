@@ -5,7 +5,7 @@ Options -Indexes
 RewriteCond %{QUERY_STRING} URL=getInformacoesMaquinas/
 RewriteRule (.*) InfoAgentesCORAC.php?p=%{QUERY_STRING} [L]
 
-RewriteCond %{QUERY_STRING} URL=AA_AcessoRemoto_Config/
+RewriteCond %{QUERY_STRING} URL=AA_AcessoRemoto_SYN/
 RewriteRule (.*) CAR_CORAC.php?p=%{QUERY_STRING} [L]
 
 RewriteCond %{REQUEST_URI} .*

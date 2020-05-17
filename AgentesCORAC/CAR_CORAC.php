@@ -68,7 +68,7 @@ try{
           /**
            * Armazena o resultado da resposta do AA.
            */ 
-            $Agente_Autonomos_PACOTES = new Connect_AA(ConfigAcessoRemoto::getServidor(), ConfigAcessoRemoto::getPorta(), ConfigAcessoRemoto::getProtocolo(), ConfigAcessoRemoto::getPasta(), $sendChave);
+            $Agente_Autonomos_PACOTES = new Connect_AA(ConfigAcessoRemoto_Config::getServidor(), ConfigAcessoRemoto_Config::getPorta(), ConfigAcessoRemoto_Config::getProtocolo(), ConfigAcessoRemoto_Config::getPasta(), $sendChave);
             $ResultRequest[RST_AG] = $Agente_Autonomos_PACOTES->AcessoRemoto($Requisicao);
             
            /**

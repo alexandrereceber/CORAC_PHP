@@ -381,8 +381,8 @@ class ConfigPowershell {
 /**
  * Classe utilizada para enviar comandos e receber o resultaado.
  */
-class ConfigAcessoRemoto {
-    private static $Protocolo = "http", $Servidor = "192.168.15.10", $Porta = 1199, $Pasta = "AcessoRemoto/";
+class ConfigAcessoRemoto_Config {
+    private static $Protocolo = "http", $Servidor = "192.168.15.10", $Porta = 1199, $Pasta = "AA_AcessoRemoto_SYN/";
     
     public static function getProtocolo() {
         return self::$Protocolo;
