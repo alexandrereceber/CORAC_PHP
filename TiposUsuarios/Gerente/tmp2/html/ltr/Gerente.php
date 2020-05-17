@@ -280,6 +280,7 @@ echo "<script>var Chave='$sendChave'</script>"
 
     <script src="/CORAC/Scripts/jsControlador/jsConstroller.js?t=<?php echo time(); ?>"></script>
     <script src="/CORAC/Componentes/CMD_CORAC.js?t=<?php echo time(); ?>"></script>
+    <script src="/CORAC/Componentes/CAR_CORAC.js?t=<?php echo time(); ?>"></script>
     <script src="/CORAC/Componentes/viewPopover.js?t=<?php echo time(); ?>" defer=""></script>
     <script src="/CORAC/Componentes/Tabelas.js?t=<?php echo time(); ?>"></script>
     <script src="./TiposUsuarios/Gerente/tmp2/dist/js/ExecMenus.js?t=<?php echo time(); ?>"></script>

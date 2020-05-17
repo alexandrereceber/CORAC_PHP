@@ -12,6 +12,7 @@
 class Connect_AA {
     
     private $Comando = null;
+    private $Requisicao = null;
     private $Servidor = null;
     private $Porta = null;
     private $Protocol = null;
@@ -148,12 +149,12 @@ class Connect_AA {
         return $Dados;
     }
     
-        public function AcessoRemoto($CMD) {
+        public function AcessoRemoto($Requisicao) {
                 
-        if($CMD == null|| $CMD == ""){
-            throw new Exception("Não foi encontrado nenhum comando.", 34001);
+        if($Requisicao == null|| $Requisicao == ""){
+            throw new Exception("Não foi encontrado nenhum pedido de acesso.", 34001);
         }else{
-            $this->Comando = $CMD;
+            $this->Requisicao = $Requisicao;
         }
         
         /**
@@ -163,10 +164,10 @@ class Connect_AA {
          * Formato: O formato de saída na resposta. Ex: json, xml, http e outros.
          * Chave: Identificador do usuário que está logado, o AA chegará se o usuário esta validado, bloqueado ou outro status.
          */
-        $Pacote_Comando = ["Pacote" => 10,"Comando" => $this->Comando, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
-        $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_Comando);
+        $Pacote_AcessoRemoto = ["Pacote" => 12,"Tipo" => $this->Requisicao, "Resposta" => null, "Formato" => 1, "Mecanismo" => 0 ,"Chave" => $this->Key];
+        $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_AcessoRemoto);
         
-        $Normalizar = $this->Normalizar($this->Comando, $Pacote_Recebido_CORAC_Desk, __FUNCTION__);
+        $Normalizar = $this->Normalizar($this->Requisicao, $Pacote_Recebido_CORAC_Desk, __FUNCTION__);
         
         return $Normalizar;
     }

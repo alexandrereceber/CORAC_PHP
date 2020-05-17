@@ -33,11 +33,11 @@ if(@!include_once ConfigSystema::get_Path_Systema() .  "/Controller/SegurityPage
     exit;
 };
 
-if(@!include_once ConfigSystema::get_Path_Systema() .  "/AgentesCORAC/CMD.php"){ //Include que contém configurações padrões do sistema.
+if(@!include_once ConfigSystema::get_Path_Systema() .  "/AgentesCORAC/Connect_AA.php"){ //Include que contém configurações padrões do sistema.
     $ResultRequest["Erros"]["Modo"]        = "Include";
     $ResultRequest["Erros"][0]             = true;
     $ResultRequest["Erros"][1]             = 3588;
-    $ResultRequest["Erros"][2]             = "O arquivo de cabecalho não foi encontrado. CMD";
+    $ResultRequest["Erros"][2]             = "O arquivo de cabecalho não foi encontrado. Connect_AA";
     
     echo json_encode($ResultRequest);
     exit;
@@ -45,11 +45,10 @@ if(@!include_once ConfigSystema::get_Path_Systema() .  "/AgentesCORAC/CMD.php"){
 
 ConfigSystema::getStartTimeTotal();
 $URL            = $_REQUEST["URL"];
-$Requisicao     = $_REQUEST["Req"];
 $Metodo         = $_REQUEST["Metodo"];
 $SSL            = $_REQUEST["SSL"];
 $Formato        = $_REQUEST["sendRetorno"]  == "" ? "JSON" : $_REQUEST["sendRetorno"]; //Atribui um formato padrão
-$CMD            = $_REQUEST["Command"];
+$Requisicao     = $_REQUEST["Requisicao"];
 $ServidorCorac  = "192.168.15.12";//$_REQUEST["ServidorCorac"];
 
 ConfigPowershell::setServidor($ServidorCorac);
@@ -70,7 +69,7 @@ try{
            * Armazena o resultado da resposta do AA.
            */ 
             $Agente_Autonomos_PACOTES = new Connect_AA(ConfigAcessoRemoto::getServidor(), ConfigAcessoRemoto::getPorta(), ConfigAcessoRemoto::getProtocolo(), ConfigAcessoRemoto::getPasta(), $sendChave);
-            $ResultRequest[RST_AG] = $Agente_Autonomos_PACOTES->Executar_CMD($CMD);
+            $ResultRequest[RST_AG] = $Agente_Autonomos_PACOTES->AcessoRemoto($Requisicao);
             
            /**
             * Armazena o tempo gasto com o processamento até esse ponto. Select

@@ -12,10 +12,10 @@ constructor(Caminho){
         super(Caminho);
     }
     
-    async get_ControlAcessoRemoto(Maquina, Comando){
+    async get_ControlAcessoRemoto(Maquina, Requisicao){
         
         this.DadosEnvio.ServidorCorac = Maquina;
-        //this.DadosEnvio.Command = Comando;
+        this.DadosEnvio.Requisicao = Requisicao;
 
         let TratarResposta = await this.Atualizar();
 
@@ -25,8 +25,14 @@ constructor(Caminho){
         }
         
         TratarResposta = JSON.parse(TratarResposta.RST_AG);
+        let Configuracoes = TratarResposta = JSON.parse(TratarResposta.Conteudo);
         
-        return TratarResposta;
+        if(Configuracoes.Resposta == "OK_2001"){
+            
+        }else{
+            bootbox.alert("<h1 style='color: red; display: inline-flex'><i class='fas fa-user-times'></i></h1> <span style='font-size: 25px; margin-left: 8px'> O usuário negou o acesso remoto!</span>")
+        }
+        return Configuracoes;
     }
     
     /**

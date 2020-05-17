@@ -37,7 +37,7 @@ if(@!include_once ConfigSystema::get_Path_Systema() .  "/AgentesCORAC/Connect_AA
     $ResultRequest["Erros"]["Modo"]        = "Include";
     $ResultRequest["Erros"][0]             = true;
     $ResultRequest["Erros"][1]             = 3588;
-    $ResultRequest["Erros"][2]             = "O arquivo de cabecalho não foi encontrado. CMD";
+    $ResultRequest["Erros"][2]             = "O arquivo de cabecalho não foi encontrado. Connect_AA";
     
     echo json_encode($ResultRequest);
     exit;

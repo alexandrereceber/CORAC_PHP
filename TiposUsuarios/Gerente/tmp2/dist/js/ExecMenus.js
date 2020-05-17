@@ -4,7 +4,7 @@
 'use strict';
 var Tabela_Computadores = new TabelaHTML("http://"+ Padrao.getHostServer() +"/CORAC/ControladorTabelas/");
 var Comandos_CORAC = new Commands("http://"+ Padrao.getHostServer() +"/CORAC/getInformacoesMaquinas/");
-
+var AR_CORAC = new ControleRemoto("http://"+ Padrao.getHostServer() +"/CORAC/AA_AcessoRemoto_Config/");
 let Origem = false;
 
 class MenuLateral{
@@ -67,43 +67,94 @@ class MenuLateral{
                     break;
             };
         }
-        Tabela_Computadores.FuncoesIcones[0] = async function(){
-            
-            try{
-                let Executar = confirm("Tem certeza que deseja executar essa operação?")
-                if(Executar == false) return false;
-                var Tbl_CPU = arguments[0],
-                Idx = 0,
-                Maquina = null;
+        Tabela_Computadores.FuncoesIcones[0] = function(){
+            var Args = arguments;
+            bootbox.confirm({
+                title: "Informações Gerais",
+                message: "<h3>Tem certeza que deseja executar essa operação?</h3>",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Não'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> OK'
+                    }
+                },
+                callback: async function(result){
+                if(!result) return false;
+                try{
 
-                Idx = arguments[1].attributes["data-chaveprimaria"].nodeValue;
-                Tbl_CPU.setChavesPrimaria(Idx);
-                Maquina = Tbl_CPU.getObterValorCampos(3);
+                    var Tbl_CPU = Args[0],
+                    Idx = 0,
+                    Maquina = null;
 
-                let Rst_AA =  await Comandos_CORAC.get_InformacoesMaquina(Maquina, "get_InfoGeral");
+                    Idx = Args[1].attributes["data-chaveprimaria"].nodeValue;
+                    Tbl_CPU.setChavesPrimaria(Idx);
+                    Maquina = Tbl_CPU.getObterValorCampos(3);
 
-                
-                if(Rst_AA == false) return false;
+                    let Rst_AA =  await Comandos_CORAC.get_InformacoesMaquina(Maquina, "get_InfoGeral");
 
-                $("#Container1-MenuInforFlash").html(  
-                                "<div id='Container2-MenuInforFlash' class='row' data-original-title='' title=''>"+
-                                    "<div id='MenuInforFlash' class='col-12 d-flex no-block align-items-center' data-original-title='' title=''>"+
-                                        "<nav class='menu-navigation-dark'>"+
-                                            "<a href='#'><i class='fas fa-user'></i><span>"+ Rst_AA[0].Usuario +"</span></a>"+
-                                            "<a href='#'><i class='mdi mdi-desktop-mac'></i><span>"+ Rst_AA[0].PlacaMae +"</span></a>"+
-                                            "<a href='#' class=''><i class='fas fa-cogs'></i><span>"+ Rst_AA[0].SOCaption +"</span></a>"+
-                                            "<a href='#' class=''><i class='mdi mdi-memory'></i><span>"+ Rst_AA[0].Processador +"</span></a>"+
-                                            "<a href='#'><i class='fas fa-microchip'></i><span>"+ Rst_AA[0].Memoria +"</span></a>"+
-                                        "</nav>"+
-                                    "</div>"+
-                                "</div>").css("display","none");
-                $("#Container1-MenuInforFlash").fadeIn("slow");
-            }catch(ex){
-                bootbox.alert(ex);
+
+                    if(Rst_AA == false) return false;
+
+                    $("#Container1-MenuInforFlash").html(  
+                                    "<div id='Container2-MenuInforFlash' class='row' data-original-title='' title=''>"+
+                                        "<div id='MenuInforFlash' class='col-12 d-flex no-block align-items-center' data-original-title='' title=''>"+
+                                            "<nav class='menu-navigation-dark'>"+
+                                                "<a href='#'><i class='fas fa-user'></i><span>"+ Rst_AA[0].Usuario +"</span></a>"+
+                                                "<a href='#'><i class='mdi mdi-desktop-mac'></i><span>"+ Rst_AA[0].PlacaMae +"</span></a>"+
+                                                "<a href='#' class=''><i class='fas fa-cogs'></i><span>"+ Rst_AA[0].SOCaption +"</span></a>"+
+                                                "<a href='#' class=''><i class='mdi mdi-memory'></i><span>"+ Rst_AA[0].Processador +"</span></a>"+
+                                                "<a href='#'><i class='fas fa-microchip'></i><span>"+ Rst_AA[0].Memoria +"</span></a>"+
+                                            "</nav>"+
+                                        "</div>"+
+                                    "</div>").css("display","none");
+                    $("#Container1-MenuInforFlash").fadeIn("slow");
+                }catch(ex){
+                    bootbox.alert(ex);
+                }
             }
+            });
+            
             
         };
         Tabela_Computadores.FuncoesIcones[1] = function(){
+            var Args = arguments;
+            bootbox.confirm({
+                title: "Acesso Remoto",
+                message: "<h3>Tem certeza que deseja executar essa operação?</h3>",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Não'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> OK'
+                    }
+                },
+                callback: async function(result){
+                if(!result) return false;
+                try{
+
+                    var Tbl_CPU = Args[0],
+                    Idx = 0,
+                    Maquina = null;
+
+                    Idx = Args[1].attributes["data-chaveprimaria"].nodeValue;
+                    Tbl_CPU.setChavesPrimaria(Idx);
+                    Maquina = Tbl_CPU.getObterValorCampos(3);
+
+                    let Rst_AA =  await AR_CORAC.get_ControlAcessoRemoto(Maquina, 0);
+
+
+                    if(Rst_AA == false) return false;
+
+
+                }catch(ex){
+                    bootbox.alert(ex);
+                }
+            }
+            });
+            
             
         }
 

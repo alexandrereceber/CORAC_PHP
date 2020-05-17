@@ -216,6 +216,7 @@ try {
     $Pacote_Auth["Autenticado"]         = true;
     $Pacote_Auth["Token"]               = $SD->getID();
     $Pacote_Auth["TempoSessao"]         = $SD->getTimeChave();
+    $Pacote_Auth["ChaveAR"]             = md5(time()); //Gera chave que será utilizada pelo cliente para acesso remoto.
     $Pacote_Auth["RenovarSessao"]       = 0;
     $Pacote_Auth["Error"]               = false;
     $Pacote_Auth["EMensagem"]           = 0;
@@ -227,7 +228,10 @@ try {
     $Pacote_Auth["DominioServidor"]     = 0;    
     $Pacote_Auth["Servico"]             = 0;
 
-
+    /**
+     * Pacote de autenticação requisitado pelo cliente desktop para realizar diversos tipos de liberação entre eles
+     * powershell, acesso remoto, chat e outros.
+     */
     $SaidaJson = json_encode($Pacote_Auth);
         
     $PacoteBase["Pacote"]               = 6;
