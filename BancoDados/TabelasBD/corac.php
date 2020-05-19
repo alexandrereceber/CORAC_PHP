@@ -1193,7 +1193,8 @@ class Computadores extends ModeloTabelas{
         $Habilitar = true;
         $Icones = [
                         ["Visible"=>true,"NomeColuna"=> "<i class='mdi mdi-information-outline' style='font-size:20px'></i>","NomeBotao"=>"IMaquinas", "Icone" => "mdi mdi-information-variant", "Func" => 0, "Tipo" => "Bootstrap", "tooltip"=> "Informações da Máquina"],
-                        ["Visible"=>true,"NomeColuna"=> "<i class='mdi mdi-monitor' style='font-size:20px'></i>","NomeBotao"=>"IACR", "Icone" => "mdi mdi-monitor-multiple", "Func" => 1, "Tipo" => "Bootstrap", "tooltip"=> "Acesso Remoto"]
+                        ["Visible"=>true,"NomeColuna"=> "<i class='mdi mdi-monitor' style='font-size:20px'></i>","NomeBotao"=>"IACR", "Icone" => "mdi mdi-monitor-multiple", "Func" => 1, "Tipo" => "Bootstrap", "tooltip"=> "Acesso Remoto"],
+                        ["Visible"=>true,"NomeColuna"=> "<i class='mdi mdi-monitor' style='font-size:20px'></i>","NomeBotao"=>"IACRA", "Icone" => "mdi mdi-monitor-multiple", "Func" => 2, "Tipo" => "Bootstrap", "tooltip"=> "Acesso Remoto"]
                     ];
         $ShowColumns[0] = $Habilitar;
         $ShowColumns[1] = $Icones;
