@@ -20,12 +20,12 @@ constructor(Caminho_Config, Caminho_Acesso){
         this.onOpen_Dados = null;
         
         this.ConfigViewDisplays = {"Primario": 
-                                            [   {"Dimensao":{"width": "0px", "heigth": "0px"}}, 
-                                                {"Posicao":{"Top": "0px", "Left": "0px"}}
+                                            [   {"Dimensao":{"width": "100px", "heigth": "100px"}}, 
+                                                {"Posicao":{"Top": "50px", "Left": "50px"}}
                                             ],
                                   "Other": 
-                                            [   {"Dimensao":{"width": "0px", "heigth": "0px"}}, 
-                                                {"Posicao":{"Top": "0px", "Left": "0px"}}
+                                            [   {"Dimensao":{"width": "50px", "heigth": "50px"}}, 
+                                                {"Posicao":{"Top": "100px", "Left": "100px"}}
                                             ]
                                 };
     }
@@ -153,7 +153,15 @@ constructor(Caminho_Config, Caminho_Acesso){
                                                         '<li><i class="mdi mdi-eye-off" title="Desconectar" style="font-size:18px; cursor: pointer; margin-left: 15px; margin-right: 15px" title="" onclick="AR_CORAC.WEBSOCKET_Close(false)"></i></li>'+
                                                     '</ul>'+
                                                 '</div>'+
-                                                '<div class="container-RdeskView-Conteudo"></div>'+
+                                                '<div id="id_ViewDisplays_BA">'+
+                                                    '<div id="id_container-RdeskView-Conteudo" class="container-RdeskView-Conteudo"></div>'+
+                                                    '<div id="id_Barra_Acessoria">'+
+                                                        '<div class="Table-Barra_A">'+
+                                                            '<div id="Conteiner-Chat"></div>'+
+                                                            '<div id="Conteiner-DisplayOther"></div>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</div >'+
                                                 '</div>'+
                                                 '<script src="./Componentes/RdeskView/js/classie.js"></script>'+
                                                 '<script src="./Componentes/RdeskView/js/gnmenu.js"></script>'+
@@ -161,13 +169,47 @@ constructor(Caminho_Config, Caminho_Acesso){
                                                         'new gnMenu( document.getElementById( "gn-menu" ) );'+
                                                 '</script>'
                 )
-        
+
+                for(let i in this.Configuracoes.Configuracoes){
+                    if(this.Configuracoes.Configuracoes[i].Primary == true){
+                        this.setDisplayPrimary();
+                    }else{
+                        this.setDisplayOther();
+                    }
+                }
+                
                 $("html").css("overflow","hidden");
                 
             }else{
                 this.WEBSOCKET_Close(true);
             }
         
+
+        }
+        
+        setDisplayPrimary(DisplayPrimary){
+            
+            $("#id_container-RdeskView-Conteudo").append("\
+                <div id='PrimaryDisplay' class='CPrimaryDisplay' \n\
+                    style=  '   position: absolute; \n\
+                    <figure>\n\
+                        <img src=''></img>\n\
+                        <figurecaption>teste</figurecaption>\n\
+                    </figure>\n\
+                </div>");
+                
+        }
+        
+        setDisplayOther(DisplayOther){
+             
+            $("#Conteiner-DisplayOther").append("\
+                <div id='PrimaryOther' class='CPrimaryOther' \n\
+                    style=  '   position: absolute; \n\
+                    <figure>\n\
+                        <img src=''></img>\n\
+                        <figurecaption>teste</figurecaption>\n\
+                    </figure>\n\
+                </div>");
 
         }
         
