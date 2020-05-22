@@ -157,6 +157,7 @@ class JSController{
                                          //pela variÃ¡vel glocal this.ResultSet
             }
         } catch (e) {
+            bootbox.alert("<h3 style='color: red'><i class='fas fa-exchange-alt'/> Ocorreu algum erro no servidor! Favor contatar o administrador.</h3>")
             console.log(e, Dados[0]);
         }
     

@@ -1,14 +1,7 @@
 /* 
  * Envia os dados para verificar se o usuário esta ou não cadastrado no sistema.
  */
-var dialog = document.querySelector('dialog');
-var showDialogButton = document.querySelector('#show-dialog');
-if (! dialog.showModal) {
-  dialogPolyfill.registerDialog(dialog);
-}
-dialog.querySelector('.close').addEventListener('click', function() {
-  dialog.close();
-});
+
     
 async function EnviarDados(obj){
     event.preventDefault();
@@ -96,6 +89,8 @@ async function EnviarDados(obj){
                 break;
 
             case 14004:
+                Result.Mensagem = "<i class='fas fa-user-times' style='color: red; font-size: 30px'/> " + Result.Mensagem + ""
+                
                 break;
 
             case 14005:
@@ -122,15 +117,23 @@ async function EnviarDados(obj){
                 break;
         }
         
-        $(".mdl-dialog__content").html("<h4>" +  Result.Mensagem + "</h4>");
-        dialog.showModal();
+        //$(".mdl-dialog__content").html("<h4>" +  Result.Mensagem + "</h4>");
+        //dialog.showModal();
+        bootbox.alert({
+            message: "<h4>" +  Result.Mensagem + "</h4>",
+            className: 'rubberBand animated'
+        });
     }else{
         if(Result.Modo == "Login")
             window.location = Result.Header;
         else if(Result.Modo == "Cadastro"){
-            $(".mdl-dialog__content").html("<h4>Usuário cadastrado com sucesso!.</h4>");
-            dialog.showModal();            
-            $("#android").click();
+            bootbox.alert({
+                message: "<h4>" +  Result.Mensagem + "</h4>",
+                className: 'rubberBand animated'
+            });            
+            //$(".mdl-dialog__content").html("<h4>Usuário cadastrado com sucesso!.</h4>");
+            //dialog.showModal();            
+            //$("#android").click();
         }
     }
     

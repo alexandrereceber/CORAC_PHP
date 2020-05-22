@@ -18,7 +18,9 @@ and open the template in the editor.
         
         <!-- Exibe o ícone tipos de usuários na aba do navegador -->
         <link rel="shortcut icon" href="login.png" type="image/jpg">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+
+        <link href="./TiposUsuarios/Gerente/tmp2/dist/css/style.min.css?t=<?php echo time(); ?>" rel="stylesheet">
+
         <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" >
         <link   rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
@@ -41,7 +43,7 @@ and open the template in the editor.
             <form action="#" onsubmit="EnviarDados(this)">
                 <div class="Caixa_User_Pass">
                     <div class="Linha_Titulo">
-                       <i class="material-icons LoginUser">person</i>
+                        <h1><i class="fas fa-user-circle" style="font-size: 122px;margin-top: 37px;color: rebeccapurple;"></i></h1>
                     </div>
                     <div class="Linha_Username">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label Usuario">
@@ -81,18 +83,6 @@ and open the template in the editor.
         </div>
     </div>
 
-
-        <dialog class="mdl-dialog">
-          <h4 class="mdl-dialog__title">Mensagem</h4>
-          <div class="mdl-dialog__content">
-            <p>
-              Texto
-            </p>
-          </div>
-          <div class="mdl-dialog__actions">
-            <button type="button" class="mdl-button close">Close</button>
-          </div>
-        </dialog>
     
         <div id="Barra-de-Mensagem" class="mdl-js-snackbar mdl-snackbar">
           <div class="mdl-snackbar__text"></div>

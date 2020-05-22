@@ -18,6 +18,7 @@ constructor(Caminho_Config, Caminho_Acesso){
         this.onError_Dados = null;
         this.onMessage_Dados = null;
         this.onOpen_Dados = null;
+        this.Componente_Tela_Primary = null;
         
         this.ConfigViewDisplays = {"Primario": 
                                             [   {"Dimensao":{"width": "100px", "heigth": "100px"}}, 
@@ -93,10 +94,24 @@ constructor(Caminho_Config, Caminho_Acesso){
                     Configuracoes.TratarErros(Resultado);
                     return false;
                 }
-                let Pacote_Config_Inicial = '{\\\"Pacote\\\": 13,\\\"Conteudo\\\":\\\"\\\", \\\"DeviceName\\\": \\\"dd\\\", \\\"Width\\\":99, \\\"Height\\\":90,\\\"Chave_AR\\\": \\\"'+ Configuracoes.Configuracoes.ChaveAR +'\\\"\}'
-                let Pacote_Base = '{"Pacote": 13, "Conteudo":"'+Pacote_Config_Inicial+'", "Remetente": 1}';
+                
+                switch (Resultado.Pacote) {
+                    case 13:
+                        let Pacote_Config_Inicial = '{\\\"Pacote\\\": 13,\\\"Conteudo\\\":\\\"\\\", \\\"DeviceName\\\": \\\"dd\\\", \\\"Width\\\":99, \\\"Height\\\":90,\\\"Chave_AR\\\": \\\"'+ Configuracoes.Configuracoes.ChaveAR +'\\\"\}'
+                        let Pacote_Base = '{"Pacote": 13, "Conteudo":"'+Pacote_Config_Inicial+'", "Remetente": 1}';
 
-                Configuracoes.ServidorCorac.send(Pacote_Base);
+                        Configuracoes.ServidorCorac.send(Pacote_Base);                    
+                        break;
+
+                    case 14:
+                        this.RefreshFrame((Resultado.Telas))
+                    break;
+                    
+                default:
+                    
+                    break;
+            }
+
             }
         }
 
@@ -108,82 +123,92 @@ constructor(Caminho_Config, Caminho_Acesso){
             }
               
         }
+        
+        RefreshFrame(Telas){
+            var TP = false;
+            for(var i in Telas){
+                TP = Telas[i].Primary || false;
+                if(TP){
+                    this.Componente_Tela_Primary.attributes.src = "data:image/png;base64," + Telas[i].Primary
+                }
+            }
+        }
+        
         setCriarMonitores(){
             var Tipo = typeof this.Configuracoes;
-//Tipo === "object" && this.Configuracoes !== null
-        if(1==1){
+        //Tipo === "object" && this.Configuracoes !== null
+            if(1==1){
 
-                $("body").append("<div id='ViewControlRemote' class='CViewControlRemote'></div>");
-                $("#ViewControlRemote").html(
-                                                '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/normalize.css" />'+
-                                               ' <link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/demo.css" />'+
-                                                '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=1" />'+
-                                                '<script src="./Componentes/RdeskView/js/modernizr.custom.js"></script>'+
-                                                '<div class="container-RdeskView">'+
-                                                '<div class="container-RdeskView-BarraMenu">'+
-                                                    '<ul id="gn-menu" class="gn-menu-main">'+
-                                                        '<li class="gn-trigger">'+
-                                                                '<a class="gn-icon-menu"><i class="mdi mdi-monitor-multiple " style="font-size:18px; cursor: pointer" title="" ></i></a>'+
-                                                                '<nav class="gn-menu-wrapper">'+
-                                                                        '<div class="gn-scroller">'+
-                                                                                '<ul class="gn-menu">'+
-                                                                                        '<li>'+
-                                                                                                '<a class="gn-icon gn-icon-download">Downloads</a>'+
-                                                                                                '<ul class="gn-submenu">'+
-                                                                                                        '<li><a class="gn-icon gn-icon-illustrator">Vector Illustrations</a></li>'+
-                                                                                                        '<li><a class="gn-icon gn-icon-photoshop">Photoshop files</a></li>'+
-                                                                                                '</ul>'+
-                                                                                        '</li>'+
-                                                                                        '<li><a class="gn-icon gn-icon-cog">Settings</a></li>'+
-                                                                                        '<li><a class="gn-icon gn-icon-help">Help</a></li>'+
-                                                                                        '<li>'+
-                                                                                                '<a class="gn-icon gn-icon-archive">Archives</a>'+
-                                                                                                '<ul class="gn-submenu">'+
-                                                                                                        '<li><a class="gn-icon gn-icon-article">Articles</a></li>'+
-                                                                                                        '<li><a class="gn-icon gn-icon-pictures">Images</a></li>'+
-                                                                                                        '<li><a class="gn-icon gn-icon-videos">Videos</a></li>'+
-                                                                                                '</ul>'+
+                    $("body").append("<div id='ViewControlRemote' class='CViewControlRemote'></div>");
+                    $("#ViewControlRemote").html(
+                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/normalize.css" />'+
+                                                   ' <link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/demo.css" />'+
+                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=1" />'+
+                                                    '<script src="./Componentes/RdeskView/js/modernizr.custom.js"></script>'+
+                                                    '<div class="container-RdeskView">'+
+                                                    '<div class="container-RdeskView-BarraMenu">'+
+                                                        '<ul id="gn-menu" class="gn-menu-main">'+
+                                                            '<li class="gn-trigger">'+
+                                                                    '<a class="gn-icon-menu"><i class="mdi mdi-monitor-multiple " style="font-size:18px; cursor: pointer" title="" ></i></a>'+
+                                                                    '<nav class="gn-menu-wrapper">'+
+                                                                            '<div class="gn-scroller">'+
+                                                                                    '<ul class="gn-menu">'+
+                                                                                            '<li>'+
+                                                                                                    '<a class="gn-icon gn-icon-download">Downloads</a>'+
+                                                                                                    '<ul class="gn-submenu">'+
+                                                                                                            '<li><a class="gn-icon gn-icon-illustrator">Vector Illustrations</a></li>'+
+                                                                                                            '<li><a class="gn-icon gn-icon-photoshop">Photoshop files</a></li>'+
+                                                                                                    '</ul>'+
                                                                                             '</li>'+
-                                                                                '</ul>'+
-                                                                        '</div><!-- /gn-scroller -->'+
-                                                                '</nav>'+
-                                                        '</li>'+
-                                                        '<li><a href="http://tympanus.net/codrops">Codrops</a></li>'+
-                                                        '<li><a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Development/HeaderEffects/"><span>Previous Demo</span></a></li>'+
-                                                        '<li><i class="mdi mdi-eye-off" title="Desconectar" style="font-size:18px; cursor: pointer; margin-left: 15px; margin-right: 15px" title="" onclick="AR_CORAC.WEBSOCKET_Close(false)"></i></li>'+
-                                                    '</ul>'+
-                                                '</div>'+
-                                                '<div id="id_ViewDisplays_BA">'+
-                                                    '<div id="id_container-RdeskView-Conteudo" class="container-RdeskView-Conteudo"></div>'+
-                                                    '<div id="id_Barra_Acessoria">'+
-                                                        '<div class="Table-Barra_A">'+
-                                                            '<div id="Conteiner-Chat"></div>'+
-                                                            '<div id="Conteiner-DisplayOther"></div>'+
-                                                        '</div>'+
+                                                                                            '<li><a class="gn-icon gn-icon-cog">Settings</a></li>'+
+                                                                                            '<li><a class="gn-icon gn-icon-help">Help</a></li>'+
+                                                                                            '<li>'+
+                                                                                                    '<a class="gn-icon gn-icon-archive">Archives</a>'+
+                                                                                                    '<ul class="gn-submenu">'+
+                                                                                                            '<li><a class="gn-icon gn-icon-article">Articles</a></li>'+
+                                                                                                            '<li><a class="gn-icon gn-icon-pictures">Images</a></li>'+
+                                                                                                            '<li><a class="gn-icon gn-icon-videos">Videos</a></li>'+
+                                                                                                    '</ul>'+
+                                                                                                '</li>'+
+                                                                                    '</ul>'+
+                                                                            '</div><!-- /gn-scroller -->'+
+                                                                    '</nav>'+
+                                                            '</li>'+
+                                                            '<li><a href="http://tympanus.net/codrops">Codrops</a></li>'+
+                                                            '<li><a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Development/HeaderEffects/"><span>Previous Demo</span></a></li>'+
+                                                            '<li><i class="mdi mdi-eye-off" title="Desconectar" style="font-size:18px; cursor: pointer; margin-left: 15px; margin-right: 15px" title="" onclick="AR_CORAC.WEBSOCKET_Close(false)"></i></li>'+
+                                                        '</ul>'+
                                                     '</div>'+
-                                                '</div >'+
-                                                '</div>'+
-                                                '<script src="./Componentes/RdeskView/js/classie.js"></script>'+
-                                                '<script src="./Componentes/RdeskView/js/gnmenu.js"></script>'+
-                                                '<script>'+
-                                                        'new gnMenu( document.getElementById( "gn-menu" ) );'+
-                                                '</script>'
-                )
+                                                    '<div id="id_ViewDisplays_BA">'+
+                                                        '<div id="id_container-RdeskView-Conteudo" class="container-RdeskView-Conteudo"></div>'+
+                                                        '<div id="id_Barra_Acessoria">'+
+                                                            '<div class="Table-Barra_A">'+
+                                                                '<div id="Conteiner-Chat"></div>'+
+                                                                '<div id="Conteiner-DisplayOther"></div>'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                    '</div >'+
+                                                    '</div>'+
+                                                    '<script src="./Componentes/RdeskView/js/classie.js"></script>'+
+                                                    '<script src="./Componentes/RdeskView/js/gnmenu.js"></script>'+
+                                                    '<script>'+
+                                                            'new gnMenu( document.getElementById( "gn-menu" ) );'+
+                                                    '</script>'
+                    )
 
-                for(let i in this.Configuracoes.Configuracoes){
-                    if(this.Configuracoes.Configuracoes[i].Primary == true){
-                        this.setDisplayPrimary();
-                    }else{
-                        this.setDisplayOther();
+                    for(let i in this.Configuracoes.Configuracoes){
+                        if(this.Configuracoes.Configuracoes[i].Primary == true){
+                            this.setDisplayPrimary();
+                        }else{
+                            this.setDisplayOther();
+                        }
                     }
+
+                    $("html").css("overflow","hidden");
+
+                }else{
+                    this.WEBSOCKET_Close(true);
                 }
-                
-                $("html").css("overflow","hidden");
-                
-            }else{
-                this.WEBSOCKET_Close(true);
-            }
-        
 
         }
         
@@ -193,7 +218,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                 <div id='PrimaryDisplay' class='CPrimaryDisplay' \n\
                     style=  '   position: absolute; \n\
                     <figure>\n\
-                        <img src=''></img>\n\
+                        <img id='id_RefreshPrimary' src=''></img>\n\
                         <figurecaption>teste</figurecaption>\n\
                     </figure>\n\
                 </div>");
@@ -210,7 +235,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                         <figurecaption>teste</figurecaption>\n\
                     </figure>\n\
                 </div>");
-
+            this.Componente_Tela_Primary = document.querySelector("#PrimaryOther");
         }
         
         WEBSOCKET_Close(D){

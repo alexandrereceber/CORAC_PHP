@@ -48,8 +48,6 @@ echo "<script>var Chave='$sendChave'</script>"
     <link rel="icon" type="image/png" sizes="16x16" href="./TiposUsuarios/Gerente/tmp2/assets/images/CORAC/ico/32px_Corac.ico">
     <title>Sistema de Gerenciamento - CORAC</title>
     <!-- Custom CSS -->
-    <link href="./TiposUsuarios/Gerente/tmp2/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-    <link href="./TiposUsuarios/Gerente/tmp2/assets/extra-libs/calendar/calendar.css" rel="stylesheet" />
     <link href="./TiposUsuarios/Gerente/tmp2/dist/css/style.min.css?t=<?php echo time(); ?>" rel="stylesheet">
     <link href="./TiposUsuarios/Gerente/tmp2/dist/css/CORAC/Corac_Custom.css?t=<?php echo time(); ?>" rel="stylesheet">
     <link href="./TiposUsuarios/Gerente/tmp2/dist/css/Terceiros/slicknav/navigation-dark.css?t=<?php echo time(); ?>" rel="stylesheet">
