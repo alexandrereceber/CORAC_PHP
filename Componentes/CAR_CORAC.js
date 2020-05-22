@@ -48,15 +48,15 @@ constructor(Caminho_Config, Caminho_Acesso){
         
         if(Configuracoes.Resposta == "OK_2001"){
             this.Configuracoes = Configuracoes;
-            this.setCriarMonitores();
-            this.getIniciar_AC();
+            await this.setCriarMonitores();
+            await this.getIniciar_AC();
         }else{
             bootbox.alert("<h1 style='color: red; display: inline-flex'><i class='fas fa-user-times'></i></h1> <span style='font-size: 25px; margin-left: 8px'> O usuário negou o acesso remoto!</span>")
         }
         return true;
     }
 
-        getIniciar_AC(){
+        async getIniciar_AC(){
             this.ServidorCorac = new WebSocket (this.CaminhoAcesso);
             this.setON_Close();
             this.setON_Error();
@@ -66,9 +66,11 @@ constructor(Caminho_Config, Caminho_Acesso){
         }
 
         setON_Close(){
+            var Configuracoes = this;
             this.ServidorCorac.onclose = function(dados){
                 console.log(dados)
                 this.onClose_Dados = dados;
+                Configuracoes.WEBSOCKET_Close(true);
                 bootbox.alert('<h3><i class="m-r-10 mdi mdi-lan-disconnect" style="font-size: 56px; color: red"></i> A conexão foi encerrada de foram inesperada!</h3>')
             } 
         }
@@ -80,37 +82,58 @@ constructor(Caminho_Config, Caminho_Acesso){
         }
 
         setON_Message(){
-
+            
             var Configuracoes = this;
             
             this.ServidorCorac.onmessage = function(dados){
-                console.log(dados)
-                this.onMessage_Dados = dados;
-                let Resultado = JSON.parse(dados.data);   
                 
-                Resultado = JSON.parse(Resultado.Conteudo);
-                
-                if(Resultado.Error != false){
-                    Configuracoes.TratarErros(Resultado);
-                    return false;
+                try{
+                    console.log(dados)
+                    this.onMessage_Dados = dados;
+                    let Resultado = JSON.parse(dados.data);   
+
+                    Resultado = JSON.parse(Resultado.Conteudo);
+
+
+
+                    switch (Resultado.Pacote) {
+                        case 13:
+                            let Pacote_Config_Inicial = '{\\\"Pacote\\\": 13,\\\"Conteudo\\\":\\\"\\\", \\\"DeviceName\\\": \\\"dd\\\", \\\"Width\\\":99, \\\"Height\\\":90,\\\"Chave_AR\\\": \\\"'+ Configuracoes.Configuracoes.ChaveAR +'\\\"\}'
+                            let Pacote_Base = '{"Pacote": 13, "Conteudo":"'+Pacote_Config_Inicial+'", "Remetente": 1}';
+
+                            Configuracoes.ServidorCorac.send(Pacote_Base);                    
+                            break;
+
+                        case 14:
+                            Configuracoes.RefreshFrame((Resultado.Telas))
+                        break;
+                        
+                        case 8: //Pacote de erro
+                            switch (Resultado.Numero) { //Subnotificações
+                            case 42001:
+                                $("#ViewControlRemote").remove();
+                                break;
+                                
+                            default:
+                                
+                                break;
+                        }
+                        break;
+                    default:
+
+                        break;
+                    }
+                    
+                    if(Resultado.Error != false){
+                        Configuracoes.TratarErros(Resultado);
+                        return false;
+                    }
+                    
+                }catch(err){
+                    bootbox.alert("<h3><i class='fas fa-exclamation-triangle'>" + err.message + "</h3>");
+                    Configuracoes.WEBSOCKET_Close(true);
                 }
                 
-                switch (Resultado.Pacote) {
-                    case 13:
-                        let Pacote_Config_Inicial = '{\\\"Pacote\\\": 13,\\\"Conteudo\\\":\\\"\\\", \\\"DeviceName\\\": \\\"dd\\\", \\\"Width\\\":99, \\\"Height\\\":90,\\\"Chave_AR\\\": \\\"'+ Configuracoes.Configuracoes.ChaveAR +'\\\"\}'
-                        let Pacote_Base = '{"Pacote": 13, "Conteudo":"'+Pacote_Config_Inicial+'", "Remetente": 1}';
-
-                        Configuracoes.ServidorCorac.send(Pacote_Base);                    
-                        break;
-
-                    case 14:
-                        this.RefreshFrame((Resultado.Telas))
-                    break;
-                    
-                default:
-                    
-                    break;
-            }
 
             }
         }
@@ -129,12 +152,14 @@ constructor(Caminho_Config, Caminho_Acesso){
             for(var i in Telas){
                 TP = Telas[i].Primary || false;
                 if(TP){
-                    this.Componente_Tela_Primary.attributes.src = "data:image/png;base64," + Telas[i].Primary
+                    //var t =$("#id_RefreshPrimary");
+                    //$("#id_RefreshPrimary").attr("src", "data:image/png;base64," + Telas[i].Primary)
+                    this.Componente_Tela_Primary.src = "data:image/png;base64," + Telas[i].Primary;
                 }
             }
         }
         
-        setCriarMonitores(){
+        async setCriarMonitores(){
             var Tipo = typeof this.Configuracoes;
         //Tipo === "object" && this.Configuracoes !== null
             if(1==1){
@@ -150,7 +175,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                                                         '<ul id="gn-menu" class="gn-menu-main">'+
                                                             '<li class="gn-trigger">'+
                                                                     '<a class="gn-icon-menu"><i class="mdi mdi-monitor-multiple " style="font-size:18px; cursor: pointer" title="" ></i></a>'+
-                                                                    '<nav class="gn-menu-wrapper">'+
+                                                                    '<nav class="gn-menu-wrapper MenuRDeskView">'+
                                                                             '<div class="gn-scroller">'+
                                                                                     '<ul class="gn-menu">'+
                                                                                             '<li>'+
@@ -198,49 +223,49 @@ constructor(Caminho_Config, Caminho_Acesso){
 
                     for(let i in this.Configuracoes.Configuracoes){
                         if(this.Configuracoes.Configuracoes[i].Primary == true){
-                            this.setDisplayPrimary();
+                            await this.setDisplayPrimary();
                         }else{
-                            this.setDisplayOther();
+                            await this.setDisplayOther();
                         }
                     }
 
                     $("html").css("overflow","hidden");
 
                 }else{
-                    this.WEBSOCKET_Close(true);
+                    await this.WEBSOCKET_Close(true);
                 }
 
         }
         
-        setDisplayPrimary(DisplayPrimary){
+        async setDisplayPrimary(DisplayPrimary){
             
             $("#id_container-RdeskView-Conteudo").append("\
                 <div id='PrimaryDisplay' class='CPrimaryDisplay' \n\
-                    style=  '   position: absolute; \n\
+                    style=  'position: absolute;'> \n\
                     <figure>\n\
-                        <img id='id_RefreshPrimary' src=''></img>\n\
+                        <img id='id_RefreshPrimary' class='.RefreshPrimary' src='0'></img>\n\
                         <figurecaption>teste</figurecaption>\n\
                     </figure>\n\
                 </div>");
-                
+            this.Componente_Tela_Primary = document.querySelector("#id_RefreshPrimary");
+  
         }
         
-        setDisplayOther(DisplayOther){
+        async setDisplayOther(DisplayOther){
              
             $("#Conteiner-DisplayOther").append("\
                 <div id='PrimaryOther' class='CPrimaryOther' \n\
-                    style=  '   position: absolute; \n\
+                    style=  '   position: absolute;'> \n\
                     <figure>\n\
                         <img src=''></img>\n\
                         <figurecaption>teste</figurecaption>\n\
                     </figure>\n\
                 </div>");
-            this.Componente_Tela_Primary = document.querySelector("#PrimaryOther");
         }
         
-        WEBSOCKET_Close(D){
+       async WEBSOCKET_Close(D){
             if(D === true){
-                this.Servidor_AR.close();
+                this.ServidorCorac.close();
             }else{
                 var Sair = this;
                 bootbox.confirm({
@@ -257,7 +282,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                     callback: function(result){
                         if(result){
                             $("#ViewControlRemote").remove();
-                            Sair.Servidor_AR.close();
+                            Sair.ServidorCorac.close();
                         }
                     }
                 })

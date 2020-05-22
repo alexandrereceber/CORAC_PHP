@@ -10,3 +10,7 @@
 .LinhaSelecionada{
     background-color: #c3e6cb !important;
 }
+
+.MenuRDeskView{
+    z-index: 90;
+}
