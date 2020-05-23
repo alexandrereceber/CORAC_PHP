@@ -69,15 +69,43 @@ constructor(Caminho_Config, Caminho_Acesso){
             var Configuracoes = this;
             this.ServidorCorac.onclose = function(dados){
                 console.log(dados)
-                this.onClose_Dados = dados;
-                Configuracoes.WEBSOCKET_Close(true);
-                bootbox.alert('<h3><i class="m-r-10 mdi mdi-lan-disconnect" style="font-size: 56px; color: red"></i> A conexão foi encerrada de foram inesperada!</h3>')
+                //this.onClose_Dados = dados;
+                if(dados.reason == "") {
+                    $("#ViewControlRemote").remove();
+                    bootbox.alert('<h3><i class="m-r-10 mdi mdi-lan-disconnect" style="font-size: 56px; color: red"></i> A conexão foi encerrada de foram inesperada!</h3>');
+                }
+
+                let Resultado = JSON.parse(dados.reason);   
+                //this.onError_Dados = dados;
+                
+                switch (Resultado.Pacote) {
+                case 15:
+                    
+                    break;
+                    
+                default:
+                    $("#ViewControlRemote").remove();
+                    bootbox.alert('<h3><i class="m-r-10 mdi mdi-lan-disconnect" style="font-size: 56px; color: red"></i> A conexão foi encerrada de foram inesperada!</h3>')
+
+                    break;
+                }
             } 
         }
         setON_Error(){
             this.ServidorCorac.onerror = function(dados){
-                console.log(dados)
-                this.onError_Dados = dados;
+                //console.log(dados);
+                let Resultado = JSON.parse(dados.data);   
+                //this.onError_Dados = dados;
+                
+                switch (Resultado.Pacote) {
+                case 15:
+                    
+                    break;
+                    
+                default:
+                    
+                    break;
+            }
             }  
         }
 
@@ -88,8 +116,8 @@ constructor(Caminho_Config, Caminho_Acesso){
             this.ServidorCorac.onmessage = function(dados){
                 
                 try{
-                    console.log(dados)
-                    this.onMessage_Dados = dados;
+                    //console.log(dados)
+                    //this.onMessage_Dados = dados;
                     let Resultado = JSON.parse(dados.data);   
 
                     Resultado = JSON.parse(Resultado.Conteudo);
@@ -155,12 +183,14 @@ constructor(Caminho_Config, Caminho_Acesso){
                     //var t =$("#id_RefreshPrimary");
                     //$("#id_RefreshPrimary").attr("src", "data:image/png;base64," + Telas[i].Primary)
                     this.Componente_Tela_Primary.src = "data:image/png;base64," + Telas[i].Primary;
+                }else{
+                    document.querySelector("#id_"+Telas[i].Monitor).src="data:image/png;base64," + Telas[i].ThumbnailImage;
                 }
             }
         }
         
         async setCriarMonitores(){
-            var Tipo = typeof this.Configuracoes;
+            var Tipo = typeof this.Configuracoes, Nome = "";
         //Tipo === "object" && this.Configuracoes !== null
             if(1==1){
 
@@ -168,7 +198,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                     $("#ViewControlRemote").html(
                                                     '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/normalize.css" />'+
                                                    ' <link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/demo.css" />'+
-                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=1" />'+
+                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=5" />'+
                                                     '<script src="./Componentes/RdeskView/js/modernizr.custom.js"></script>'+
                                                     '<div class="container-RdeskView">'+
                                                     '<div class="container-RdeskView-BarraMenu">'+
@@ -225,7 +255,8 @@ constructor(Caminho_Config, Caminho_Acesso){
                         if(this.Configuracoes.Configuracoes[i].Primary == true){
                             await this.setDisplayPrimary();
                         }else{
-                            await this.setDisplayOther();
+                            Nome = this.Configuracoes.Configuracoes[i].DeviceName;
+                            await this.setDisplayOther(Nome);
                         }
                     }
 
@@ -240,12 +271,8 @@ constructor(Caminho_Config, Caminho_Acesso){
         async setDisplayPrimary(DisplayPrimary){
             
             $("#id_container-RdeskView-Conteudo").append("\
-                <div id='PrimaryDisplay' class='CPrimaryDisplay' \n\
-                    style=  'position: absolute;'> \n\
-                    <figure>\n\
-                        <img id='id_RefreshPrimary' class='.RefreshPrimary' src='0'></img>\n\
-                        <figurecaption>teste</figurecaption>\n\
-                    </figure>\n\
+                <div id='PrimaryDisplay' class='CPrimaryDisplay'> \n\
+                        <img  id='id_RefreshPrimary' class='RefreshPrimary' src='0'></img>\n\
                 </div>");
             this.Componente_Tela_Primary = document.querySelector("#id_RefreshPrimary");
   
@@ -254,12 +281,9 @@ constructor(Caminho_Config, Caminho_Acesso){
         async setDisplayOther(DisplayOther){
              
             $("#Conteiner-DisplayOther").append("\
-                <div id='PrimaryOther' class='CPrimaryOther' \n\
-                    style=  '   position: absolute;'> \n\
-                    <figure>\n\
-                        <img src=''></img>\n\
-                        <figurecaption>teste</figurecaption>\n\
-                    </figure>\n\
+                <div id='DisplayOther' class='CDisplayOther' \n\
+                    style=  ' '> \n\
+                        <img id='id_"+ DisplayOther +"' class='IMG_DisplayOther' src=''></img>\n\
                 </div>");
         }
         
