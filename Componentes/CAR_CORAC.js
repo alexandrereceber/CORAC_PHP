@@ -180,11 +180,9 @@ constructor(Caminho_Config, Caminho_Acesso){
             for(var i in Telas){
                 TP = Telas[i].Primary || false;
                 if(TP){
-                    //var t =$("#id_RefreshPrimary");
-                    //$("#id_RefreshPrimary").attr("src", "data:image/png;base64," + Telas[i].Primary)
                     this.Componente_Tela_Primary.src = "data:image/png;base64," + Telas[i].Primary;
                 }else{
-                    document.querySelector("#id_"+Telas[i].Monitor).src="data:image/png;base64," + Telas[i].ThumbnailImage;
+                    document.querySelector("#"+Telas[i].Monitor).src="data:image/png;base64," + Telas[i].ThumbnailImage;
                 }
             }
         }
@@ -198,7 +196,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                     $("#ViewControlRemote").html(
                                                     '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/normalize.css" />'+
                                                    ' <link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/demo.css" />'+
-                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=5" />'+
+                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=11" />'+
                                                     '<script src="./Componentes/RdeskView/js/modernizr.custom.js"></script>'+
                                                     '<div class="container-RdeskView">'+
                                                     '<div class="container-RdeskView-BarraMenu">'+
@@ -209,7 +207,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                                                                             '<div class="gn-scroller">'+
                                                                                     '<ul class="gn-menu">'+
                                                                                             '<li>'+
-                                                                                                    '<a class="gn-icon gn-icon-download">Downloads</a>'+
+                                                                                                    '<a class="fas fa-plus fai-icon"><span style="margin-left: 18px;font-family: serif;">Downloads</span></a>'+
                                                                                                     '<ul class="gn-submenu">'+
                                                                                                             '<li><a class="gn-icon gn-icon-illustrator">Vector Illustrations</a></li>'+
                                                                                                             '<li><a class="gn-icon gn-icon-photoshop">Photoshop files</a></li>'+
@@ -235,7 +233,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                                                         '</ul>'+
                                                     '</div>'+
                                                     '<div id="id_ViewDisplays_BA">'+
-                                                        '<div id="id_container-RdeskView-Conteudo" class="container-RdeskView-Conteudo"></div>'+
+                                                        '<div id="id_container-RdeskView-Primario" class="container-RdeskView-Primario"></div>'+
                                                         '<div id="id_Barra_Acessoria">'+
                                                             '<div class="Table-Barra_A">'+
                                                                 '<div id="Conteiner-Chat"></div>'+
@@ -245,7 +243,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                                                     '</div >'+
                                                     '</div>'+
                                                     '<script src="./Componentes/RdeskView/js/classie.js"></script>'+
-                                                    '<script src="./Componentes/RdeskView/js/gnmenu.js"></script>'+
+                                                    '<script src="./Componentes/RdeskView/js/gnmenu.js?q=2"></script>'+
                                                     '<script>'+
                                                             'new gnMenu( document.getElementById( "gn-menu" ) );'+
                                                     '</script>'
@@ -253,7 +251,8 @@ constructor(Caminho_Config, Caminho_Acesso){
 
                     for(let i in this.Configuracoes.Configuracoes){
                         if(this.Configuracoes.Configuracoes[i].Primary == true){
-                            await this.setDisplayPrimary();
+                            Nome = this.Configuracoes.Configuracoes[i].DeviceName;
+                            await this.setDisplayPrimary(Nome);
                         }else{
                             Nome = this.Configuracoes.Configuracoes[i].DeviceName;
                             await this.setDisplayOther(Nome);
@@ -270,20 +269,20 @@ constructor(Caminho_Config, Caminho_Acesso){
         
         async setDisplayPrimary(DisplayPrimary){
             
-            $("#id_container-RdeskView-Conteudo").append("\
-                <div id='PrimaryDisplay' class='CPrimaryDisplay'> \n\
-                        <img  id='id_RefreshPrimary' class='RefreshPrimary' src='0'></img>\n\
+            $("#id_container-RdeskView-Primario").append("\
+                <div id='div_"+ DisplayPrimary +"' class='div_DisplayPrimary'> \n\
+                        <img  id='"+ DisplayPrimary +"' class='IMG_DisplayPrimary' src='0'></img>\n\
                 </div>");
-            this.Componente_Tela_Primary = document.querySelector("#id_RefreshPrimary");
+            this.Componente_Tela_Primary = document.querySelector("#"+ DisplayPrimary +"");
   
         }
         
         async setDisplayOther(DisplayOther){
              
             $("#Conteiner-DisplayOther").append("\
-                <div id='DisplayOther' class='CDisplayOther' \n\
+                <div id='div_"+ DisplayOther +"' class='div_DisplayOther' \n\
                     style=  ' '> \n\
-                        <img id='id_"+ DisplayOther +"' class='IMG_DisplayOther' src=''></img>\n\
+                        <img id='"+ DisplayOther +"' class='IMG_DisplayOther' src=''></img>\n\
                 </div>");
         }
         

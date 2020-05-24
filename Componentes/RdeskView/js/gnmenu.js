@@ -34,7 +34,7 @@
 
 			var self = this;
 			this.bodyClickFn = function() {
-				self._closeMenu();
+				//self._closeMenu();
 				this.removeEventListener( self.eventtype, self.bodyClickFn );
 			};
 		},
@@ -42,7 +42,7 @@
 			var self = this;
 
 			if( !mobilecheck() ) {
-				this.trigger.addEventListener( 'mouseover', function(ev) { self._openIconMenu(); } );
+				this.trigger.addEventListener( 'click', function(ev) { self._openIconMenu(); } );
 				this.trigger.addEventListener( 'mouseout', function(ev) { self._closeIconMenu(); } );
 			
 				this.menu.addEventListener( 'mouseover', function(ev) {
@@ -62,7 +62,7 @@
 					document.addEventListener( self.eventtype, self.bodyClickFn );
 				}
 			} );
-			this.menu.addEventListener( this.eventtype, function(ev) { ev.stopPropagation(); } );
+			this.menu.addEventListener( this.eventtype, function(ev) { self._SubMenu_Exibir(ev) } );
 		},
 		_openIconMenu : function() {
 			classie.add( this.menu, 'gn-open-part' );
@@ -83,7 +83,26 @@
 			this.isMenuOpen = false;
 			classie.remove( this.menu, 'gn-open-all' );
 			this._closeIconMenu();
-		}
+		},
+                _SubMenu_Exibir(Obj){
+                    var Menu, SubMenu;
+                    if(Obj.target.nodeName == "SPAN"){
+                        Menu = Obj.target.parentElement;
+                        SubMenu = Obj.target.parentElement.nextSibling;
+                    }else{
+                        Menu = Obj.target;
+                        SubMenu = Obj.target.nextSibling;
+                    }
+            
+                    let Visivel = $(SubMenu).hasClass("gn-submenu-visible");
+                    if(!Visivel){
+                        $(Menu).removeClass("fa-plus").addClass("fa-minus");
+                        $(SubMenu).addClass("gn-submenu-visible");
+                    }else{
+                        $(Menu).removeClass("fa-minus").addClass("fa-plus");
+                        $(SubMenu).removeClass("gn-submenu-visible");
+                    }
+                }
 	}
 
 	// add to global namespace

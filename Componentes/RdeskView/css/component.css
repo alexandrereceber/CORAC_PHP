@@ -25,7 +25,7 @@
 		list-style: none;
 		text-transform: none;
 		font-weight: 300;
-		font-family: 'Lato', Arial, sans-serif;
+		font-family: sans-serif;
 		line-height: 60px;
 }
 
@@ -39,7 +39,7 @@
 
 .gn-menu-main a {
 		display: block;
-		/*height: 100%;*/
+		/* height: 100%; */
 		color: #5f6f81;
 		text-decoration: none;
 		cursor: pointer;
@@ -121,10 +121,15 @@
 		text-align: left;
 		font-size: 18px;
 }
+.gn-submenu{
+    display: none;
+    margin-left: 10px;
+    margin-left: 24px !important;
+}
 
 .gn-menu li:not(:first-child),
 .gn-menu li li {
-		box-shadow: inset 0 1px #c6d0da
+		box-shadow: inset 0 1px #c6d0da;
 }
 
 .gn-submenu li {
@@ -135,10 +140,27 @@
 		transition: height 0.3s;
 }
 
+.gn-submenu-visible{
+    display: inherit !important;
+}
+
+
 .gn-submenu li a {
 		color: #c1c9d1 !important
 }
-
+.fai-icon{
+    display: inline-block;
+    width: 93% !important;
+    /* text-align: center; */
+    text-transform: none;
+    /* font-family: 'Lato', Arial, sans-serif; */
+    font-style: normal;
+    font-variant: normal;
+    line-height: 3.5;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    padding-left: 23px;
+}
 input.gn-search {
 		position: relative;
 		z-index: 10;
@@ -214,10 +236,10 @@ input.gn-search:focus {
 		display: inline-block;
 		width: 60px;
 		text-align: center;
-		text-transform: none;
-		font-weight: normal;
-		font-style: normal;
-		font-variant: normal;
+		/* text-transform: none; */
+		/* font-weight: normal; */
+		/* font-style: normal; */
+		/* font-variant: normal; */
 		font-family: 'ecoicons';
 		line-height: 1;
 		speak: none;
@@ -233,7 +255,7 @@ input.gn-search:focus {
 }
 
 .gn-icon-cog::before {
-		content: "\e006"
+		content: "\e006";
 }
 
 .gn-icon-search::before {
@@ -308,7 +330,10 @@ input.gn-search:focus {
 }
 
 .gn-menu-wrapper.gn-open-all {
-		width: 340px
+		width: 340px;
+		border-left: solid 13px #5d6b99;
+		border-right: solid 1px #b3b1b144;
+		border-right-style: inset;
 }
 
 .gn-menu-wrapper.gn-open-all .gn-submenu li {
@@ -329,6 +354,7 @@ input.gn-search:focus {
 .container-RdeskView{
     width: 100%;
     height: 80vh;
+    /* display: inline-table; */
 }
 
 .container-RdeskView-BarraMenu{
@@ -336,17 +362,17 @@ input.gn-search:focus {
 }
 
 #id_ViewDisplays_BA{
-   display: table;
+   display: inline-flex;
    width: 100%;
-   height: 80%;
+   height: 93vh;
 }
-.container-RdeskView-Conteudo{
-    display: table-cell;
-    z-index: 999;
-    top: 0px;
-    left: 0px;
-    width: 80%;
-    height: 81vh;
+.container-RdeskView-Primario{
+    display: inline-flex;
+    z-index: 0;
+    /* top: 0px; */
+    /* left: 0px; */
+    width: 100%;
+    height: 94vh;
     border: solid 2px;
     border-color: #04040452;
     border-right-style: inset;
@@ -355,32 +381,51 @@ input.gn-search:focus {
     text-align: center;
     background-color: #08080826;
     background-image: url("http://192.168.15.10/CORAC/Componentes/RdeskView/img/fundo_CORAC.fw.png?q=2");
+    overflow: auto;
+    position: relative;
 }
 
 #id_Barra_Acessoria{
-    display: table-cell;
-    width: 100%;
+    display: inline-flex;
+    width: 30%;
+    height: 100vh;
 }
+/*-----------------------------------DISPLAY PRIMARY---------------*/
 
-.CPrimaryDisplay{
-    display: inline-block;
-}
-
-.CDisplayOther{
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    height: 245px;
-}
-/*Refresh da imagem*/
-.RefreshPrimary{
+.div_DisplayPrimary{
+    display: inline-flex;
+    /* margin: auto; */
     width: 100%;
     height: 100%;
 }
+
+
+/*Refresh da imagem*/
+.IMG_DisplayPrimary{
+    /* width: 100%; */
+    /* height: 100%; */
+    margin: auto;
+}
+
+/*-----------------------------------DISPLAY OTHER---------------*/
+.div_DisplayOther{
+    display: inline-flex;
+    position: relative;
+    width: 100%;
+    height: 245px;
+    padding: 3px;
+    margin: auto;
+}
+.div_DisplayOther:hover{
+    border: solid 2px;
+    border-color: red;
+}
 .IMG_DisplayOther{
     width: inherit;
-    height: inherit;
+    height: -webkit-fill-available;
 }
+
+/*-----------------------------------DISPLAY OTHER---------------*/
 
 #Conteiner-Chat{
     border-style: ridge;
@@ -390,11 +435,13 @@ input.gn-search:focus {
 .Table-Barra_A{
     display: table;
     width: 100%;
-    height: 91vh;
+    height: 94vh;
 }
 
 #Conteiner-DisplayOther{
     border-style: ridge;
     width: 100%;
     height: 30%;
+    display: inline-flex;
+    overflow-y: auto;
 }
