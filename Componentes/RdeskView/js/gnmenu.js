@@ -34,7 +34,7 @@
 
 			var self = this;
 			this.bodyClickFn = function() {
-				//self._closeMenu();
+				self._closeMenu();
 				this.removeEventListener( self.eventtype, self.bodyClickFn );
 			};
 		},
@@ -62,7 +62,7 @@
 					document.addEventListener( self.eventtype, self.bodyClickFn );
 				}
 			} );
-			this.menu.addEventListener( this.eventtype, function(ev) { self._SubMenu_Exibir(ev) } );
+			this.menu.addEventListener( this.eventtype, function(ev) { self._SubMenu_Exibir(ev, self) } );
 		},
 		_openIconMenu : function() {
 			classie.add( this.menu, 'gn-open-part' );
@@ -84,7 +84,11 @@
 			classie.remove( this.menu, 'gn-open-all' );
 			this._closeIconMenu();
 		},
-                _SubMenu_Exibir(Obj){
+                _SubMenu_Exibir(Obj, self){
+                    Obj.stopPropagation();
+                    Obj.preventDefault();
+                    //self._closeMenu();
+                    
                     var Menu, SubMenu;
                     if(Obj.target.nodeName == "SPAN"){
                         Menu = Obj.target.parentElement;
@@ -93,14 +97,45 @@
                         Menu = Obj.target;
                         SubMenu = Obj.target.nextSibling;
                     }
-            
-                    let Visivel = $(SubMenu).hasClass("gn-submenu-visible");
-                    if(!Visivel){
-                        $(Menu).removeClass("fa-plus").addClass("fa-minus");
-                        $(SubMenu).addClass("gn-submenu-visible");
+                    if(!$(Menu).hasClass("submenu-final")){
+                        let Visivel = $(SubMenu).hasClass("gn-submenu-visible");
+                        if(!Visivel){
+                            $(Menu).removeClass("fa-plus").addClass("fa-minus");
+                            $(SubMenu).addClass("gn-submenu-visible");
+                        }else{
+                            $(Menu).removeClass("fa-minus").addClass("fa-plus");
+                            $(SubMenu).removeClass("gn-submenu-visible");
+                        }
                     }else{
-                        $(Menu).removeClass("fa-minus").addClass("fa-plus");
-                        $(SubMenu).removeClass("gn-submenu-visible");
+
+                        let Exec = $(Menu).attr("id");
+                        switch (Exec) {
+                            case "Area_de_Trabalho":
+                                this._Area_Trabalho(Obj);
+                            break;
+                            case "Area_Total":
+                                this._Area_Display(Obj);
+
+                            break;
+                        
+                            default:
+
+                            break;
+                        }
+                    }
+
+                },
+                _Area_Trabalho(o){
+                    $(".IMG_DisplayPrimary").css("width","100%").css("height","100%")
+                },
+                _Area_Display(o){
+
+                    let ID = $(".IMG_DisplayPrimary").attr("id");
+                    let Monitores = AR_CORAC.get_Displays();
+                    for(var i in Monitores){
+                        if(Monitores[i].DeviceName == ID){
+                            $(".IMG_DisplayPrimary").css("width",Monitores[i].Width + "px").css("height",Monitores[i].Height + "px");
+                        }
                     }
                 }
 	}

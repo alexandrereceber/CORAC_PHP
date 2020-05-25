@@ -13,4 +13,6 @@ var Ws = null;
 //        Ws.send(dados.value)
 //    }
 
-var g = this
+window.onkeydown = function(e){
+
+}
