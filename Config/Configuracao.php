@@ -352,7 +352,7 @@ class AmbienteCall {
  * Classe utilizada para enviar comandos e receber o resultaado.
  */
 class ConfigPowershell {
-    private static $Protocolo = "http", $Servidor = "192.168.15.10", $Porta = 1199, $Pasta = "Pacotes/";
+    private static $Protocolo = "http", $Servidor = "192.168.15.250", $Porta = 1199, $Pasta = "Pacotes/";
     
     public static function getProtocolo() {
         return self::$Protocolo;
@@ -382,7 +382,7 @@ class ConfigPowershell {
  * Classe utilizada para enviar comandos e receber o resultaado.
  */
 class ConfigAcessoRemoto_Config {
-    private static $Protocolo = "http", $Servidor = "192.168.15.10", $Porta = 1199, $Pasta = "AA_AcessoRemoto_SYN/";
+    private static $Protocolo = "http", $Servidor = "192.168.15.250", $Porta = 1199, $Pasta = "AA_AcessoRemoto_SYN/";
     
     public static function getProtocolo() {
         return self::$Protocolo;

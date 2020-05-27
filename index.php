@@ -28,7 +28,7 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" defer=""></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" defer=""></script>
 
-        <script defer="" src="./index.js?q=6" ></script>
+        <script defer="" src="./index.js?q=63" ></script>
    
         
     </head>
@@ -37,7 +37,6 @@ and open the template in the editor.
 
         <button value="Teste" onclick="webServicos()">Conectar WebSocke</button>
         <input id="dadosenv" type="text"/><button onclick="enviardados(dadosenv)" value="envia">enviar</button>
-        <div id="ImgG"><img  src="./Imagens/teste/win.png" onmouseenter="alert('oi')" onmouseout="alert('tchau')" /></div>
-        <div id="tecla" ></div>
+        <div id="tecla" >Teclas</div>
     </body>
 </html>

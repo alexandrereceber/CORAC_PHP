@@ -49,9 +49,9 @@ $Metodo         = $_REQUEST["Metodo"];
 $SSL            = $_REQUEST["SSL"];
 $Formato        = $_REQUEST["sendRetorno"]  == "" ? "JSON" : $_REQUEST["sendRetorno"]; //Atribui um formato padrão
 $Requisicao     = $_REQUEST["Requisicao"];
-$ServidorCorac  = "192.168.15.12";//$_REQUEST["ServidorCorac"];
+$AA_CORAC  = $_REQUEST["AA_CORAC"];
 
-ConfigPowershell::setServidor($ServidorCorac);
+ConfigAcessoRemoto_Config::setServidor($AA_CORAC);
 
 try{
         switch ($Formato) {

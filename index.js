@@ -14,5 +14,5 @@ var Ws = null;
 //    }
 
 window.onkeydown = function(e){
-
+document.querySelector("#tecla").innerHTML = e.key + "  " + e.keyCode;
 }

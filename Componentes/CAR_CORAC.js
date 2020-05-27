@@ -8,9 +8,9 @@
  */
 class ControleRemoto extends JSController{
     
-constructor(Caminho_Config, Caminho_Acesso){
+constructor(Caminho_Config){
         super(Caminho_Config);
-        this.CaminhoAcesso = Caminho_Acesso.replace("{PORTA}",":1199");
+        //this.CaminhoAcesso = Caminho_Acesso.replace("{PORTA}",":1199");
         this.Configuracoes = null;
         this.Servidor_AR = null;
         
@@ -21,14 +21,15 @@ constructor(Caminho_Config, Caminho_Acesso){
         /*Mantém as informações sobre a abertura do socketweb e a tramissão dos dados*/
         this.onOpen_Dados = {};
         
-        this.Pacote_Base = {"Pacote": 0, "Conteudo": null, "Remetente": 1};
+        this.Pacote_Base = {"Pacote": 0, "Conteudo": null, "Remetente": 2};
 
         this.Pacote_Teclado = {
+                                Pacote: 16,
                                 altKey: false, 
                                 bubbles: false, 
                                 cancelBubble: false, 
                                 cancelable: false, 
-                                charCode:false, 
+                                charCode:0, 
                                 code: "", 
                                 composed: false, 
                                 ctrlKey: false, 
@@ -56,11 +57,14 @@ constructor(Caminho_Config, Caminho_Acesso){
                                             ]
                                 };
     }
-    
+    setPortaCORAC_Cliente(p){
+        this.PORTA_CORAC = p;
+    }
     async get_ControlAcessoRemoto(Maquina, Requisicao){
-        
-        this.DadosEnvio.ServidorCorac = Maquina;
+        //let SCORAC = "ws://"+ Maquina +"{PORTA}/CORAC/AcessoRemoto/".replace("{PORTA}", this.PORTA_CORAC);
+        this.DadosEnvio.AA_CORAC = Maquina;  //Variável utilizada no php CORAC
         this.DadosEnvio.Requisicao = Requisicao;
+        this.DadosEnvio.sendRetorno = "JSON";
 
         let TratarResposta = await this.Atualizar();
 
@@ -70,9 +74,10 @@ constructor(Caminho_Config, Caminho_Acesso){
         }
         
         TratarResposta = JSON.parse(TratarResposta.RST_AG);
-        let Configuracoes = TratarResposta = JSON.parse(TratarResposta.Conteudo);
+        let Configuracoes = JSON.parse(TratarResposta.Conteudo);
         
         if(Configuracoes.Resposta == "OK_2001"){
+            this.CaminhoAcesso = TratarResposta.AA_ServerCORAC;
             this.Configuracoes = Configuracoes;
             await this.setCriarMonitores();
             await this.getIniciar_AC();
@@ -116,7 +121,13 @@ constructor(Caminho_Config, Caminho_Acesso){
                 Componente.Pacote_Teclado.metaKey = eventos.metaKey;
                 Componente.Pacote_Teclado.repeat = eventos.repeat;
                 Componente.Pacote_Teclado.returnValue = eventos.returnValue;
-                Componente.Pacote_Teclado.shiftKey = eventos.shiftKey;                  
+                Componente.Pacote_Teclado.shiftKey = eventos.shiftKey;
+                
+               
+                Componente.Pacote_Base.Pacote = 16;
+                Componente.Pacote_Base.Conteudo = JSON.stringify(Componente.Pacote_Teclado);
+                Componente.enviarPacotes(Componente.Pacote_Base);
+                
             }
         }
         
@@ -131,6 +142,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                 //this.onClose_Dados = dados;
                 if(dados.reason == "") {
                     $("#ViewControlRemote").remove();
+                    $("html").css("overflow","visible");
                     bootbox.alert('<h3><i class="m-r-10 mdi mdi-lan-disconnect" style="font-size: 56px; color: red"></i> A conexão foi encerrada de foram inesperada!</h3>');
                 }
 
@@ -144,6 +156,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                     
                 default:
                     $("#ViewControlRemote").remove();
+                    $("html").css("overflow","visible");
                     bootbox.alert('<h3><i class="m-r-10 mdi mdi-lan-disconnect" style="font-size: 56px; color: red"></i> A conexão foi encerrada de foram inesperada!</h3>')
 
                     break;
@@ -167,7 +180,10 @@ constructor(Caminho_Config, Caminho_Acesso){
                 }
             }  
         }
-
+        enviarPacotes(Pacote){
+            this.ServidorCorac.send(JSON.stringify(Pacote))
+        }
+        
         setON_Message(){
             
             var Configuracoes = this;
@@ -188,9 +204,8 @@ constructor(Caminho_Config, Caminho_Acesso){
                             let Pacote_Config_Inicial = {"Pacote": 13,"Conteudo":"", "DeviceName": "dd", "Width":99, "Height":90,"Chave_AR": Configuracoes.Configuracoes.ChaveAR}
                             Configuracoes.Pacote_Base.Pacote = 13;
                             Configuracoes.Pacote_Base.Conteudo = JSON.stringify(Pacote_Config_Inicial);
-                            Configuracoes.Pacote_Base.Remetente = 1;
 
-                            Configuracoes.ServidorCorac.send(JSON.stringify(Configuracoes.Pacote_Base));                    
+                            Configuracoes.enviarPacotes(Configuracoes.Pacote_Base);                    
                             break;
 
                         case 14:
@@ -198,15 +213,14 @@ constructor(Caminho_Config, Caminho_Acesso){
                         break;
                         
                         case 8: //Pacote de erro
-                            switch (Resultado.Numero) { //Subnotificações
-                            case 42001:
+                            if(Resultado.Error){
+                                Configuracoes.TratarErros(Resultado);
                                 $("#ViewControlRemote").remove();
-                                break;
-                                
-                            default:
-                                
-                                break;
-                        }
+                                $("html").css("overflow","visible");
+
+                                return false;
+                            }
+
                         break;
                     default:
 
@@ -232,6 +246,9 @@ constructor(Caminho_Config, Caminho_Acesso){
             this.ServidorCorac.onopen = function(dados){
                 //console.log(dados)
                 Canal.onOpen_Dados.Open = true;
+                window.onbeforeunload = function (event) {
+                    return true;
+                };
             }
               
         }
@@ -257,7 +274,7 @@ constructor(Caminho_Config, Caminho_Acesso){
                     $("#ViewControlRemote").html(
                                                     '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/normalize.css" />'+
                                                    ' <link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/demo.css" />'+
-                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=11" />'+
+                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=13" />'+
                                                     '<script src="./Componentes/RdeskView/js/modernizr.custom.js"></script>'+
                                                     '<div class="container-RdeskView">'+
                                                     '<div class="container-RdeskView-BarraMenu">'+
@@ -377,6 +394,8 @@ constructor(Caminho_Config, Caminho_Acesso){
                     callback: function(result){
                         if(result){
                             $("#ViewControlRemote").remove();
+                            $("html").css("overflow","visible");
+
                             Sair.ServidorCorac.close();
                         }
                     }

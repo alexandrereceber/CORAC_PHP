@@ -5,8 +5,8 @@
 'use strict';
 var Tabela_Computadores = new TabelaHTML("http://"+ Padrao.getHostServer() +"/CORAC/ControladorTabelas/");
 var Comandos_CORAC = new Commands("http://"+ Padrao.getHostServer() +"/CORAC/getInformacoesMaquinas/");
-var AR_CORAC = new ControleRemoto("http://"+ Padrao.getHostServer() +"/CORAC/AA_AcessoRemoto_SYN/", "ws://"+ Padrao.getHostServer() +"{PORTA}/CORAC/AcessoRemoto/");
-
+var AR_CORAC = new ControleRemoto("http://"+ Padrao.getHostServer() +"/CORAC/AA_AcessoRemoto_SYN/");
+let Origem = false;
 class MenuLateral{
     constructo(){
 
@@ -142,7 +142,7 @@ class MenuLateral{
                     Idx = Args[1].attributes["data-chaveprimaria"].nodeValue;
                     Tbl_CPU.setChavesPrimaria(Idx);
                     Maquina = Tbl_CPU.getObterValorCampos(3);
-
+                    AR_CORAC.setPortaCORAC_Cliente(1199);
                     let Rst_AA =  await AR_CORAC.get_ControlAcessoRemoto(Maquina, 0);
 
 

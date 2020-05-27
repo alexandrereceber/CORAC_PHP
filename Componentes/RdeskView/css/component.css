@@ -352,8 +352,10 @@ input.gn-search:focus {
 }
 
 .container-RdeskView{
+    position: fixed;
     width: 100%;
-    height: 80vh;
+    height: 100vh;
+    background-color: aliceblue;
     /* display: inline-table; */
 }
 

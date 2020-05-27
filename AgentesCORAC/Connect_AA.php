@@ -18,6 +18,8 @@ class Connect_AA {
     private $Protocol = null;
     private $Folder = null;
     private $Key = null;
+    const WEBSOCKET = "ws://";
+
     /**
      * 
      * @param type $Srv -> Endereço IP ou nome dns para o agente autônomo
@@ -121,8 +123,8 @@ class Connect_AA {
          */
         $Pacote_Comando = ["Pacote" => 3,"Comando" => $this->Comando, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
         $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_Comando);
-        
-        $Normalizar = $this->Normalizar($this->Comando, $Pacote_Recebido_CORAC_Desk, __FUNCTION__);
+
+        $Normalizar = $this->Normalizar_Executar_CMD($this->Comando, $Pacote_Recebido_CORAC_Desk);
         
         return $Normalizar;
     }
@@ -133,7 +135,7 @@ class Connect_AA {
      * @param type $Dados
      * @return type
      */
-    protected function Normalizar($CMD, &$Dados, $Function){
+    protected function Normalizar_Executar_CMD($CMD, &$Dados){
         $CMD = preg_split("/ /", $CMD)[0];
         
         switch ($Dados) {
@@ -148,7 +150,13 @@ class Connect_AA {
         
         return $Dados;
     }
-    
+        protected function Normalizar_AcessoRemoto($Requisicao, &$Dados){
+            $Dados = json_decode($Dados);
+            $Dados->AA_ServerCORAC = "ws://$this->Servidor:$this->Porta/CORAC/AcessoRemoto/";
+            $Dados = json_encode($Dados);
+
+        return $Dados;
+    }
         public function AcessoRemoto($Requisicao) {
                 
         if($Requisicao == null|| $Requisicao == ""){
@@ -167,7 +175,7 @@ class Connect_AA {
         $Pacote_AcessoRemoto = ["Pacote" => 12,"Tipo" => $this->Requisicao, "Resposta" => null, "Formato" => 1, "Mecanismo" => 0 ,"Chave" => $this->Key];
         $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_AcessoRemoto);
         
-        $Normalizar = $this->Normalizar($this->Requisicao, $Pacote_Recebido_CORAC_Desk, __FUNCTION__);
+        $Normalizar = $this->Normalizar_AcessoRemoto($this->Requisicao, $Pacote_Recebido_CORAC_Desk);
         
         return $Normalizar;
     }
