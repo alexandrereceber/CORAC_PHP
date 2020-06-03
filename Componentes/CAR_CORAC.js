@@ -13,16 +13,49 @@ constructor(Caminho_Config){
         //this.CaminhoAcesso = Caminho_Acesso.replace("{PORTA}",":1199");
         this.Configuracoes = null;
         this.Servidor_AR = null;
-        
+
         this.onClose_Dados = null;
         this.onError_Dados = null;
         this.onMessage_Dados = null;
-        
+        //this.Confirmacao = true;
         /*Mantém as informações sobre a abertura do socketweb e a tramissão dos dados*/
         this.onOpen_Dados = {};
         
         this.Pacote_Base = {"Pacote": 0, "Conteudo": null, "Remetente": 2};
 
+        this.Pacote_Mouse = {
+                    Pacote: 18,
+                    altKey:false,
+                    bubbles:false,
+                    button:0,
+                    buttons :0,
+                    cancelBubble :false,
+                    cancelable :false,
+                    clientX :0,
+                    clientY :0,
+                    composed :false,
+                    ctrlKey :false,
+                    defaultPrevented: false, 
+                    detail :0,
+                    eventPhase:0, 
+                    isTrusted :false,
+                    layerX :0,
+                    layerY :0,
+                    metaKey : false,
+                    movementX :0,
+                    movementY :0,
+                    offsetX :0,
+                    offsetY :0,
+                    pageX :0,
+                    pageY :0,
+                    screenX :0,
+                    screenY :0,
+                    shiftKey :false,
+                    type:"",
+                    x :0,
+                    y:0
+        }
+        
         this.Pacote_Teclado = {
                                 Pacote: 16,
                                 altKey: false, 
@@ -45,6 +78,7 @@ constructor(Caminho_Config){
                                 returnValue: false, 
                                 shiftKey: false 
                             };
+                            
         this.Componente_Tela_Primary = null; //Obtém a instancia do objeto DOM do img que receberá as imagem do monitor primário.
         /*Armazena as configurações dos monitores virtuais no cliente*/
         this.ConfigViewDisplays = {"Primario": 
@@ -57,9 +91,7 @@ constructor(Caminho_Config){
                                             ]
                                 };
     }
-    setPortaCORAC_Cliente(p){
-        this.PORTA_CORAC = p;
-    }
+
     async get_ControlAcessoRemoto(Maquina, Requisicao){
         //let SCORAC = "ws://"+ Maquina +"{PORTA}/CORAC/AcessoRemoto/".replace("{PORTA}", this.PORTA_CORAC);
         this.DadosEnvio.AA_CORAC = Maquina;  //Variável utilizada no php CORAC
@@ -95,12 +127,97 @@ constructor(Caminho_Config){
             this.setON_Open();
 
         }
+        
+        calcularDeslogamento(ev){
+            let naturalHeight, naturalWidth, clientHeight, clientWidth, DfHeight, DfWidth;
+            naturalHeight = ev.target.naturalHeight;
+            naturalWidth = ev.target.naturalWidth;
+            clientHeight = ev.target.clientHeight;
+            clientWidth = ev.target.clientWidth;
+            
+            if(naturalHeight > clientHeight) {
+                let Df = (naturalHeight / clientHeight);
+                console.log("naturalHeight >= : "+Df);    
+                DfHeight = parseInt(ev.offsetY * (Df));
+                
+            }else if(naturalHeight < clientHeight){
+                let Df = (clientHeight / naturalHeight);
+                console.log("naturalHeight < : "+Df); 
+                DfHeight = parseInt(ev.offsetY / Df);
+                
+            }else{
+                DfHeight = ev.offsetY;
+            }
+            
+            if(naturalWidth > clientWidth) {
+                let Df = (naturalWidth / clientWidth);
+                console.log("naturalHeight >= : "+Df);    
+                DfWidth = parseInt(ev.offsetX * Df);
+
+            } else if(naturalWidth < clientWidth){
+                let Df = (clientWidth / naturalWidth);
+                console.log("naturalHeight < : "+Df);    
+                DfWidth = parseInt(ev.offsetX / Df);
+                
+            }else{
+                DfWidth = ev.offsetX;
+            }
+            
+            return {D_y: DfHeight, D_x: DfWidth};
+            
+        }
         _onDesabilitarEnvioTeclas(){
             window.onkeydown = null;
+            window.onmousemove = null;
+        }
+        _onHabilitarEnvioMouse(ev){
+            //if(!this.Confirmacao) return false;
+            //this.Confirmacao = false;
+            let Normalizar_Escala = this.calcularDeslogamento(ev);
+
+            this.Pacote_Mouse.Pacote = 18,
+            this.Pacote_Mouse.altKey = ev.altKey;
+            this.Pacote_Mouse.bubbles = ev.bubbles;
+            this.Pacote_Mouse.button = ev.button;
+            this.Pacote_Mouse.buttons = ev.buttons;
+            this.Pacote_Mouse.cancelBubble = ev.cancelBubble;
+            this.Pacote_Mouse.cancelable = ev.cancelable;
+            this.Pacote_Mouse.clientX = ev.clientX;
+            this.Pacote_Mouse.clientY = ev.clientY;
+            this.Pacote_Mouse.composed = ev.composed;
+            this.Pacote_Mouse.ctrlKey = ev.ctrlKey;
+            this.Pacote_Mouse.defaultPrevented = ev.defaultPrevented; 
+            this.Pacote_Mouse.detail = ev.detail;
+            this.Pacote_Mouse.eventPhase = ev.eventPhase; 
+            this.Pacote_Mouse.isTrusted = ev.isTrusted;
+            this.Pacote_Mouse.layerX = ev.layerX;
+            this.Pacote_Mouse.layerY = ev.layerY;
+            this.Pacote_Mouse.metaKey = ev.metaKey;
+            this.Pacote_Mouse.movementX = ev.movementX;
+            this.Pacote_Mouse.movementY = ev.movementY;
+            this.Pacote_Mouse.offsetX = Normalizar_Escala.D_x;
+            this.Pacote_Mouse.offsetY = Normalizar_Escala.D_y;
+            this.Pacote_Mouse.pageX = ev.pageX;
+            this.Pacote_Mouse.pageY = ev.pageY;
+            this.Pacote_Mouse.screenX = ev.screenX;
+            this.Pacote_Mouse.screenY = ev.screenY;
+            this.Pacote_Mouse.shiftKey = ev.shiftKey;
+            this.Pacote_Mouse.type= ev.type;
+            this.Pacote_Mouse.x = ev.x;
+            this.Pacote_Mouse.y = ev.y;
+
+            console.log(this.Pacote_Mouse)
+            console.log(ev)
+            console.log(Normalizar_Escala)
+
+            this.Pacote_Base.Pacote = 18;
+            this.Pacote_Base.Conteudo = JSON.stringify(this.Pacote_Mouse);
+            this.enviarPacotes(this.Pacote_Base);
+                
         }
         _onHabilitarEnvioTeclas(){
-           let Componente = this;
-
+           var Componente = this;
+           /*Eventos relativos ao teclado.*/
             window.onkeydown = function(eventos){
                 eventos.preventDefault();
                 Componente.Pacote_Teclado.altKey = eventos.altKey;
@@ -211,6 +328,10 @@ constructor(Caminho_Config){
                         case 14:
                             Configuracoes.RefreshFrame((Resultado.Telas));
                         break;
+                        
+                        //case 19:
+                        //    Configuracoes.Confirmacao = true;
+                       // break;
                         
                         case 8: //Pacote de erro
                             if(Resultado.Error){
@@ -349,9 +470,10 @@ constructor(Caminho_Config){
             
             $("#id_container-RdeskView-Primario").append("\
                 <div id='div_"+ DisplayPrimary +"' class='div_DisplayPrimary'> \n\
-                        <img  id='"+ DisplayPrimary +"' class='IMG_DisplayPrimary' src='0'></img>\n\
+                        <img  id='"+ DisplayPrimary +"' class='IMG_DisplayPrimary' src='http://"+ Padrao.getHostServer() +"/CORAC/Imagens/loads/loaders.gif'></img>\n\
                 </div>");
             this.Componente_Tela_Primary = document.querySelector("#"+ DisplayPrimary +"");
+            this.DisplayTela = document.querySelector(".div_DisplayPrimary");
             var self = this;
             let count = 0;
 
@@ -364,6 +486,38 @@ constructor(Caminho_Config){
                 $("#teste").html(count);
                 count++;
             }
+            this.Componente_Tela_Primary.onclick = function(ev){
+                ev.preventDefault();
+                ev.stopPropagation();
+                self._onHabilitarEnvioMouse(ev);
+            }
+            this.Componente_Tela_Primary.ondrag = function(ev){
+                ev.preventDefault();
+                ev.stopPropagation();
+                self._onHabilitarEnvioMouse(ev);
+
+            }
+            this.Componente_Tela_Primary.ondragstart = function(ev){
+                ev.preventDefault();
+                self._onHabilitarEnvioMouse(ev);
+                
+            }
+            this.Componente_Tela_Primary.onmousemove = function(ev){
+                self._onHabilitarEnvioMouse(ev);
+                ev.preventDefault();
+            }
+            
+            this.Componente_Tela_Primary.ondragstop = function(ev){
+                //ev.preventDefault();
+                self._onHabilitarEnvioMouse(ev);
+                
+            }
+            this.Componente_Tela_Primary.oncontextmenu = function(ev){
+                ev.preventDefault();
+                self._onHabilitarEnvioMouse(ev);
+                
+            }
+            
         }
         
         async setDisplayOther(DisplayOther){
@@ -371,11 +525,12 @@ constructor(Caminho_Config){
             $("#Conteiner-DisplayOther").append("\
                 <div id='div_"+ DisplayOther +"' class='div_DisplayOther' \n\
                     style=  ' '> \n\
-                        <img id='"+ DisplayOther +"' class='IMG_DisplayOther' src=''></img>\n\
+                        <img id='"+ DisplayOther +"' class='IMG_DisplayOther' src='http://"+ Padrao.getHostServer() +"/CORAC/Imagens/loads/loaders.gif'></img>\n\
                 </div>");
         }
         
        async WEBSOCKET_Close(D){
+           window.onbeforeunload = null;
             if(D === true){
                 this.ServidorCorac.close();
             }else{

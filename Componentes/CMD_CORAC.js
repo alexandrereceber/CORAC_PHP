@@ -9,7 +9,7 @@ class Commands extends JSController{
     }
     
     async get_InformacoesMaquina(Maquina, Comando){
-        this.DadosEnvio.ServidorCorac = Maquina;
+        this.DadosEnvio.AA_CORAC = Maquina;
         this.DadosEnvio.Command = Comando;
 
         let TratarResposta = await this.Atualizar();

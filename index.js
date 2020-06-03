@@ -13,6 +13,6 @@ var Ws = null;
 //        Ws.send(dados.value)
 //    }
 
-window.onkeydown = function(e){
-document.querySelector("#tecla").innerHTML = e.key + "  " + e.keyCode;
+document.querySelector("#ImgG").onmousemove = function(ev){
+    alert(9)
 }

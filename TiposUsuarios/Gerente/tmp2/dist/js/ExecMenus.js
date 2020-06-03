@@ -142,7 +142,7 @@ class MenuLateral{
                     Idx = Args[1].attributes["data-chaveprimaria"].nodeValue;
                     Tbl_CPU.setChavesPrimaria(Idx);
                     Maquina = Tbl_CPU.getObterValorCampos(3);
-                    AR_CORAC.setPortaCORAC_Cliente(1199);
+                    //AR_CORAC.setPortaCORAC_Cliente(1199);
                     let Rst_AA =  await AR_CORAC.get_ControlAcessoRemoto(Maquina, 0);
 
 

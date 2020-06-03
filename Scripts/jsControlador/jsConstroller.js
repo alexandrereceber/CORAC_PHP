@@ -2,14 +2,17 @@
 var Padrao = function(){
     var Operacao= {readyState: 0}; //Armazena o status da operação de XMLRequest. Verifica se o sistema já esta realizando outra tarefa.
     return{
-        addload: function(objxhr){
-            var Scroll = window.scrollY
+        addload: function(Recipente, Descricao){
+            var Scroll = window.scrollY,
+                Description = Descricao || "";
                 
-                $("body").append('<center><div \n\
+                $(Recipente).append('<center><div \n\
                                         class="" \n\
                                         id="myLoader" \n\
                                         style="z-index: 9999;top:'+ Scroll +'px;background-color: #efeef2b3;text-align: -webkit-center;position: absolute;left: 0px;width: 100%;height: 100%;"><div style="display: table-cell;vertical-align: middle;height: 50vw;"> \n\
-                                        <div style="height: 40vw;display: table-cell;vertical-align: middle;"><img src="http://'+ this.getHostServer() +'/CORAC/Imagens/loads/loaders.gif" style="width: 50%;"></div>\n\
+                                        <div style="height: 40vw;display: table-cell;vertical-align: middle;">\n\
+                                            <figure><img src="http://'+ this.getHostServer() +'/CORAC/Imagens/loads/loaders.gif" style="width: 50%;"><figcaption>'+ Description +'</figcaption></figure>\n\
+                                        </div>\n\
                                     </div></center>\n\
                                 </div>').addClass("modal-open");
             $(".fecharAjax").unbind();
@@ -98,7 +101,7 @@ class JSController{
                         Config: this.Config,
                         beforeSend: function(Antes){
                             if(this.Config.Load == true)
-                                Padrao.addload(this);
+                                Padrao.addload("body", "Aguarde...");
                         },
                         complete: function(Completo){ //Método é chamado automaticamento pelo objeto ajax.
                             if(this.Config.Load == true)

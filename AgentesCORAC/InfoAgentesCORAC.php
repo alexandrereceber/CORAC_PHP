@@ -50,9 +50,9 @@ $Metodo         = $_REQUEST["Metodo"];
 $SSL            = $_REQUEST["SSL"];
 $Formato        = $_REQUEST["sendRetorno"]  == "" ? "JSON" : $_REQUEST["sendRetorno"]; //Atribui um formato padrão
 $CMD            = $_REQUEST["Command"];
-$ServidorCorac  = "192.168.15.10";//$_REQUEST["ServidorCorac"];
+$AA_CORAC  = $_REQUEST["AA_CORAC"];
 
-ConfigPowershell::setServidor($ServidorCorac);
+ConfigPowershell::setServidor($AA_CORAC);
 
 try{
         switch ($Formato) {
