@@ -37,6 +37,9 @@ RewriteRule (.*) Credencial/Checked.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQU
 RewriteCond %{REQUEST_URI} /Update/$
 RewriteRule (.*) UpdateCORAC/update_CORAC.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
+#Realiza a verificação de atualizações CORAC.
+RewriteCond %{REQUEST_URI} /ChatOnline/$
+RewriteRule (.*) LoadPages/ChatOnline.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
 #RewriteCond %{REQUEST_URI} /ControladorPages/$
 #RewriteRule (.*) Controller/LP/LoadPages.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]

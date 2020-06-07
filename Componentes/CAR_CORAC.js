@@ -44,7 +44,9 @@ constructor(Caminho_Config){
                     metaKey : false,
                     movementX :0,
                     movementY :0,
-                    offsetX :0,
+                    deltaY: 0,
+                    deltaX: 0,
+                    offset :0,
                     offsetY :0,
                     pageX :0,
                     pageY :0,
@@ -113,6 +115,7 @@ constructor(Caminho_Config){
             this.Configuracoes = Configuracoes;
             await this.setCriarMonitores();
             await this.getIniciar_AC();
+            await this.setCriarChat();
         }else{
             bootbox.alert("<h1 style='color: red; display: inline-flex'><i class='fas fa-user-times'></i></h1> <span style='font-size: 25px; margin-left: 8px'> O usuário negou o acesso remoto!</span>")
         }
@@ -195,6 +198,12 @@ constructor(Caminho_Config){
             this.Pacote_Mouse.metaKey = ev.metaKey;
             this.Pacote_Mouse.movementX = ev.movementX;
             this.Pacote_Mouse.movementY = ev.movementY;
+            
+            if(ev.type == "wheel"){
+                this.Pacote_Mouse.deltaY = ev.deltaY * -1;
+                this.Pacote_Mouse.deltaX = ev.deltaX * -1;
+            }
+
             this.Pacote_Mouse.offsetX = Normalizar_Escala.D_x;
             this.Pacote_Mouse.offsetY = Normalizar_Escala.D_y;
             this.Pacote_Mouse.pageX = ev.pageX;
@@ -206,9 +215,9 @@ constructor(Caminho_Config){
             this.Pacote_Mouse.x = ev.x;
             this.Pacote_Mouse.y = ev.y;
 
-            console.log(this.Pacote_Mouse)
-            console.log(ev)
-            console.log(Normalizar_Escala)
+            //console.log(this.Pacote_Mouse)
+            //console.log(ev)
+            //console.log(Normalizar_Escala)
 
             this.Pacote_Base.Pacote = 18;
             this.Pacote_Base.Conteudo = JSON.stringify(this.Pacote_Mouse);
@@ -308,7 +317,7 @@ constructor(Caminho_Config){
             this.ServidorCorac.onmessage = function(dados){
                 
                 try{
-                    //console.log(dados)
+                    console.log(dados)
                     //this.onMessage_Dados = dados;
                     let Resultado = JSON.parse(dados.data);   
 
@@ -332,7 +341,11 @@ constructor(Caminho_Config){
                         //case 19:
                         //    Configuracoes.Confirmacao = true;
                        // break;
-                        
+                        case 20: //Pacote de Close
+                            $("#ViewControlRemote").remove();
+                            $("html").css("overflow","visible");
+                            bootbox.alert("<h3><img style='width:40px; margin-right: 10px' src='http://"+ Padrao.getHostServer() +"/CORAC/Imagens/Chat/User_Close.jpg'/>Usuário finalizou atendimento!</h3>");
+                            window.onbeforeunload = null;
                         case 8: //Pacote de erro
                             if(Resultado.Error){
                                 Configuracoes.TratarErros(Resultado);
@@ -345,7 +358,7 @@ constructor(Caminho_Config){
                         break;
                     default:
 
-                        break;
+                            break;
                     }
                     
                     if(Resultado.Error != false){
@@ -385,7 +398,40 @@ constructor(Caminho_Config){
                 }
             }
         }
-        
+        async setCriarChat(){
+            $("#Conteiner-Chat").html(
+                '<div class="row Painel-DialogMensagem">'+
+                    '<div class="col-12 Painel-Dialog">'+
+                        '<div class="card">'+
+                            '<div class="card-body">'+
+                                '<div class="chat-box scrollable ps-container ps-theme-default ps-active-y" style="" data-ps-id="7646d4ca-ef31-3a6d-ea54-735f422da7e9">'+
+                                    '<ul class="chat-list">'+
+                                        '<li class="chat-item">'+
+                                            '<div class="chat-img"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_user.png" alt="Usuário"></div>'+
+                                            '<div class="chat-content">'+
+                                                '<h6 class="font-medium">James Anderson</h6>'+
+                                                '<div class="box bg-light-info">Lorem Ipsum is simply am text of the printing &amp; type setting industry.</div>'+
+                                            '</div>'+
+                                            '<div class="chat-time">10:56 am</div>'+
+                                        '</li>'+
+                                        '<li class="odd chat-item">'+
+                                            '<div class="chat-content">'+
+                                                '<div class="box bg-light-inverse">I would love to join the team.</div>'+
+                                                '<br>'+
+                                            '</div>'+
+                                            '<div class="chat-img chat-Img-Left"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_Suporte.png" alt="user"></div>'+
+                                            '<div class="chat-time">10:56 am</div>'+
+                                        '</li>'+
+                                    '</ul>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="col-12 Painel-Mensagem">'+
+                    '<div class="Conteiner-Mensagem"><div class="Conteiner-Input"><input id="Caixa_Mensagem" type="text"/></div><div class="Container-Button"><img id="Botao_Mensagem" src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/enviarmensagem.png" alt="Enviar" /></div></div>'+
+                    '</div>'+
+                '</div>')
+        }
         async setCriarMonitores(){
             var Tipo = typeof this.Configuracoes, Nome = "";
             //Tipo === "object" && this.Configuracoes !== null
@@ -395,7 +441,7 @@ constructor(Caminho_Config){
                     $("#ViewControlRemote").html(
                                                     '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/normalize.css" />'+
                                                    ' <link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/demo.css" />'+
-                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=13" />'+
+                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=23" />'+
                                                     '<script src="./Componentes/RdeskView/js/modernizr.custom.js"></script>'+
                                                     '<div class="container-RdeskView">'+
                                                     '<div class="container-RdeskView-BarraMenu">'+
@@ -513,6 +559,12 @@ constructor(Caminho_Config){
                 
             }
             this.Componente_Tela_Primary.oncontextmenu = function(ev){
+                ev.preventDefault();
+                self._onHabilitarEnvioMouse(ev);
+                
+            }
+            
+            this.Componente_Tela_Primary.onwheel = function(ev){
                 ev.preventDefault();
                 self._onHabilitarEnvioMouse(ev);
                 

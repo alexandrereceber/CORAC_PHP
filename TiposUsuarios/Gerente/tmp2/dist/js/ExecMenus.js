@@ -159,6 +159,7 @@ class MenuLateral{
         }
         Tabela_Computadores.FuncoesIcones[2] = function(){
             AR_CORAC.setCriarMonitores();
+            AR_CORAC.setCriarChat();
         }
         Tabela_Computadores.show();
         window.onscroll = function(){

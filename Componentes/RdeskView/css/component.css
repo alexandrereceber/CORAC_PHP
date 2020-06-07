@@ -447,3 +447,42 @@ input.gn-search:focus {
     display: inline-flex;
     overflow-y: auto;
 }
+
+.Conteiner-Mensagem{
+    display: inline-flex;
+    width: 100%;
+    margin: auto;
+}
+
+.Conteiner-Input{
+    display: inline-flex;
+    width: 88%;
+    margin: auto;
+}
+
+.Container-Button{
+    display: inline-flex;
+    padding-left: 0px;
+    align-items: center;
+}
+
+#Caixa_Mensagem{
+    width: 100%;
+    border: solid 1px #4444;
+    box-shadow: 4px 5px 6px -1px #4444;
+    border-radius: 6px;
+}
+
+#Botao_Mensagem{
+    width: 30px;
+}
+
+.Painel-Dialog{
+    height: 93%;
+    overflow-y: auto;
+}
+.Painel-Mensagem{display: flex;margin: auto;}
+
+.Painel-DialogMensagem{
+    height: 100%;
+}

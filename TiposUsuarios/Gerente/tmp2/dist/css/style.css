@@ -14316,6 +14316,12 @@ File: scss
       .chat-list .chat-item .chat-img img {
         width: 45px;
         border-radius: 100%; }
+      .chat-img-Left{
+          text-align: right !important;
+      }
+      .chat-content{
+          width: 92% !important;
+      }
     .chat-list .chat-item .chat-content {
       width: calc(100% - 50px);
       display: inline-block;
