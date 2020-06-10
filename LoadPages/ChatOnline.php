@@ -75,40 +75,16 @@ Template do chat online do CORAC
 
 
         <!-- Custom Theme JavaScript -->
-        <script src="/CORAC/Scripts/bootbox/bootbox.js?t=<?php echo time(); ?>"></script>
+        <script src="/CORAC/TiposUsuarios/Gerente/tmp2/assets/libs/jquery/dist/jquery.min.js" defer=""></script>
+        <script src="/CORAC/Scripts/bootbox/bootbox.js?t=<?php echo time(); ?>" defer=""></script>
+        <script src="/CORAC/Componentes/CHAT_CORAC.js?t=<?php echo time(); ?>" defer=""></script>
+
     </head>
     <body>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="chat-box scrollable ps-container ps-theme-default ps-active-y" style="" data-ps-id="7646d4ca-ef31-3a6d-ea54-735f422da7e9">
-                            <!--chat Row -->
-                            <ul class="chat-list">
-                                <!--chat Row -->
-                                <li class="chat-item">
-                                    <div class="chat-img"><img src="../TiposUsuarios/Gerente/tmp2/assets/images/CORAC/ico/32px_Corac.ico" alt="user"></div>
-                                    <div class="chat-content">
-                                        <h6 class="font-medium">James Anderson</h6>
-                                        <div class="box bg-light-info">Lorem Ipsum is simply am text of the printing &amp; type setting industry.</div>
-                                    </div>
-                                    <div class="chat-time">10:56 am</div>
-                                </li>
-                                
-                                <li class="odd chat-item">
-                                    <div class="chat-content">
-                                        <div class="box bg-light-inverse">I would love to join the team.</div>
-                                        <br>
-                                    </div>
-                                    <div class="chat-img chat-Img-Left"><img src="../TiposUsuarios/Gerente/tmp2/assets/images/CORAC/ico/32px_Corac.ico" alt="user"></div>
-                                    <div class="chat-time">10:56 am</div>
-                                </li>
-                                <!--chat Row -->
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <!--chat Row -->
+        <ul id="Chat-List" class="chat-list">
+        </ul>
+
     </body>
 </html>

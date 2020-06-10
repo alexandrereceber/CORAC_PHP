@@ -92,6 +92,8 @@ constructor(Caminho_Config){
                                                 {"Posicao":{"Top": "100px", "Left": "100px"}}
                                             ]
                                 };
+                                
+
     }
 
     async get_ControlAcessoRemoto(Maquina, Requisicao){
@@ -140,7 +142,7 @@ constructor(Caminho_Config){
             
             if(naturalHeight > clientHeight) {
                 let Df = (naturalHeight / clientHeight);
-                console.log("naturalHeight >= : "+Df);    
+                console.log("naturalHeight >= : " + Df);
                 DfHeight = parseInt(ev.offsetY * (Df));
                 
             }else if(naturalHeight < clientHeight){
@@ -224,6 +226,7 @@ constructor(Caminho_Config){
             this.enviarPacotes(this.Pacote_Base);
                 
         }
+
         _onHabilitarEnvioTeclas(){
            var Componente = this;
            /*Eventos relativos ao teclado.*/
@@ -338,14 +341,7 @@ constructor(Caminho_Config){
                             Configuracoes.RefreshFrame((Resultado.Telas));
                         break;
                         
-                        //case 19:
-                        //    Configuracoes.Confirmacao = true;
-                       // break;
-                        case 20: //Pacote de Close
-                            $("#ViewControlRemote").remove();
-                            $("html").css("overflow","visible");
-                            bootbox.alert("<h3><img style='width:40px; margin-right: 10px' src='http://"+ Padrao.getHostServer() +"/CORAC/Imagens/Chat/User_Close.jpg'/>Usuário finalizou atendimento!</h3>");
-                            window.onbeforeunload = null;
+                            
                         case 8: //Pacote de erro
                             if(Resultado.Error){
                                 Configuracoes.TratarErros(Resultado);
@@ -356,9 +352,25 @@ constructor(Caminho_Config){
                             }
 
                         break;
-                    default:
+                        
+                        case 20: //Pacote de Close
+                            $("#ViewControlRemote").remove();
+                            $("html").css("overflow","visible");
+                            bootbox.alert("<h3><img style='width:40px; margin-right: 10px' src='http://"+ Padrao.getHostServer() +"/CORAC/Imagens/Chat/User_Close.jpg'/>Usuário finalizou atendimento!</h3>");
+                            window.onbeforeunload = null;                    
+                        break;
+                        
+                        case 21: //Pacote chat usuário
+                            let Pacote_User = {Nome: Resultado.Nome , Mensagem: Resultado.Mensagem, Hora: Resultado.Hora};
+                            Configuracoes.Escrever_Mensagem_Usuario(Pacote_User);
+                            return false;
+                        break;
+
+                        default:
 
                             break;
+                            
+                            
                     }
                     
                     if(Resultado.Error != false){
@@ -398,7 +410,45 @@ constructor(Caminho_Config){
                 }
             }
         }
+        
+        _onEnviar_MensagemSuporte(Pacote_Suporte){
+            this.Pacote_Base.Pacote = 22;
+            this.Pacote_Base.Conteudo = JSON.stringify(Pacote_Suporte);
+            this.enviarPacotes(this.Pacote_Base);
+        }
+        
+        Escrever_Mensagem_Usuario(Pacote_User){
+        //this.CHAT_Talk = {Nome:"{Username}", Mensagem:"{Talk}", Hora:"{Time}"};
+        
+            $(".chat-list").append('<li class="chat-item">'+
+                                            '<div class="chat-content">'+
+                                                '<h6 class="font-medium">'+ Pacote_User.Nome +'</h6>'+
+                                                '<div class="chat-img"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_user.png" alt="Usuário"></div>'+
+                                                '<div class="box bg-light-info">'+ Pacote_User.Mensagem +'</div>'+
+                                            '</div>'+
+                                            '<div class="chat-time">'+ Pacote_User.Hora +'</div>'+
+                                        '</li>');
+            $(".Painel-Dialog").scrollTop(parseInt($(".chat-list").css("height")));
+
+        }
+        
+        Escrever_Mensagem_Suporte(Pacote_Suporte){
+        //this.CHAT_Talk = {Nome:"{Username}", Mensagem:"{Talk}", Hora:"{Time}"};
+        
+        $(".chat-list").append('<li class="odd chat-item">'+
+                                        '<div class="chat-content">'+
+                                            '<h6 class="font-medium">James Anderson</h6>'+
+                                            '<div class="box bg-light-inverse">'+ Pacote_Suporte.Mensagem +'</div>'+
+                                            '<br>'+
+                                        '</div>'+
+                                        '<div class="chat-img chat-Img-Left"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_Suporte.png" alt="user"></div>'+
+                                        '<div class="chat-time">'+ Pacote_Suporte.Hora +'</div>'+
+                                    '</li>');     
+        $(".Painel-Dialog").scrollTop(parseInt($(".chat-list").css("height")));
+
+        }
         async setCriarChat(){
+            var Componente = this;
             $("#Conteiner-Chat").html(
                 '<div class="row Painel-DialogMensagem">'+
                     '<div class="col-12 Painel-Dialog">'+
@@ -406,22 +456,7 @@ constructor(Caminho_Config){
                             '<div class="card-body">'+
                                 '<div class="chat-box scrollable ps-container ps-theme-default ps-active-y" style="" data-ps-id="7646d4ca-ef31-3a6d-ea54-735f422da7e9">'+
                                     '<ul class="chat-list">'+
-                                        '<li class="chat-item">'+
-                                            '<div class="chat-img"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_user.png" alt="Usuário"></div>'+
-                                            '<div class="chat-content">'+
-                                                '<h6 class="font-medium">James Anderson</h6>'+
-                                                '<div class="box bg-light-info">Lorem Ipsum is simply am text of the printing &amp; type setting industry.</div>'+
-                                            '</div>'+
-                                            '<div class="chat-time">10:56 am</div>'+
-                                        '</li>'+
-                                        '<li class="odd chat-item">'+
-                                            '<div class="chat-content">'+
-                                                '<div class="box bg-light-inverse">I would love to join the team.</div>'+
-                                                '<br>'+
-                                            '</div>'+
-                                            '<div class="chat-img chat-Img-Left"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_Suporte.png" alt="user"></div>'+
-                                            '<div class="chat-time">10:56 am</div>'+
-                                        '</li>'+
+                                    //Mensagem Enviada e recebidas
                                     '</ul>'+
                                 '</div>'+
                             '</div>'+
@@ -430,7 +465,25 @@ constructor(Caminho_Config){
                     '<div class="col-12 Painel-Mensagem">'+
                     '<div class="Conteiner-Mensagem"><div class="Conteiner-Input"><input id="Caixa_Mensagem" type="text"/></div><div class="Container-Button"><img id="Botao_Mensagem" src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/enviarmensagem.png" alt="Enviar" /></div></div>'+
                     '</div>'+
-                '</div>')
+                '</div>');
+        
+        $("#Caixa_Mensagem").keydown(function(event){
+            if(event.keyCode == 13){
+                let Pacote_Suporte = {Pacote: 22, Mensagem: $("#Caixa_Mensagem").val(), Nome: "Suporte", Hora:  (new Date()).toLocaleTimeString().substring(0,4)}
+                Componente._onEnviar_MensagemSuporte(Pacote_Suporte);
+                Componente.Escrever_Mensagem_Suporte(Pacote_Suporte);
+                $(this).val("");                
+            }
+        })
+        
+        $("#Botao_Mensagem").click(function(){
+            if($("#Caixa_Mensagem").val() != ""){
+                let Pacote_Suporte = {Pacote: 22, Mensagem: $("#Caixa_Mensagem").val(), Nome: "Suporte", Hora:  (new Date()).toLocaleTimeString().substring(0,4)}
+                Componente._onEnviar_MensagemSuporte(Pacote_Suporte);
+                Componente.Escrever_Mensagem_Suporte(Pacote_Suporte);
+                $("#Caixa_Mensagem").val("");                
+            }
+        })        
         }
         async setCriarMonitores(){
             var Tipo = typeof this.Configuracoes, Nome = "";
@@ -441,7 +494,7 @@ constructor(Caminho_Config){
                     $("#ViewControlRemote").html(
                                                     '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/normalize.css" />'+
                                                    ' <link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/demo.css" />'+
-                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=23" />'+
+                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=24" />'+
                                                     '<script src="./Componentes/RdeskView/js/modernizr.custom.js"></script>'+
                                                     '<div class="container-RdeskView">'+
                                                     '<div class="container-RdeskView-BarraMenu">'+
