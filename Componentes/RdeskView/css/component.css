@@ -487,3 +487,11 @@ input.gn-search:focus {
 .Painel-DialogMensagem{
     height: 65vh;
 }
+
+#userDigitando{
+    position: absolute;
+    top: -64px;
+    margin-left: 15px;
+    font-style: oblique;
+    font-size: 11px;
+}

@@ -142,12 +142,12 @@ constructor(Caminho_Config){
             
             if(naturalHeight > clientHeight) {
                 let Df = (naturalHeight / clientHeight);
-                console.log("naturalHeight >= : " + Df);
+                //console.log("naturalHeight >= : " + Df);
                 DfHeight = parseInt(ev.offsetY * (Df));
                 
             }else if(naturalHeight < clientHeight){
                 let Df = (clientHeight / naturalHeight);
-                console.log("naturalHeight < : "+Df); 
+                //console.log("naturalHeight < : "+Df); 
                 DfHeight = parseInt(ev.offsetY / Df);
                 
             }else{
@@ -156,12 +156,12 @@ constructor(Caminho_Config){
             
             if(naturalWidth > clientWidth) {
                 let Df = (naturalWidth / clientWidth);
-                console.log("naturalHeight >= : "+Df);    
+                //console.log("naturalHeight >= : "+Df);    
                 DfWidth = parseInt(ev.offsetX * Df);
 
             } else if(naturalWidth < clientWidth){
                 let Df = (clientWidth / naturalWidth);
-                console.log("naturalHeight < : "+Df);    
+                //console.log("naturalHeight < : "+Df);    
                 DfWidth = parseInt(ev.offsetX / Df);
                 
             }else{
@@ -267,7 +267,7 @@ constructor(Caminho_Config){
         setON_Close(){
             var Configuracoes = this;
             this.ServidorCorac.onclose = function(dados){
-                console.log(dados)
+                //console.log(dados)
                 //this.onClose_Dados = dados;
                 if(dados.reason == "") {
                     $("#ViewControlRemote").remove();
@@ -320,7 +320,7 @@ constructor(Caminho_Config){
             this.ServidorCorac.onmessage = function(dados){
                 
                 try{
-                    console.log(dados)
+                    //console.log(dados)
                     //this.onMessage_Dados = dados;
                     let Resultado = JSON.parse(dados.data);   
 
@@ -365,7 +365,12 @@ constructor(Caminho_Config){
                             Configuracoes.Escrever_Mensagem_Usuario(Pacote_User);
                             return false;
                         break;
-
+                        
+                        case 23: //Pacote chat usuário
+                            Configuracoes.Usuario_Digitando(Resultado.Digitando);
+                            return false;
+                        break;
+                        
                         default:
 
                             break;
@@ -417,8 +422,15 @@ constructor(Caminho_Config){
             this.enviarPacotes(this.Pacote_Base);
         }
         
+        Usuario_Digitando(Rst){
+            if(Rst == true){
+                $("#userDigitando").css("display","inherit");
+            }else{
+                $("#userDigitando").css("display","none");
+            }
+        }
+        
         Escrever_Mensagem_Usuario(Pacote_User){
-        //this.CHAT_Talk = {Nome:"{Username}", Mensagem:"{Talk}", Hora:"{Time}"};
         
             $(".chat-list").append('<li class="chat-item">'+
                                             '<div class="chat-content">'+
@@ -433,20 +445,18 @@ constructor(Caminho_Config){
         }
         
         Escrever_Mensagem_Suporte(Pacote_Suporte){
-        //this.CHAT_Talk = {Nome:"{Username}", Mensagem:"{Talk}", Hora:"{Time}"};
-        
-        $(".chat-list").append('<li class="odd chat-item">'+
-                                        '<div class="chat-content">'+
-                                            '<h6 class="font-medium">James Anderson</h6>'+
-                                            '<div class="box bg-light-inverse">'+ Pacote_Suporte.Mensagem +'</div>'+
-                                            '<br>'+
-                                        '</div>'+
-                                        '<div class="chat-img chat-Img-Left"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_Suporte.png" alt="user"></div>'+
-                                        '<div class="chat-time">'+ Pacote_Suporte.Hora +'</div>'+
-                                    '</li>');     
-        $(".Painel-Dialog").scrollTop(parseInt($(".chat-list").css("height")));
-
+            $(".chat-list").append('<li class="odd chat-item">'+
+                                            '<div class="chat-content">'+
+                                                '<h6 class="font-medium">James Anderson</h6>'+
+                                                '<div class="box bg-light-inverse">'+ Pacote_Suporte.Mensagem +'</div>'+
+                                                '<br>'+
+                                            '</div>'+
+                                            '<div class="chat-img chat-Img-Left"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_Suporte.png" alt="user"></div>'+
+                                            '<div class="chat-time">'+ Pacote_Suporte.Hora +'</div>'+
+                                        '</li>');     
+            $(".Painel-Dialog").scrollTop(parseInt($(".chat-list").css("height")));
         }
+        
         async setCriarChat(){
             var Componente = this;
             $("#Conteiner-Chat").html(
@@ -463,7 +473,19 @@ constructor(Caminho_Config){
                         '</div>'+
                     '</div>'+
                     '<div class="col-12 Painel-Mensagem">'+
-                    '<div class="Conteiner-Mensagem"><div class="Conteiner-Input"><input id="Caixa_Mensagem" type="text"/></div><div class="Container-Button"><img id="Botao_Mensagem" src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/enviarmensagem.png" alt="Enviar" /></div></div>'+
+                        '<div id="userDigitando" style="display: none">\n\
+                            <figure>\n\
+                                <img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/Digitando.gif" style="width:50px"/>\n\
+                            <figcaption>Usuário Digitando</figcaption>\n\
+                            </figure>\n\
+                         </div>'+
+                        '<div class="Conteiner-Mensagem"><div class="Conteiner-Input">\n\
+                            <input data-Modificate=false id="Caixa_Mensagem" type="text"/>\n\
+                        </div>\n\
+                        <div class="Container-Button">\n\
+                            <img id="Botao_Mensagem" src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/enviarmensagem.png" alt="Enviar" />\n\
+                        </div>\n\
+                        </div>'+
                     '</div>'+
                 '</div>');
         
@@ -472,9 +494,34 @@ constructor(Caminho_Config){
                 let Pacote_Suporte = {Pacote: 22, Mensagem: $("#Caixa_Mensagem").val(), Nome: "Suporte", Hora:  (new Date()).toLocaleTimeString().substring(0,4)}
                 Componente._onEnviar_MensagemSuporte(Pacote_Suporte);
                 Componente.Escrever_Mensagem_Suporte(Pacote_Suporte);
-                $(this).val("");                
+                $(this).val("");
+                event.target.dataset.modificate = false;
+                //console.log("nao modificado")
+
+            }else if(event.keyCode == 8){
+                if(event.target.dataset.modificate == "true" && ($(this).val().length == 1)){
+                    event.target.dataset.modificate = false;
+                    
+                    let Pacote_ChatDigitando = {Pacote: 23, Digitando: false}
+                    Componente.Pacote_Base.Pacote = 23;
+                    Componente.Pacote_Base.Conteudo = JSON.stringify(Pacote_ChatDigitando);
+                    Componente.enviarPacotes(Componente.Pacote_Base);
+                }
             }
         })
+        
+        $("#Caixa_Mensagem").keypress(function(event){
+            if(event.keyCode == 13) return false;
+             if(event.target.dataset.modificate == "false"){
+                event.target.dataset.modificate = true;
+                
+                    let Pacote_ChatDigitando = {Pacote: 23, Digitando: true}
+                    Componente.Pacote_Base.Pacote = 23;
+                    Componente.Pacote_Base.Conteudo = JSON.stringify(Pacote_ChatDigitando);
+                    Componente.enviarPacotes(Componente.Pacote_Base);
+
+             }
+        }) 
         
         $("#Botao_Mensagem").click(function(){
             if($("#Caixa_Mensagem").val() != ""){
@@ -494,7 +541,7 @@ constructor(Caminho_Config){
                     $("#ViewControlRemote").html(
                                                     '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/normalize.css" />'+
                                                    ' <link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/demo.css" />'+
-                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=24" />'+
+                                                    '<link rel="stylesheet" type="text/css" href="./Componentes/RdeskView/css/component.css?q=38" />'+
                                                     '<script src="./Componentes/RdeskView/js/modernizr.custom.js"></script>'+
                                                     '<div class="container-RdeskView">'+
                                                     '<div class="container-RdeskView-BarraMenu">'+

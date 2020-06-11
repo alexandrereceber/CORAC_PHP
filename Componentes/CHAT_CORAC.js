@@ -23,11 +23,27 @@ function CriarMensagemUser(Nome, Mensagem, Hora){
                         
 function CriarMensagemSuporte(Nome, Mensagem, Hora){
         $(".chat-list").append('<li class="odd chat-item">'+
-                                        '<div class="chat-content">'+
-                                            '<h6 class="font-medium">'+ Nome +'</h6>'+
-                                            '<div class="box bg-light-inverse">'+ Mensagem +'</div>'+
-                                        '</div>'+
-                                        '<div class="chat-img chat-Img-Left"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_Suporte.png" alt="user"></div>'+
-                                        '<div class="chat-time">'+ Hora +'</div>'+
-                                    '</li>'); 
+                                    '<div class="chat-content">'+
+                                        '<h6 class="font-medium">'+ Nome +'</h6>'+
+                                        '<div class="box bg-light-inverse">'+ Mensagem +'</div>'+
+                                    '</div>'+
+                                    '<div class="chat-img chat-Img-Left"><img src="http://'+ Padrao.getHostServer() +'/CORAC/Imagens/Chat/chat_Suporte.png" alt="user"></div>'+
+                                    '<div class="chat-time">'+ Hora +'</div>'+
+                                '</li>'); 
+        $("#userDigitando").remove();
+
+}
+
+function Chat_UserDigitando(Visivel){
+    if(Visivel == true){
+        $("body").append(
+        '<div id="userDigitando" style="position: fixed; top: 260px; left: 550px;">'+
+            '<figure>'+
+                '<img src="http://192.168.15.10/CORAC/Imagens/Chat/Digitando.gif" style="width:50px"/>'+
+            '<figcaption>Atendente Digitando.</figcaption>'+
+            '</figure>'+
+         '</div>')
+    }else{
+        $("#userDigitando").remove();
+    }
 }
