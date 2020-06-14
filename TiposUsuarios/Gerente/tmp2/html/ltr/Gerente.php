@@ -305,7 +305,9 @@ echo "<script>var Chave='$sendChave'</script>"
         <div class="modal-body">
           
         </div>
-        
+        <div class="modal-footer status-footer">
+
+        </div>         
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn  cancelar" data-dismiss="modal"></button><button type="button" class="btn  ok" data-dismiss="modal"></button>

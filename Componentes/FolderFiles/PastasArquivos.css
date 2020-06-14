@@ -1,0 +1,77 @@
+/*
+CSS para a caixa de pastas e arquivos remotos.
+*/
+/* 
+    Created on : 11/06/2020, 18:51:50
+    Author     : Alexandre José da Silva Marques
+*/
+@media screen and (min-width: 300px) and (max-width: 400px) {
+
+    .container-explorer{
+        width: 100%;
+        border: solid 1px #5555;
+        height: 100%;
+    }
+
+    .container-Directory{
+        border: solid 1px #4445;
+        height: 50%;
+        width: 100%;
+        display: block;
+    }
+
+    .container-Files{
+        border: solid 1px #4445;
+        height: 50%;
+        width: 100%;
+        display: block;
+    }
+
+}
+
+@media screen and (min-width: 401px)and (max-width: 900px) {
+    .container-explorer{
+        width: 100%;
+        border: solid 1px #5555;
+        height: 100%;
+    }
+
+    .container-Directory{
+        border: solid 1px #4445;
+        height: 100%;
+        width: 30%;
+        display: inline-block;
+    }
+
+    .container-Files{
+        border: solid 1px #4445;
+        height: 100%;
+        width: 70%;
+        display: inline-block;
+    }
+}
+
+@media screen and (min-width: 901px) {
+    .container-explorer{
+        width: 100%;
+        height: 100%;
+    }
+
+    .container-Directory{
+        border: solid 1px #4445;
+        height: 100%;
+        width: 30%;
+        display: inline-block;
+    }
+
+    .container-Files{
+        border: solid 1px #4445;
+        height: 100%;
+        width: 70%;
+        display: inline-block;
+    }
+    
+    .modal-dialog{
+        width: 900px !important;
+    }
+}

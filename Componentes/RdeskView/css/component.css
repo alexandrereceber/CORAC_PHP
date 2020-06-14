@@ -80,7 +80,7 @@
 }
 
 .gn-menu-main > li > a {
-		padding: 0 30px;
+		padding: 0 16px;
 		text-transform: uppercase;
 		letter-spacing: 1px;
 		font-weight: bold;
@@ -494,4 +494,43 @@ input.gn-search:focus {
     margin-left: 15px;
     font-style: oblique;
     font-size: 11px;
+}
+
+.mid-icon{
+    display: inline-flex;
+    margin-left: 34px;
+}
+
+.mid-legend{
+    display: inline-flex;
+    margin-left: 10px;
+}
+
+#Blok_EXEC{
+    
+    
+}
+
+.Autenticacao{
+    font-size: 21px;
+}
+
+.Rotulo_Label{
+    font-size: 20px;
+    color: blueviolet;
+}
+
+@media screen and (min-width: 300px) and (max-width: 400px) {
+
+ }
+
+@media screen and (min-width: 401px)and (max-width: 900px) {
+    
+}
+
+@media screen and (min-width: 901px) {
+      
+    .modal-dialog{
+        width: 600px !important;
+    }
 }
