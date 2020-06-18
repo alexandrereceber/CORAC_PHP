@@ -422,9 +422,18 @@ constructor(Caminho_Config){
         for(var i in Telas){
             TP = Telas[i].Primary || false;
             if(TP){
-                this.Componente_Tela_Primary.src = "data:image/png;base64," + Telas[i].Primary;
+                try{
+                   document.querySelector("#"+Telas[i].Monitor).src = "data:image/png;base64," + Telas[i].Screen;
+                }catch(err){
+                    
+                }
             }else{
-                document.querySelector("#"+Telas[i].Monitor).src="data:image/png;base64," + Telas[i].ThumbnailImage;
+                try{
+                    document.querySelector("#"+Telas[i].Monitor).src="data:image/png;base64," + Telas[i].Screen;
+
+                }catch(err){
+                    
+                }
             }
         }
     }
@@ -639,7 +648,7 @@ constructor(Caminho_Config){
     async setDisplayPrimary(DisplayPrimary){
 
         $("#id_container-RdeskView-Primario").append("\
-            <div id='div_"+ DisplayPrimary +"' class='div_DisplayPrimary'> \n\
+            <div id='div_Primary' class='div_DisplayPrimary'> \n\
                     <img  id='"+ DisplayPrimary +"' class='IMG_DisplayPrimary' src='http://"+ Padrao.getHostServer() +"/CORAC/Imagens/loads/loaders.gif'></img>\n\
             </div>");
         this.Componente_Tela_Primary = document.querySelector("#"+ DisplayPrimary +"");
@@ -695,12 +704,23 @@ constructor(Caminho_Config){
     }
 
     async setDisplayOther(DisplayOther){
-
+        var Self = this;
         $("#Conteiner-DisplayOther").append("\
             <div id='div_"+ DisplayOther +"' class='div_DisplayOther' \n\
                 style=  ' '> \n\
                     <img id='"+ DisplayOther +"' class='IMG_DisplayOther' src='http://"+ Padrao.getHostServer() +"/CORAC/Imagens/loads/loaders.gif'></img>\n\
             </div>");
+
+        $("#"+DisplayOther).click(function(event){
+           let Primary = document.querySelector(".IMG_DisplayPrimary");
+           let SCREEN_P = Primary.id;
+           
+           let SCREEN_O = this.id;
+           
+           Primary.id = SCREEN_O;
+           this.id = SCREEN_P;
+           
+        })
     }
 
     async WEBSOCKET_Close(D){
