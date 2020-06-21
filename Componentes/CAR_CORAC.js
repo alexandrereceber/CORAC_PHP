@@ -25,6 +25,7 @@ constructor(Caminho_Config){
 
         this.Pacote_Mouse = {
                     Pacote: 18,
+                    Screen: "",
                     altKey:false,
                     bubbles:false,
                     button:0,
@@ -82,6 +83,7 @@ constructor(Caminho_Config){
                             };
                             
         this.Componente_Tela_Primary = null; //Obtém a instancia do objeto DOM do img que receberá as imagem do monitor primário.
+        this.Display_Atual = null;
         /*Armazena as configurações dos monitores virtuais no cliente*/
         this.ConfigViewDisplays = {"Primario": 
                                             [   {"Dimensao":{"width": "100px", "heigth": "100px"}}, 
@@ -132,7 +134,18 @@ constructor(Caminho_Config){
         this.setON_Open();
 
     }
-
+    
+    deslocamentoScreen(){
+        let PosMouseScreen = {Des_ScreenX: 0, Des_ScreenY: 0}
+        for(var i in this.Configuracoes.Displays){
+            if(this.Display_Atual == this.Configuracoes.Displays[i].DeviceName){
+                PosMouseScreen.Des_ScreenX =  this.Configuracoes.Displays[i].X;
+                PosMouseScreen.Des_ScreenY =  this.Configuracoes.Displays[i].Y;                
+            }
+        }
+        return PosMouseScreen;
+    }
+    
     calcularDeslogamento(ev){
         let naturalHeight, naturalWidth, clientHeight, clientWidth, DfHeight, DfWidth;
         naturalHeight = ev.target.naturalHeight;
@@ -140,6 +153,7 @@ constructor(Caminho_Config){
         clientHeight = ev.target.clientHeight;
         clientWidth = ev.target.clientWidth;
 
+        
         if(naturalHeight > clientHeight) {
             let Df = (naturalHeight / clientHeight);
             //console.log("naturalHeight >= : " + Df);
@@ -167,8 +181,11 @@ constructor(Caminho_Config){
         }else{
             DfWidth = ev.offsetX;
         }
-
-        return {D_y: DfHeight, D_x: DfWidth};
+        let D_Screen = this.deslocamentoScreen();
+        
+        let Tela_Deslocamento = {D_y: D_Screen.Des_ScreenY + DfHeight, D_x: D_Screen.Des_ScreenX + DfWidth};
+        
+        return Tela_Deslocamento;
 
     }
 
@@ -183,6 +200,7 @@ constructor(Caminho_Config){
         let Normalizar_Escala = this.calcularDeslogamento(ev);
 
         this.Pacote_Mouse.Pacote = 18,
+        this.Pacote_Mouse.Screen = ev.target.id;
         this.Pacote_Mouse.altKey = ev.altKey;
         this.Pacote_Mouse.bubbles = ev.bubbles;
         this.Pacote_Mouse.button = ev.button;
@@ -219,9 +237,9 @@ constructor(Caminho_Config){
         this.Pacote_Mouse.x = ev.x;
         this.Pacote_Mouse.y = ev.y;
 
-        //console.log(this.Pacote_Mouse)
-        //console.log(ev)
-        //console.log(Normalizar_Escala)
+        console.log(this.Pacote_Mouse)
+        console.log(ev)
+        console.log(Normalizar_Escala)
 
         this.Pacote_Base.Pacote = 18;
         this.Pacote_Base.Conteudo = JSON.stringify(this.Pacote_Mouse);
@@ -651,6 +669,9 @@ constructor(Caminho_Config){
             <div id='div_Primary' class='div_DisplayPrimary'> \n\
                     <img  id='"+ DisplayPrimary +"' class='IMG_DisplayPrimary' src='http://"+ Padrao.getHostServer() +"/CORAC/Imagens/loads/loaders.gif'></img>\n\
             </div>");
+                                                            
+        this.Display_Atual = DisplayPrimary;
+        
         this.Componente_Tela_Primary = document.querySelector("#"+ DisplayPrimary +"");
         this.DisplayTela = document.querySelector(".div_DisplayPrimary");
         var self = this;
@@ -719,7 +740,7 @@ constructor(Caminho_Config){
            
            Primary.id = SCREEN_O;
            this.id = SCREEN_P;
-           
+           Self.Display_Atual = SCREEN_O;
         })
     }
 
