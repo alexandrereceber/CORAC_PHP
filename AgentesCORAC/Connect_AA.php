@@ -150,33 +150,33 @@ class Connect_AA {
         
         return $Dados;
     }
-        protected function Normalizar_AcessoRemoto($Requisicao, &$Dados){
-            $Dados = json_decode($Dados);
-            $Dados->AA_ServerCORAC = "ws://$this->Servidor:$this->Porta/CORAC/AcessoRemoto/";
-            $Dados = json_encode($Dados);
+    protected function Normalizar_AcessoRemoto($Requisicao, &$Dados){
+        $Dados = json_decode($Dados);
+        $Dados->AA_ServerCORAC = "ws://$this->Servidor:$this->Porta/CORAC/AcessoRemoto/";
+        $Dados = json_encode($Dados);
 
-        return $Dados;
+    return $Dados;
+}
+    public function AcessoRemoto($Requisicao) {
+
+    if($Requisicao == null|| $Requisicao == ""){
+        throw new Exception("Não foi encontrado nenhum pedido de acesso.", 34001);
+    }else{
+        $this->Requisicao = $Requisicao;
     }
-        public function AcessoRemoto($Requisicao) {
-                
-        if($Requisicao == null|| $Requisicao == ""){
-            throw new Exception("Não foi encontrado nenhum pedido de acesso.", 34001);
-        }else{
-            $this->Requisicao = $Requisicao;
-        }
-        
-        /**
-         * Pacote: Tipo de pacote que será entregue ao agente autônomo.
-         * Comando: Comando em powershell ou personalizado, dentro do CORAC desktop, que será executado.
-         * Resposta: Campo que conterá a resposta do AA.
-         * Formato: O formato de saída na resposta. Ex: json, xml, http e outros.
-         * Chave: Identificador do usuário que está logado, o AA chegará se o usuário esta validado, bloqueado ou outro status.
-         */
-        $Pacote_AcessoRemoto = ["Pacote" => 12,"Tipo" => $this->Requisicao, "Resposta" => null, "Formato" => 1, "Mecanismo" => 0 ,"Chave" => $this->Key];
-        $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_AcessoRemoto);
-        
-        $Normalizar = $this->Normalizar_AcessoRemoto($this->Requisicao, $Pacote_Recebido_CORAC_Desk);
-        
-        return $Normalizar;
-    }
+
+    /**
+     * Pacote: Tipo de pacote que será entregue ao agente autônomo.
+     * Comando: Comando em powershell ou personalizado, dentro do CORAC desktop, que será executado.
+     * Resposta: Campo que conterá a resposta do AA.
+     * Formato: O formato de saída na resposta. Ex: json, xml, http e outros.
+     * Chave: Identificador do usuário que está logado, o AA chegará se o usuário esta validado, bloqueado ou outro status.
+     */
+    $Pacote_AcessoRemoto = ["Pacote" => 12,"Tipo" => $this->Requisicao, "Resposta" => null, "Formato" => 1, "Mecanismo" => 0 ,"Chave" => $this->Key];
+    $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_AcessoRemoto);
+
+    $Normalizar = $this->Normalizar_AcessoRemoto($this->Requisicao, $Pacote_Recebido_CORAC_Desk);
+
+    return $Normalizar;
+}
 }

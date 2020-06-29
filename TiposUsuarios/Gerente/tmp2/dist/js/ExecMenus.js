@@ -11,6 +11,7 @@ class MenuLateral{
     constructo(){
 
     }
+    
     MenuLateral_Computadores(){
         
         $(".page-title").html("Computadores Gerenciados")

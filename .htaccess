@@ -68,6 +68,9 @@ RewriteRule (.*) AgentesCORAC/InfoAgentesCORAC.php?URL=$1&Req=%{HTTP_REFERER}&Me
 RewriteCond %{REQUEST_URI} /AA_AcessoRemoto_SYN/$
 RewriteRule (.*) AgentesCORAC/CAR_CORAC.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
+RewriteCond %{REQUEST_URI} /ConfCORAC/$
+RewriteRule (.*) AgentesCORAC/Config.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
 </IfModule>
 
 
