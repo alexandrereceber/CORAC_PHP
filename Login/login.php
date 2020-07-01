@@ -10,7 +10,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-    <title>Acessar Sistema</title>
+    <title>Login CORAC</title>
         <meta charset="UTF-8">
         <meta http-equiv="CACHE-CONTROL" content="Private">
         <meta http-equiv="CACHE-CONTROL" content="cache">
