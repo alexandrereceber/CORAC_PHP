@@ -116,6 +116,10 @@ try {
     $SelecionarDados->Select();
     $Saida = $SelecionarDados->getArrayDados()[0];
     
+    if($Saida == null){
+        throw new Exception("Usuário ou senha inválidos.", 14006);
+        exit;
+    }
     /**
      * O sistema validará se o usuário esta habilitado ou não somente se a configuração, abaixo, estiver como true;
      */
@@ -176,7 +180,40 @@ try {
                 $SelecionarDados->AtualizarDadosTabela($ChavesAtualizacao,$Atualizar);
             }
             
-        throw new Exception("Usuário ou senha inválidos.", 14006);
+        
+    }else{
+        if($Saida[4] > 0){
+           /**
+             * Garante que o contador será zerado, caso o usuário não bloquei por tentativas, ao efetivar o login.
+             */
+            $FiltroCampos = [
+                                [
+                                    [
+                                        0=>0,
+                                        1=>"=",
+                                        2=>$Usuario
+                                    ]
+                                ]
+                            ];
+
+                $SelecionarDados->setFiltros($FiltroCampos);
+                $SelecionarDados->Select();            
+                $UserPSError = $SelecionarDados->getArrayDados()[0];
+
+                $Tentativa = 0;
+                $ChavesAtualizacao = [
+                                        [
+                                            0=>5, 
+                                            1=>$UserPSError[5]]
+                                    ];
+                
+                $Atualizar = [
+                                [
+                                    "name"=>"Tentativa",
+                                    "value"=>$Tentativa]
+                            ];
+                $SelecionarDados->AtualizarDadosTabela($ChavesAtualizacao,$Atualizar);
+            }
     }
     
     $SDados["Active"]   = true;
@@ -184,7 +221,7 @@ try {
     $SDados["Password"] = $Senha;
     $SDados["Tusuario"] = $Saida[2];
     $SDados["Tempo"]    = time();
-    $Dados["tentativas"] = $Saida[4];
+    $SDados["Tentativas"] = $Saida[4];
     $SDados["ID"]       = md5($Saida[0]);
 
     session_save_path( __DIR__ . "/../Account/Sessoes");
@@ -208,7 +245,7 @@ try {
          $ResultRequest["Modo"] = "Login";
          $ResultRequest["Chave"] = $Chave;
          $ResultRequest["TipoUsuario"] = "Gerente";
-         $ResultRequest["Tentativas"] = $SDados["tentativa"];
+         $ResultRequest["Tentativas"] = $SDados["Tentativas"];
          $ResultRequest["Header"] = ConfigSystema::getHttp_Systema(). $Saida[2] ."?s=" . $Chave;
          echo json_encode($ResultRequest);
          break;
