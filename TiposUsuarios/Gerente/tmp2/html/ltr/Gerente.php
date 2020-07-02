@@ -50,6 +50,7 @@ echo "<script>var Chave='$sendChave'</script>"
     <!-- Custom CSS -->
     <link href="./TiposUsuarios/Gerente/tmp2/dist/css/style.min.css?t=<?php echo time(); ?>" rel="stylesheet">
     <link href="./TiposUsuarios/Gerente/tmp2/dist/css/CORAC/Corac_Custom.css?t=<?php echo time(); ?>" rel="stylesheet">
+    <link href="./CSS/Componentes/CMD_CORAC.css?t=<?php echo time(); ?>" rel="stylesheet">
     <link href="./TiposUsuarios/Gerente/tmp2/dist/css/Terceiros/slicknav/navigation-dark.css?t=<?php echo time(); ?>" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

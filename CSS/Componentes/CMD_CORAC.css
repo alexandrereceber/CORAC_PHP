@@ -1,0 +1,50 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02/07/2020, 08:48:54
+    Author     : Alexandre José da Silva Marques
+*/
+
+#Barra_InfoContainer{
+    display: flex;
+    position: absolute;
+    border: solid 1px;
+    top: 0px;
+    background-color: #7460ee;
+    right: 0px;
+    border-color: #7460ee;
+    color: white;
+    width: 14px;
+    height: 100%;
+}
+
+#Regulador_Info{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#Conteudo_info{
+    
+}
+
+.RegulaWidth{
+    display: inherit;
+    align-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+#Regulador_Info:hover{
+    background-color: #44ff00;
+}
+
+#BIGmini{
+    position: absolute;
+    right: -6px;
+    top: 0px;
+    cursor: pointer;
+}

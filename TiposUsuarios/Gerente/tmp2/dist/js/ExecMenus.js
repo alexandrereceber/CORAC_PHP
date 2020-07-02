@@ -3,17 +3,34 @@
  */
 
 'use strict';
+
+
+
 var Tabela_Computadores = new TabelaHTML("http://"+ Padrao.getHostServer() +"/CORAC/ControladorTabelas/");
 var Comandos_CORAC = new Commands("http://"+ Padrao.getHostServer() +"/CORAC/getInformacoesMaquinas/");
 var AR_CORAC = new ControleRemoto("http://"+ Padrao.getHostServer() +"/CORAC/AA_AcessoRemoto_SYN/");
+
 let Origem = false;
 class MenuLateral{
-    constructo(){
+    constructor(){
+        //-----------------------------------------------------------------------------------------------
 
+        /**
+         * Deixa a barra lateral de menus minima
+         * @type {type}
+         */
+        $("#main-wrapper").toggleClass("mini-sidebar");
+        if ($("#main-wrapper").hasClass("mini-sidebar")) {
+            $(".sidebartoggler").prop("checked", !0);
+            $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
+        } else {
+            $(".sidebartoggler").prop("checked", !1);
+            $("#main-wrapper").attr("data-sidebartype", "full");
+        }
+        //-----------------------------------------------------------------------------------------------
     }
     
     MenuLateral_Computadores(){
-        
         $(".page-title").html("Computadores Gerenciados")
         Tabela_Computadores.Destroy();
         Tabela_Computadores.setTabela = "bb22afd6fd3058670dbdf0bcc064ddde";
@@ -93,24 +110,13 @@ class MenuLateral{
                     Tbl_CPU.setChavesPrimaria(Idx);
                     Maquina = Tbl_CPU.getObterValorCampos(3);
 
-                    let Rst_AA =  await Comandos_CORAC.get_InformacoesMaquina(Maquina, "get_InfoGeral");
+                    await Comandos_CORAC.get_InformacoesMaquina(Maquina, "get_InfoGeral");
 
-
-                    if(Rst_AA == false) return false;
-
-                    $("#Container1-MenuInforFlash").html(  
-                                    "<div id='Container2-MenuInforFlash' class='row' data-original-title='' title=''>"+
-                                        "<div id='MenuInforFlash' class='col-12 d-flex no-block align-items-center' data-original-title='' title=''>"+
-                                            "<nav class='menu-navigation-dark'>"+
-                                                "<a href='#'><i class='fas fa-user'></i><span>"+ Rst_AA[0].Usuario +"</span></a>"+
-                                                "<a href='#'><i class='mdi mdi-desktop-mac'></i><span>"+ Rst_AA[0].PlacaMae +"</span></a>"+
-                                                "<a href='#' class=''><i class='fas fa-cogs'></i><span>"+ Rst_AA[0].SOCaption +"</span></a>"+
-                                                "<a href='#' class=''><i class='mdi mdi-memory'></i><span>"+ Rst_AA[0].Processador +"</span></a>"+
-                                                "<a href='#'><i class='fas fa-microchip'></i><span>"+ Rst_AA[0].Memoria +"</span></a>"+
-                                            "</nav>"+
-                                        "</div>"+
-                                    "</div>").css("display","none");
-                    $("#Container1-MenuInforFlash").fadeIn("slow");
+//
+//                    if(Rst_AA == false) return false;
+//
+//                    ShwInfo.addCaixa(Rst_AA[0].Usuario, Rst_AA[0].PlacaMae, Rst_AA[0].SOCaption, Rst_AA[0].Processador, Rst_AA[0].Memoria);
+//                    ShwInfo.ShowCaixa();
                 }catch(ex){
                     bootbox.alert(ex);
                 }
@@ -120,6 +126,7 @@ class MenuLateral{
             
         };
         Tabela_Computadores.FuncoesIcones[1] = function(){
+
             var Args = arguments;
             bootbox.confirm({
                 title: "Acesso Remoto",
@@ -190,6 +197,7 @@ class MenuLateral{
         };
     }
     MenuLateral_Submenu_Controler_Auto(){
+
         Tabela_Computadores.Destroy();
         $(".page-title").html("Agentes Autônomos")
         Tabela_Computadores.setTabela = "e78169c2553f6f5abe6e35fe042b792a";
