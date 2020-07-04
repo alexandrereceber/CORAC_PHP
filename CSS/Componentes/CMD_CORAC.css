@@ -5,13 +5,24 @@ and open the template in the editor.
 */
 /* 
     Created on : 02/07/2020, 08:48:54
-    Author     : Alexandre José da Silva Marques
+    Author     : Alexandre JosÃ© da Silva Marques
 */
+.Bt_InfoGerais{
+    display: inline-block;
+    height: 67px;
+    text-align: center;
+    width: 67px;
+}
+
+.icon_inf{
+    margin-bottom: 4px;
+    width: 40%;
+}
 
 #Barra_InfoContainer{
     display: flex;
     position: absolute;
-    border: solid 1px;
+    /* border: solid 1px; */
     top: 0px;
     background-color: #7460ee;
     right: 0px;
@@ -25,10 +36,54 @@ and open the template in the editor.
     display: flex;
     align-items: center;
     cursor: pointer;
+    background-color: #9a9a9a66;
+    border-right: solid 1px;
+    /* border-left: solid 1px; */
 }
 
 #Conteudo_info{
-    
+    display: block;
+    /* border: solid 1px; */
+    width: inherit;
+}
+
+#C_info_Cabecalho{
+    display: block;
+    /* border: solid 1px; */
+    height: 18%;
+    /* text-align: center; */
+}
+
+#C_inf_Img{display: inline-block;/* border: solid 1px; */height: 100%;width: 12%;margin: 0px;}
+
+#C_inf_Desc{
+    display: inline-flex;
+    /* border: solid 1px; */
+    height: 100%;
+    width: 87%;
+    margin: 0px;
+}
+
+#C_inf_Conteiner_Geral{
+    display: table;
+    /* border: solid 1px; */
+    height: 82%;
+    width: 100%;
+}
+
+#C_inf_C_Geral_botoes_Container{
+    display: table-cell;
+    /* border: solid 1px; */
+    height: 100%;
+    width: 7%;
+    text-align: center;
+}
+
+#C_inf_C_Geral_Desc_Container{
+    display: table-cell;
+    /* border: solid 1px; */
+    height: 82%;
+    width: 60%;
 }
 
 .RegulaWidth{
@@ -39,7 +94,9 @@ and open the template in the editor.
 }
 
 #Regulador_Info:hover{
-    background-color: #44ff00;
+    background-color: #8c545466;
+    border-right: solid 1px #fffcfc;
+    color: #ffffff;
 }
 
 #BIGmini{
@@ -47,4 +104,24 @@ and open the template in the editor.
     right: -6px;
     top: 0px;
     cursor: pointer;
+}
+
+#BarraContainer{
+   height: inherit;
+   overflow-y: auto;
+   display: block !important;
+   padding-top: 3px;
+}
+
+#Barra_Icones_GetInfo{
+    width: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
