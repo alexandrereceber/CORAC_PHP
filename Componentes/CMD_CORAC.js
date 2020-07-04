@@ -6,8 +6,9 @@
 class Commands extends JSController{
     constructor(Caminho){
         super(Caminho);
-        this.Barra_Lateral = {Min:true}
-        this.Menu_Geral = {Min:false}
+        this.Barra_Lateral = {Min:true};
+        this.Menu_Geral = {Min:false};
+        this.Botao_Selecionado = {Botao : null};
     }
     
     async get_InformacoesMaquina(Maquina, Comando){
@@ -89,23 +90,23 @@ class Commands extends JSController{
         }
     }
     MinMax_Barra_Lateral(p){
-           if(this.Barra_Lateral.Min){
-                let ant = $("#Regulador_Info").parent();
-                $(ant).animate({width:"100%"})
-                let Depois = $("#Regulador_Info").children();
-                $(Depois).removeClass("fa-angle-double-left");
-                $(Depois).addClass("fa-angle-double-right");
-                this.Barra_Lateral.Min = false;
-                $("#Regulador_Info").css("width","20px").css("padding-left","5px")
-            }else{
-                let ant = $("#Regulador_Info").parent();
-                $(ant).animate({width:"14px"})
-                let Depois = $("#Regulador_Info").children();
-                $(Depois).removeClass("fa-angle-double-right");
-                $(Depois).addClass("fa-angle-double-left");
-                this.Barra_Lateral.Min = true;
-                $("#Regulador_Info").css("width","20px").css("border-right","").css("padding-left","")
-            }
+        if(this.Barra_Lateral.Min){
+            let ant = $("#Regulador_Info").parent();
+            $(ant).animate({width:"100%"})
+            let Depois = $("#Regulador_Info").children();
+            $(Depois).removeClass("fa-angle-double-left");
+            $(Depois).addClass("fa-angle-double-right");
+            this.Barra_Lateral.Min = false;
+            $("#Regulador_Info").css("width","20px").css("padding-left","5px")
+        }else{
+            let ant = $("#Regulador_Info").parent();
+            $(ant).animate({width:"14px"})
+            let Depois = $("#Regulador_Info").children();
+            $(Depois).removeClass("fa-angle-double-right");
+            $(Depois).addClass("fa-angle-double-left");
+            this.Barra_Lateral.Min = true;
+            $("#Regulador_Info").css("width","20px").css("border-right","").css("padding-left","")
+        }
     }
     Show_BarraLateral(){
         let Self = this;
@@ -132,16 +133,25 @@ class Commands extends JSController{
     }
     
     addBotoes(){
-        
+        let Self = this;
         let Bt = [
-                    {"IDX":0, "Nome":"Rede", "Funcao":"", "Icone": this.Icones("Rede") ,"Etiqueta":"Rede","Descricao":"Busca informações sobre as configurações de hardware e software da placa de rede da máquina.", "Active":false},
-                    {"IDX":1, "Nome":"DiscoRigido", "Funcao":"", "Icone": this.Icones("HD") ,"Etiqueta":"Hard Disc","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
-                    {"IDX":2, "Nome":"Memória", "Funcao":"", "Icone": this.Icones("HD") ,"Etiqueta":"Hard Disc","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
-                    {"IDX":3, "Nome":"Processador", "Funcao":"", "Icone": this.Icones("HD") ,"Etiqueta":"Hard Disc","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
-                    {"IDX":4, "Nome":"Vídeo", "Funcao":"", "Icone": this.Icones("HD") ,"Etiqueta":"Hard Disc","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
-                    {"IDX":5, "Nome":"Teclado", "Funcao":"", "Icone": this.Icones("HD") ,"Etiqueta":"Hard Disc","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
-                    {"IDX":6, "Nome":"Mouse", "Funcao":"", "Icone": this.Icones("HD") ,"Etiqueta":"Hard Disc","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
-                    {"IDX":7, "Nome":"Áudio", "Funcao":"", "Icone": this.Icones("HD") ,"Etiqueta":"Hard Disc","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
+                    {
+                        "IDX":0, 
+                        "Nome":"Rede", 
+                        "Funcao":function(){
+                            //alert(9)
+                        }, 
+                        "Etiqueta":"Rede",
+                        "Descricao":"Busca informações sobre as configurações de hardware e software da placa de rede da máquina.", 
+                        "Active":false},
+                    
+                    {"IDX":1, "Nome":"DiscoRigido", "Funcao":null, "Etiqueta":"Disco Rígido","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
+                    {"IDX":2, "Nome":"Memoria", "Funcao":null, "Etiqueta":"Memória","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
+                    {"IDX":3, "Nome":"Processador", "Funcao":null, "Etiqueta":"Processador","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
+                    {"IDX":4, "Nome":"Video", "Funcao":null, "Etiqueta":"Vídeo","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
+                    {"IDX":5, "Nome":"Teclado", "Funcao":null, "Etiqueta":"Teclado","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
+                    {"IDX":6, "Nome":"Mouse", "Funcao":null, "Etiqueta":"Mouse","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
+                    {"IDX":7, "Nome":"Audio", "Funcao":null, "Etiqueta":"Áudio","Descricao":"Busca informações sobre os discos da máquina.", "Active":false},
                ]
 
         let Modelo_Botao = "<a href='#' class='{Class}' id='{Nome}' data-index={IDX} alt='{Descricao}'>{Icone}<span>{Etiqueta}</span></a>"
@@ -149,14 +159,41 @@ class Commands extends JSController{
         for(var i in Bt){
             let _IDX = Modelo_Botao.replace("{IDX}",Bt[i].IDX);
             let _Nome = _IDX.replace("{Nome}",Bt[i].Nome);
-            let _Funcao = _Nome.replace("{Funcao}",Bt[i].Funcao);
-            let _Icone = _Funcao.replace("{Icone}",Bt[i].Icone);
+            let _Icone = _Nome.replace("{Icone}", this.Icones(Bt[i].Nome));
             let _Etiqueta = _Icone.replace("{Etiqueta}",Bt[i].Etiqueta);
             let _Descricao = _Etiqueta.replace("{Descricao}",Bt[i].Descricao);
             let _BotaoCompleto = _Descricao.replace("{Active}",Bt[i].Active);
-            
-        $("#Barra_Icones_GetInfo").append(_BotaoCompleto)   
+        
+        /**
+         * Adiciona uma função em cada botão relativa à sua representação.
+         */
+        $("#Barra_Icones_GetInfo").append(_BotaoCompleto);
+        if(Bt[i].Funcao != null)
+            $("#" + Bt[i].Nome).click(Bt[i].Funcao);
+        
+        /**
+         * Aciona uma funcionalidade que será realizada por todos os botões.
+         */
+        $("#" + Bt[i].Nome).click(function(e){
+            if(Self.Botao_Selecionado.Botao == null){
+                Self.Botao_Selecionado.Botao = e.currentTarget.id;
+                $("#"+Self.Botao_Selecionado.Botao).addClass("Active");
+            }
+            else {
+                let BotaoAtual = Self.Botao_Selecionado.Botao;
+                $("#"+BotaoAtual).removeClass("Active");
+                $(e.currentTarget).addClass("Active");
+                Self.Botao_Selecionado.Botao = e.currentTarget.id;
+            }
+
+            let idnx = parseInt(e.currentTarget.dataset.index);
+            let IMG = Self.Icones(idnx);
+            $("#C_inf_Img").html(IMG);
+        })
+        
         }
+        
+
     }
     
     /**
@@ -181,10 +218,19 @@ class Commands extends JSController{
     }
     
     Icones(IDX){
-        var I = []
+        var I = [], Endereco = "http://192.168.15.10/CORAC"
         I["Rede"] = '<svg class="icon_inf" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="network-wired" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svg-inline--fa fa-network-wired fa-w-20 fa-7x"><path fill="currentColor" d="M632 240H336v-80h80c17.67 0 32-14.33 32-32V32c0-17.67-14.33-32-32-32H224c-17.67 0-32 14.33-32 32v96c0 17.67 14.33 32 32 32h80v80H8c-4.42 0-8 3.58-8 8v16c0 4.42 3.58 8 8 8h120v80H64c-17.67 0-32 14.33-32 32v96c0 17.67 14.33 32 32 32h160c17.67 0 32-14.33 32-32v-96c0-17.67-14.33-32-32-32h-64v-80h320v80h-64c-17.67 0-32 14.33-32 32v96c0 17.67 14.33 32 32 32h160c17.67 0 32-14.33 32-32v-96c0-17.67-14.33-32-32-32h-64v-80h120c4.42 0 8-3.58 8-8v-16c0-4.42-3.58-8-8-8zM224 384v96H64v-96h160zm0-256V32h192v96H224zm352 256v96H416v-96h160z" class=""></path></svg>';
-        I["HD"] = '<svg  class="icon_inf" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="disc-drive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-disc-drive fa-w-16 fa-7x"><path fill="currentColor" d="M256 224a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm248 224h-24V96a64 64 0 0 0-64-64H96a64 64 0 0 0-64 64v352H8a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h496a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8zm-56 0H64V96a32 32 0 0 1 32-32h320a32 32 0 0 1 32 32zM256 96a160 160 0 1 0 160 160A160 160 0 0 0 256 96zm0 288a128 128 0 1 1 128-128 128.14 128.14 0 0 1-128 128z" class=""></path></svg>'
-        return I[IDX]
+        I["DiscoRigido"] = '<svg  class="icon_inf" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="disc-drive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-disc-drive fa-w-16 fa-7x"><path fill="currentColor" d="M256 224a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm248 224h-24V96a64 64 0 0 0-64-64H96a64 64 0 0 0-64 64v352H8a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h496a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8zm-56 0H64V96a32 32 0 0 1 32-32h320a32 32 0 0 1 32 32zM256 96a160 160 0 1 0 160 160A160 160 0 0 0 256 96zm0 288a128 128 0 1 1 128-128 128.14 128.14 0 0 1-128 128z" class=""></path></svg>'
+        I["Processador"] = '<svg  class="icon_inf" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="disc-drive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-disc-drive fa-w-16 fa-7x"><path fill="currentColor" d="M256 224a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm248 224h-24V96a64 64 0 0 0-64-64H96a64 64 0 0 0-64 64v352H8a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h496a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8zm-56 0H64V96a32 32 0 0 1 32-32h320a32 32 0 0 1 32 32zM256 96a160 160 0 1 0 160 160A160 160 0 0 0 256 96zm0 288a128 128 0 1 1 128-128 128.14 128.14 0 0 1-128 128z" class=""></path></svg>'
+        I["Video"] = '<svg  class="icon_inf" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="disc-drive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-disc-drive fa-w-16 fa-7x"><path fill="currentColor" d="M256 224a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm248 224h-24V96a64 64 0 0 0-64-64H96a64 64 0 0 0-64 64v352H8a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h496a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8zm-56 0H64V96a32 32 0 0 1 32-32h320a32 32 0 0 1 32 32zM256 96a160 160 0 1 0 160 160A160 160 0 0 0 256 96zm0 288a128 128 0 1 1 128-128 128.14 128.14 0 0 1-128 128z" class=""></path></svg>'
+        I["Mouse"] = '<svg  class="icon_inf" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="disc-drive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-disc-drive fa-w-16 fa-7x"><path fill="currentColor" d="M256 224a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm248 224h-24V96a64 64 0 0 0-64-64H96a64 64 0 0 0-64 64v352H8a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h496a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8zm-56 0H64V96a32 32 0 0 1 32-32h320a32 32 0 0 1 32 32zM256 96a160 160 0 1 0 160 160A160 160 0 0 0 256 96zm0 288a128 128 0 1 1 128-128 128.14 128.14 0 0 1-128 128z" class=""></path></svg>'
+        I["Audio"] = '<svg  class="icon_inf" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="disc-drive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-disc-drive fa-w-16 fa-7x"><path fill="currentColor" d="M256 224a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm248 224h-24V96a64 64 0 0 0-64-64H96a64 64 0 0 0-64 64v352H8a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h496a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8zm-56 0H64V96a32 32 0 0 1 32-32h320a32 32 0 0 1 32 32zM256 96a160 160 0 1 0 160 160A160 160 0 0 0 256 96zm0 288a128 128 0 1 1 128-128 128.14 128.14 0 0 1-128 128z" class=""></path></svg>'
+        I["Teclado"] = '<svg  class="icon_inf" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="disc-drive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-disc-drive fa-w-16 fa-7x"><path fill="currentColor" d="M256 224a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm248 224h-24V96a64 64 0 0 0-64-64H96a64 64 0 0 0-64 64v352H8a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h496a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8zm-56 0H64V96a32 32 0 0 1 32-32h320a32 32 0 0 1 32 32zM256 96a160 160 0 1 0 160 160A160 160 0 0 0 256 96zm0 288a128 128 0 1 1 128-128 128.14 128.14 0 0 1-128 128z" class=""></path></svg>'
+        I["Memoria"] = '<svg  class="icon_inf" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="disc-drive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-disc-drive fa-w-16 fa-7x"><path fill="currentColor" d="M256 224a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm248 224h-24V96a64 64 0 0 0-64-64H96a64 64 0 0 0-64 64v352H8a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h496a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8zm-56 0H64V96a32 32 0 0 1 32-32h320a32 32 0 0 1 32 32zM256 96a160 160 0 1 0 160 160A160 160 0 0 0 256 96zm0 288a128 128 0 1 1 128-128 128.14 128.14 0 0 1-128 128z" class=""></path></svg>'
+        I[0] = "<img  class='IMGBotaoSelecionado' src='" + Endereco + "/Imagens/InfoGerais/Network.png?q=1' />";
+        I[1] = "<img  class='IMGBotaoSelecionado' src='" + Endereco + "/Imagens/InfoGerais/DiscoRigido.png?q=2' />";
+        
+       return I[IDX]
     }
 }
 

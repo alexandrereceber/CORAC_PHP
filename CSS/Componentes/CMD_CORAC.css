@@ -19,6 +19,16 @@ and open the template in the editor.
     width: 40%;
 }
 
+.IMGBotaoSelecionado{
+    position: relative;
+    left: 144px;
+    top: 18px;
+    width: 76%;
+}
+.Active{
+    background-color: #41a5d9 !important;
+    color: whitesmoke !important;
+}
 #Barra_InfoContainer{
     display: flex;
     position: absolute;
@@ -48,19 +58,19 @@ and open the template in the editor.
 }
 
 #C_info_Cabecalho{
-    display: block;
-    /* border: solid 1px; */
-    height: 18%;
-    /* text-align: center; */
-}
-
-#C_inf_Img{display: inline-block;/* border: solid 1px; */height: 100%;width: 12%;margin: 0px;}
-
-#C_inf_Desc{
     display: inline-flex;
     /* border: solid 1px; */
+    height: 18%;
+    width: 100%;
+}
+
+#C_inf_Img{/* display: inline-block; *//* border: solid 1px; */height: 100%;width: 12%;margin: auto;}
+
+#C_inf_Desc{
+    display: flow-root;
+    /* border: solid 1px; */
     height: 100%;
-    width: 87%;
+    width: 88%;
     margin: 0px;
 }
 
