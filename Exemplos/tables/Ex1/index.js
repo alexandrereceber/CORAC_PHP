@@ -7,7 +7,7 @@ var t = new TabelaHTML("http://"+ Padrao.getHostServer() +"/CORAC/ControladorTab
  * Nome da tabela que esta no formato MD5 no arquivo de configuração Config/Configuracao.php
  * @type String
  */
-t.setTabela = "d7227c5ee4543a7972360a111fa2305f";
+t.setTabela = "5ca5579ec4bd2e5ca5d9608be68ae733";
 t.setRecipiente = "dados";
 t.Name = "t";
 t.show();

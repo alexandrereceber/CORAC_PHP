@@ -250,9 +250,19 @@ try {
          echo json_encode($ResultRequest);
          break;
 
+    case "Administrado":
+         $ResultRequest["Error"] = false;
+         $ResultRequest["Modo"] = "Login";
+         $ResultRequest["Chave"] = $Chave;
+         $ResultRequest["TipoUsuario"] = "Administrador";
+         $ResultRequest["Tentativas"] = $SDados["Tentativas"];
+         $ResultRequest["Header"] = ConfigSystema::getHttp_Systema(). $Saida[2] ."?s=" . $Chave;
+         echo json_encode($ResultRequest);
+         break;
+     
      default:
          session_destroy();
-        throw new Exception("Esse usuário foi autenticado, mas não possui nenhum perfil de acesso. Favor entrar em contato com o administrador.", 14007);
+            throw new Exception("Esse usuário foi autenticado, mas não possui nenhum perfil de acesso. Favor entrar em contato com o administrador.", 14007);
          break;
  }
 
