@@ -88,7 +88,9 @@ async function EnviarDados(obj){
                 obj[0].value = "";
                 break;
 
+            case 14006:            
             case 14004:
+
                 Result.Mensagem = "<i class='fas fa-user-times' style='color: red; font-size: 30px'/> " + Result.Mensagem + ""
                 
                 break;

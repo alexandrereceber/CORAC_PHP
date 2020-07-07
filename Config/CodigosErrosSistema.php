@@ -162,5 +162,11 @@
 
  * ERROR ACIMA DE 10000 SÃO ERROS PERSONALIZADOS DAS FUNÇÕES DAS CLASSES DAS TABELAS EM SEUS MÉTODOS:
  * Jobs() - validarConteudoCampoRegex()
+ * 
+ * 50000 - 60000 => Erros gerados no CORAC Desktop
+ * 
+ * Page Servidor_HTTP.cs
+ * 
+ * 50000 - Esse comando não existe. 
  */
 

@@ -86,7 +86,7 @@ class Connect_AA {
 
         if($Resultado_CORAC_Desktop->{"Pacote"} == 8) {
             $Mensagem = $Resultado_CORAC_Desktop->{"Mensagem"};
-            throw new Exception($Mensagem, 34305);
+            throw new Exception($Mensagem, $Resultado_CORAC_Desktop->{"Numero"});
         }
         return $Resultado_CORAC_Desktop->{"Resposta"};
     }
@@ -106,7 +106,7 @@ class Connect_AA {
      * @return type
      * @throws Exception
      */
-    public function Executar_CMD($CMD) {
+    public function Executar_CMD($CMD, $ScriptBD = false) {
                 
         if($CMD == null|| $CMD == ""){
             throw new Exception("Não foi encontrado nenhum comando.", 34001);
@@ -121,7 +121,7 @@ class Connect_AA {
          * Formato: O formato de saída na resposta. Ex: json, xml, http e outros.
          * Chave: Identificador do usuário que está logado, o AA chegará se o usuário esta validado, bloqueado ou outro status.
          */
-        $Pacote_Comando = ["Pacote" => 3,"Comando" => $this->Comando, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
+        $Pacote_Comando = ["Pacote" => 3,"Comando" => $this->Comando, "ScriptBD" => $ScriptBD, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
         $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_Comando);
 
         $Normalizar = $this->Normalizar_Executar_CMD($this->Comando, $Pacote_Recebido_CORAC_Desk);
@@ -138,13 +138,15 @@ class Connect_AA {
     protected function Normalizar_Executar_CMD($CMD, &$Dados){
         $CMD = preg_split("/ /", $CMD)[0];
         
-        switch ($Dados) {
+        switch ($CMD) {
             case "":
-
 
                 break;
 
             default:
+                $InsertIP = json_decode($Dados);
+                $InsertIP[0]->IP = $this->Servidor;
+                $Dados = json_encode($InsertIP);
                 break;
         }
         

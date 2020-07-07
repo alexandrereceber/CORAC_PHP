@@ -38,7 +38,7 @@ class MenuLateral{
         Tabela_Computadores.GeralDivClass = "Tabela_Geral table-striped table-bordered";
         Tabela_Computadores.Name = "Tabela_Computadores";
         //Tabela_Computadores.Configuracao.Tabela.Linha.Select_Color="#c3e6cb";
-        //Tabela_Computadores.Configuracao.Tabela.Linha.Unselect_Color="initial";
+        Tabela_Computadores.Configuracao.Tabela.Linha.Unselect_Color="rgb(232, 241, 234)";
         Tabela_Computadores.setDefaultOrderBy(3,"ASC")
         Tabela_Computadores.FuncoesChvExt[0] = function(){
             
@@ -109,8 +109,8 @@ class MenuLateral{
                     Idx = Args[1].attributes["data-chaveprimaria"].nodeValue;
                     Tbl_CPU.setChavesPrimaria(Idx);
                     Maquina = Tbl_CPU.getObterValorCampos(3);
-
-                    await Comandos_CORAC.get_InformacoesMaquina(Maquina, "get_InfoGeral");
+                    Comandos_CORAC.Maquina = Maquina;
+                    await Comandos_CORAC.get_InformacoesMaquina();
 
 //
 //                    if(Rst_AA == false) return false;
@@ -118,7 +118,7 @@ class MenuLateral{
 //                    ShwInfo.addCaixa(Rst_AA[0].Usuario, Rst_AA[0].PlacaMae, Rst_AA[0].SOCaption, Rst_AA[0].Processador, Rst_AA[0].Memoria);
 //                    ShwInfo.ShowCaixa();
                 }catch(ex){
-                    bootbox.alert(ex);
+                    bootbox.alert("<h3><i class='fas fa-times' style='color: red; font-size: 27px' data-original-title='' title=''></i> " + ex +"</h3>");
                 }
             }
             });
@@ -158,7 +158,8 @@ class MenuLateral{
 
 
                 }catch(ex){
-                    bootbox.alert(ex);
+                    bootbox.alert("<h3><i class='fas fa-times' style='color: red; font-size: 27px' data-original-title='' title=''></i> " + ex +"</h3>");
+
                 }
             }
             });

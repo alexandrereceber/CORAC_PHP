@@ -21,9 +21,9 @@ and open the template in the editor.
 
 .IMGBotaoSelecionado{
     position: relative;
-    left: 144px;
-    top: 18px;
-    width: 76%;
+    /* left: 144px; */
+    top: -92px;
+    width: 90px;
 }
 .Active{
     background-color: #41a5d9 !important;
@@ -58,42 +58,54 @@ and open the template in the editor.
 }
 
 #C_info_Cabecalho{
-    display: inline-flex;
+    display: inline-block;
     /* border: solid 1px; */
-    height: 18%;
+    height: 88px;
     width: 100%;
 }
 
-#C_inf_Img{/* display: inline-block; *//* border: solid 1px; */height: 100%;width: 12%;margin: auto;}
+#C_inf_C_Geral_Img{
+    display: inline-block;
+    width: 99%;
+    height: 8px;
+    background-color: #8cca90;
+    margin: 6px;
+}
+
+#C_inf_C_Geral_AA{
+    display: inline-block;
+    width: 100%;
+    height: inherit;
+}
 
 #C_inf_Desc{
-    display: flow-root;
+    display: inline-block;
     /* border: solid 1px; */
     height: 100%;
-    width: 88%;
-    margin: 0px;
+    width: inherit;
+    margin-top: 10px;
 }
 
 #C_inf_Conteiner_Geral{
-    display: table;
+    display: flex;
     /* border: solid 1px; */
-    height: 82%;
+    height: 100%;
     width: 100%;
 }
 
 #C_inf_C_Geral_botoes_Container{
-    display: table-cell;
+    display: flex;
     /* border: solid 1px; */
     height: 100%;
-    width: 7%;
+    width: 150px;
     text-align: center;
 }
 
 #C_inf_C_Geral_Desc_Container{
-    display: table-cell;
+    display: inline-block;
     /* border: solid 1px; */
-    height: 82%;
-    width: 60%;
+    height: auto;
+    width: 100%;
 }
 
 .RegulaWidth{
@@ -121,10 +133,22 @@ and open the template in the editor.
    overflow-y: auto;
    display: block !important;
    padding-top: 3px;
+   position: relative;
+   top: 105px;
 }
 
 #Barra_Icones_GetInfo{
     width: 100%;
+}
+
+#C_Inf_Cab_NomeMaquina{
+    text-align: center;
+    font-size: 30px;
+}
+
+#C_Inf_Cab_IPMaquina{
+    text-align: center;
+    font-size: 20px;
 }
 
 ::-webkit-scrollbar {

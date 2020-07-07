@@ -50,7 +50,8 @@ $Metodo         = $_REQUEST["Metodo"];
 $SSL            = $_REQUEST["SSL"];
 $Formato        = $_REQUEST["sendRetorno"]  == "" ? "JSON" : $_REQUEST["sendRetorno"]; //Atribui um formato padrão
 $CMD            = $_REQUEST["Command"];
-$AA_CORAC  = $_REQUEST["AA_CORAC"];
+$ScriptBD         = $_REQUEST["ScriptBD"]  == "" ? false : $_REQUEST["ScriptBD"]; //Atribui um formato padrão
+$AA_CORAC       = $_REQUEST["AA_CORAC"];
 
 ConfigPowershell::setServidor($AA_CORAC);
 
@@ -70,7 +71,7 @@ try{
            * Armazena o resultado da resposta do AA.
            */ 
             $Agente_Autonomos_PACOTES = new Connect_AA(ConfigPowershell::getServidor(), ConfigPowershell::getPorta(), ConfigPowershell::getProtocolo(), ConfigPowershell::getPasta(), $sendChave);
-            $ResultRequest[RST_AG] = $Agente_Autonomos_PACOTES->Executar_CMD($CMD);
+            $ResultRequest[RST_AG] = $Agente_Autonomos_PACOTES->Executar_CMD($CMD, $ScriptBD);
             
            /**
             * Armazena o tempo gasto com o processamento até esse ponto. Select
