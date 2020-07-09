@@ -128,12 +128,40 @@ class Commands extends JSController{
             case 0:
                 this.Bt_InfoGeral_Usuario();
                 break;
+
+            case 1:
+                this.Bt_InfoGeral_Hora();
+                break;
                 
             default:
                 
                 break;
         }   
     }
+    
+     /**
+     * Busca informações relativas ao usuário que está logado no sistema no momento.
+     * Tipo: SVG
+     */
+    async Bt_InfoGeral_Hora(){
+        
+        if(this.Maquina == null){
+            throw "O nome da máquina não foi definido!";
+        }
+        
+        this.DadosEnvio.AA_CORAC = this.Maquina;
+        this.DadosEnvio.Command = "placamaehtml";
+
+        let TratarResposta = await this.Atualizar();
+
+        if(TratarResposta.Error != false){
+            this.TratarErros(TratarResposta);
+            return false;
+        }
+        this.Resultado = JSON.parse(TratarResposta.RST_AG);
+        
+    }
+    
      /**
      * Busca informações relativas ao usuário que está logado no sistema no momento.
      * Tipo: SVG

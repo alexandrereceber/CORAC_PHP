@@ -74,7 +74,7 @@ try{
             $ResultRequest[RST_AG] = $Agente_Autonomos_PACOTES->Executar_CMD($CMD, $ScriptBD);
             
            /**
-            * Armazena o tempo gasto com o processamento até esse ponto. Select
+            * Armazena o tempo gasto com o processamento até esse ponto. Contando também a execução do powershell no agente autônomo.
             */
             ConfigSystema::getEndTimeTotal();
             $ResultRequest["SistemaTempoTotal"] = ConfigSystema::getTimeTotal();

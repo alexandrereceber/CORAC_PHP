@@ -137,19 +137,21 @@ class Connect_AA {
      */
     protected function Normalizar_Executar_CMD($CMD, &$Dados){
         $CMD = preg_split("/ /", $CMD)[0];
-        
+
         switch ($CMD) {
             case "":
 
                 break;
 
             default:
-                $InsertIP = json_decode($Dados);
-                $InsertIP[0]->IP = $this->Servidor;
-                $Dados = json_encode($InsertIP);
+
                 break;
         }
         
+        $InsertIP = json_decode(($Dados));
+        $InsertIP[0]->IP = $this->Servidor;        
+
+        $Dados = json_encode($InsertIP);
         return $Dados;
     }
     protected function Normalizar_AcessoRemoto($Requisicao, &$Dados){

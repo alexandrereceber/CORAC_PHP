@@ -250,7 +250,7 @@ try {
          echo json_encode($ResultRequest);
          break;
 
-    case "Administrado":
+    case "Administrador":
          $ResultRequest["Error"] = false;
          $ResultRequest["Modo"] = "Login";
          $ResultRequest["Chave"] = $Chave;

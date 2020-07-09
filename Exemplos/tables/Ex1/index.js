@@ -10,5 +10,8 @@ var t = new TabelaHTML("http://"+ Padrao.getHostServer() +"/CORAC/ControladorTab
 t.setTabela = "5ca5579ec4bd2e5ca5d9608be68ae733";
 t.setRecipiente = "dados";
 t.Name = "t";
+t.Funcoes.Conteudo = function(i, v, p){
+    return "<span>"+ p +"</span>";
+}
 t.show();
             
