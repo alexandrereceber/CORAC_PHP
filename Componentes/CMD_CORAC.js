@@ -13,6 +13,8 @@ class Commands extends JSController{
         this.Maquina = null;
         this.Comandos = null;
         this.ScriptBD = false;
+        this.TempoResposta = null;
+        this.AA = null;
     }
     
     set Maquinas(M){
@@ -41,14 +43,15 @@ class Commands extends JSController{
         this.DadosEnvio.ScriptBD = this.ScriptBD;
         
         let TratarResposta = await this.Atualizar();
-
+        this.TempoResposta = TratarResposta.SistemaTempoTotal;
+        this.AA = TratarResposta.AA;
+        
         if(TratarResposta.Error != false){
             this.TratarErros(TratarResposta);
             return false;
         }
-        this.Resultado = JSON.parse(TratarResposta.RST_AG);
         
-        this.get_InforGeral();
+        this.get_InforGeral(TratarResposta.RST_AG);
 
         return true;
     }
@@ -56,32 +59,11 @@ class Commands extends JSController{
     /**
      * Trata os resultados da busca das informações gerais da máquina selecionada.
      */
-    async get_InforGeral(){
+    async get_InforGeral(InforGeral){
         let Self = this;
 
-        let ArrayUser = (this.Resultado[0].Usuario).split("-");
-
         
-        let Usuario = ArrayUser[ArrayUser.length - 1];
-        let PlacaMae = this.Resultado[0].PlacaMae;
-        let SOCaption = (this.Resultado[0].SOCaption).replace("Windows","");
-        let Memoria = Number((this.Resultado[0].Memoria) / (1024 * 1024)).toFixed(2) + " GB";
-        let Regx = /(i[0-5]|Celerom).*/ig
-        
-        let Processador = Regx.exec(this.Resultado[0].Processador)[0];  
-        $("#Container1-MenuInforFlash").html(  
-        "<div id='Container2-MenuInforFlash' class='row' data-original-title='' title=''>"+
-            "<div id='MenuInforFlash' class='col-12 d-flex no-block align-items-center' data-original-title='' title=''>"+
-                "<nav class='menu-navigation-dark'>"+
-                    "<a data-index=0 id='Bt_Usuario' href='#' class='Bt_INF_G'><i class='fas fa-user'></i><span>"+ Usuario +"</span></a>"+
-                    "<a data-index=1 id='Bt_PlacaMae'  href='#' class='Bt_INF_G'><i class='mdi mdi-desktop-mac Bt_INF_G'></i><span>"+ PlacaMae +"</span></a>"+
-                    "<a data-index=2 id='Bt_SOCaption'  href='#' class='Bt_INF_G'><i class='fas fa-cogs Bt_INF_G'></i><span>"+ SOCaption +"</span></a>"+
-                    "<a data-index=3 id='Bt_Processador'  href='#' class='Bt_INF_G'><i class='mdi mdi-memory Bt_INF_G'></i><span>"+ Processador +"</span></a>"+
-                    "<a data-index=4 id='Bt_Memoria'  href='#' class='Bt_INF_G'><i class='fas fa-microchip Bt_INF_G'></i><span>"+ Memoria +"</span></a>"+
-                "</nav>"+
-            "<i id='BIGmini' class='fas fa-arrow-circle-up'></i>"+
-            "</div>"+
-        "</div>").css("display","none");
+        $("#Container1-MenuInforFlash").html(InforGeral).css("display","none");
 
         $("#Container1-MenuInforFlash").fadeIn("slow");
         
@@ -150,16 +132,18 @@ class Commands extends JSController{
         }
         
         this.DadosEnvio.AA_CORAC = this.Maquina;
-        this.DadosEnvio.Command = "placamaehtml";
+        this.DadosEnvio.Command = "get_UsuarioLogado";
 
         let TratarResposta = await this.Atualizar();
-
+        this.TempoResposta = TratarResposta.SistemaTempoTotal;
+        this.AA = TratarResposta.AA;
+        
         if(TratarResposta.Error != false){
             this.TratarErros(TratarResposta);
             return false;
         }
-        this.Resultado = JSON.parse(TratarResposta.RST_AG);
-        
+        $("#C_inf_C_Geral_AA").html(TratarResposta.RST_AG)
+
     }
     
      /**
@@ -176,13 +160,14 @@ class Commands extends JSController{
         this.DadosEnvio.Command = "get_UsuarioLogado";
 
         let TratarResposta = await this.Atualizar();
-
+        this.TempoResposta = TratarResposta.SistemaTempoTotal;
+        this.AA = TratarResposta.AA;
+        
         if(TratarResposta.Error != false){
             this.TratarErros(TratarResposta);
             return false;
         }
-        this.Resultado = JSON.parse(TratarResposta.RST_AG);
-        
+        $("#C_inf_C_Geral_AA").html(TratarResposta.RST_AG)
     }
 
      /**
@@ -267,7 +252,7 @@ class Commands extends JSController{
                                             <div id='C_info_Cabecalho'>\n\
                                                 <div id='C_inf_Desc'>\n\
                                                     <div id='C_Inf_Cab_NomeMaquina'>"+ this.DadosEnvio.AA_CORAC +"</div>\n\
-                                                    <div id='C_Inf_Cab_IPMaquina'>"+ this.Resultado[0].IP +"</div>\n\
+                                                    <div id='C_Inf_Cab_IPMaquina'>"+ this.AA.IP +"</div>\n\
                                                 </div>\n\
                                             </div>\n\
                                             <div id='C_inf_C_Geral_Img'></div>\n\

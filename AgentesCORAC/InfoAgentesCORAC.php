@@ -72,7 +72,7 @@ try{
            */ 
             $Agente_Autonomos_PACOTES = new Connect_AA(ConfigPowershell::getServidor(), ConfigPowershell::getPorta(), ConfigPowershell::getProtocolo(), ConfigPowershell::getPasta(), $sendChave);
             $ResultRequest[RST_AG] = $Agente_Autonomos_PACOTES->Executar_CMD($CMD, $ScriptBD);
-            
+            $ResultRequest["AA"] = ["NomeAgente"=>$AA_CORAC, "IP" => ConfigPowershell::getServidor()];
            /**
             * Armazena o tempo gasto com o processamento até esse ponto. Contando também a execução do powershell no agente autônomo.
             */

@@ -148,10 +148,6 @@ class Connect_AA {
                 break;
         }
         
-        $InsertIP = json_decode(($Dados));
-        $InsertIP[0]->IP = $this->Servidor;        
-
-        $Dados = json_encode($InsertIP);
         return $Dados;
     }
     protected function Normalizar_AcessoRemoto($Requisicao, &$Dados){
