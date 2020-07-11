@@ -35,7 +35,7 @@ class MenuLateral{
         Tabela_Computadores.Destroy();
         Tabela_Computadores.setTabela = "bb22afd6fd3058670dbdf0bcc064ddde";
         Tabela_Computadores.setRecipiente = "Conteudo_1";
-        Tabela_Computadores.GeralDivClass = "Tabela_Geral table-striped table-bordered";
+        Tabela_Computadores.CSSTableGeral.GeralTableClass = "Tabela_Geral table-striped table-bordered";
         Tabela_Computadores.Name = "Tabela_Computadores";
         //Tabela_Computadores.Configuracao.Tabela.Linha.Select_Color="#c3e6cb";
         Tabela_Computadores.Configuracao.Tabela.Linha.Unselect_Color="rgb(232, 241, 234)";

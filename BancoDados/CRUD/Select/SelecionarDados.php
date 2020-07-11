@@ -42,8 +42,30 @@ try{
 
     switch ($Formato) {
 
-        case "XML":
+        case "CAMPOS":
+            $ResultRequest["Modo"]             = "S";
+            $ResultRequest["Error"]             = false;
+            $ResultRequest["NomeTabela"]        = TabelaBancoDadosMD5::getTabelaForMD5($Tabela);
+            $ResultRequest["Campos"]            = $SelecionarDados->getInfoCampos();
+            $ResultRequest["ChavesPrimarias"]   = $SelecionarDados->getChaves();
+            $ResultRequest["Paginacao"]         = $SelecionarDados->getPaginacao();
+            $ResultRequest["InfoPaginacao"]     = $SelecionarDados->getInfoPaginacao();
+            $ResultRequest["Botoes"]            = $SelecionarDados->getBotoes();
+            $ResultRequest["ContadorLinha"]     = $SelecionarDados->getMostrarContador();
+            $ResultRequest["OrdemBy"]           = $SelecionarDados->getOrderBy();
+            $ResultRequest["Filtros"]           = $SelecionarDados->getFiltros();
+            $ResultRequest["ShowColumnsIcones"] = $SelecionarDados->showColumnsIcones();
+            $ResultRequest["Formato"]          = "JSON";
+            $ResultRequest["Indexador"]         = time();
 
+           /**
+            * Armazena o tempo gasto com o processamento até esse ponto. Select
+            */
+            ConfigSystema::getEndTimeTotal();
+            $ResultRequest["TempoTotal"]["BancoDados"]  = $SelecionarDados->getTempoTotal();
+            $ResultRequest["TempoTotal"]["SitemaTotal"] = ConfigSystema::getTimeTotal();
+
+            echo json_encode($ResultRequest);
 
             break;
         case "JSON":

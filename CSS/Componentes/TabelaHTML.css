@@ -4,3 +4,29 @@
 .modal{
     overflow: auto !important;
 }
+.CabtheadModelHoriz{
+    display: table-cell;
+}
+
+.CabtrModelHoriz{
+    
+}
+
+.CabthModelHoriz{
+    display: inline-grid;
+    width: 100%;
+}
+.bodytheadModelHoriz{
+    display: inline-grid;
+    width: 100%;
+}
+
+.bodytrModelHoriz{
+    display: inline-grid;
+}
+.bodytdModelHoriz{
+    
+}
+.bodytrModelHoriz {
+    
+}

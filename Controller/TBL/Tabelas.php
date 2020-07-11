@@ -23,6 +23,7 @@ if(@!include_once "./Cabecalho_Tabelas.php"){ //Include que contém configuraç�
 }; 
 
 switch ($Operacao) {
+    
     case "Select":
 
         if(!@include_once ConfigSystema::get_Path_Systema() . '/BancoDados/CRUD/Select/SelecionarDados.php'){

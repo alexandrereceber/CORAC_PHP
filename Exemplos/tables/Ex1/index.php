@@ -15,7 +15,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="CSS/Componentes/TabelaHTML.css?d">
+        <link rel="stylesheet" href="../../../CSS/Componentes/TabelaHTML.css?d2s1">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -26,8 +26,8 @@ and open the template in the editor.
 
         <script  src="../../../Scripts/bootbox/bootbox.js?5aa" defer="defer"></script>
         <script  src="../../../Scripts/jsControlador/jsConstroller.js?ddf443ss3" defer="defer"></script>     
-        <script  src="../../../Componentes/Tabelas.js?q=dssds" defer="defer"></script>  
-        <script  src="index.js?q=ssdd" defer="defer"></script>  
+        <script  src="../../../Componentes/Tabelas.js?q=367s35s7s" defer="defer"></script>  
+        <script  src="index.js?q=ssd" defer="defer"></script>  
         
     </head>
     <body>

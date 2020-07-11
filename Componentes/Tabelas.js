@@ -33,19 +33,35 @@ class TabelaHTML extends JSController{
         this.FuncoesIcones = []; //Armazena as funções, criadas manualmente, para a execução dos ícones da tabela HTML, a função recebe os parâmetros Instância da tabela e o próprio objeto 
         this.FuncoesChvExt = []; //Armazena as funções para as chaves extrangeiras. São identificadas pelo numero da função. Esse número vem do ModeloTabela.php que fica no campo.
         this.StatusGeral = [];   //Amazena informações gerais como por exemplo se ja foi buscado os dados no banco. É a variável de estado do objeto.
+        //-----------Tabela Geral--------------------
+        this.CSSTableGeral = {
+                                "GeralDivClass":"",
+                                "GeralTableClass":"table",
+                                "GeralTheadClass":"",
+                                "GeralThClass":"",
+                                "GeralTbodyClass":"",
+                                "GeralTrClass":"",
+                                "GeralTdClass":"",
+                                "GeralLiClass":"page-item",
+                                "GeralAClass":"page-link",
+                                "GeralUClass":"pagination",
+                                "GeralButtonClass":"btn btn-primary",
+                            }
+        this.CSSEspefTableBD = [
+                            {"Cabecalho":{"thead":"","tr":"aaa","th":"","td":""}},
+                            {"Corpo":{"tbody":"","tr":"", "td":""}},
+                            {"RodaPe":{}},
+]
         
-        this.GeralTableClass = "table",
-        this.GeralDivClass = "",
-        this.GeralThClass = "",
-        this.GeralTdClass = "",
-        this.GeralTrClass = "",
-        this.GeralLiClass = "page-item",
-        this.GeralAClass = "page-link",
-        this.GeralUClass = "pagination",
-        this.GeralButtonClass = "btn btn-primary",
+        this.BTIEE = [
+                        {"Inserir":{"Class":"btn btn-primary"}},
+                        {"Editar":{"Class":"btn btn-primary"}},
+                        {"Excluir":{"Class":"btn btn-danger"}}
+                    ]                   
         this.visibleChavePrimaria = false,
         this.VisibleDetalhesUpdate = true;
 
+        
         this.Configuracao = {
             Tabela: {
                 Linha: {
@@ -227,12 +243,12 @@ class TabelaHTML extends JSController{
              * Caso o usuário tenha permissão para editar a tabela será apresentada a caixa de seleção
              */
             if(Edit){
-               Check = "<td  class='"+ this.GeralThClass +"'  style='text-align: center; vertical-align: inherit;'><input style='cursor: pointer' type='checkbox'  value='' data-chavePrimaria='" + ChavePrimaria +"' onclick='" + this.NomeInstancia +".setSelecionarLinhas(this)'></td>";
+               Check = "<td  class='"+ this.CSSTableGeral.GeralThClass + " " + this.CSSEspefTableBD[1].Corpo.td +"'  style='text-align: center; vertical-align: inherit;'><input style='cursor: pointer' type='checkbox'  value='' data-chavePrimaria='" + ChavePrimaria +"' onclick='" + this.NomeInstancia +".setSelecionarLinhas(this)'></td>";
             }
             
             if(DadosLinhas.ContadorLinha){
                 var NLinha = parseInt(DadosLinhas.InfoPaginacao.Deslocamento) + parseInt(indx1) + 1;
-                Numerador = "<td class='"+ this.GeralThClass +"'  style='text-align: center;vertical-align: inherit;'>"+ NLinha +"</td>";
+                Numerador = "<td class='"+ this.CSSTableGeral.GeralThClass + " " + this.CSSEspefTableBD[1].Corpo.td +"'  style='text-align: center;vertical-align: inherit;'>"+ NLinha +"</td>";
             }
             
             if(DadosLinhas.ShowColumnsIcones[0]){
@@ -255,15 +271,15 @@ class TabelaHTML extends JSController{
                     Valor = this.getTipoConteudo(indx2, Conteudo);
                 }
                 
-                LinhasHTML += "<td class='td_"+ DadosLinhas.Indexador+"' style='text-align: center; vertical-align: inherit;' data-chavePrimaria='" + ChavePrimaria +"' data-Valor='" + Conteudo +"'>"+ Valor +"</td>";
+                LinhasHTML += "<td class=' "+ this.CSSTableGeral.GeralTdClass+ " " + this.CSSEspefTableBD[1].Corpo.td +" td_"+ DadosLinhas.Indexador+"' style='text-align: center; vertical-align: inherit;' data-chavePrimaria='" + ChavePrimaria +"' data-Valor='" + Conteudo +"'>"+ Valor +"</td>";
             }
 
-            TR += "<tr class='tr_"+ DadosLinhas.Indexador+"'>" + Check + Numerador + ShowIcons + LinhasHTML +"</tr>";
+            TR += "<tr class=' "+ this.CSSTableGeral.GeralTrClass+ " " + this.CSSEspefTableBD[1].Corpo.tr  +" tr_"+ DadosLinhas.Indexador+"'>" + Check + Numerador + ShowIcons + LinhasHTML +"</tr>";
 
             
             LinhasHTML = "";
         }
-        Html = TR === null ? "" : "<tbody>" + TR + "</tbody>" ;
+        Html = TR === null ? "" : "<tbody  class='  "+ this.CSSTableGeral.GeralTbodyClass+ " " + this.CSSEspefTableBD[1].Corpo.tbody +" '>" + TR + "</tbody>" ;
         
         return Html;
     }
@@ -368,7 +384,7 @@ class TabelaHTML extends JSController{
                 if(!Icon[i].Visible) continue;
                 TipoIcone = Icon[i].Tipo;
                 if(TipoIcone == "Bootstrap"){
-                    TdI += "<td style='text-align: center;vertical-align: inherit;'><i data-chavePrimaria='" + ChavePrimaria +"'  class='"+ Icon[i].Icone + " "+ Icon[i].NomeBotao + "_"+ this.ResultSet.Indexador + "' style='font-size:18px; cursor: pointer' title='"+ Icon[i].tooltip +"'></i></td>";
+                    TdI += "<td  class='"+ this.CSSEspefTableBD[1].Corpo.td +"' style='text-align: center;vertical-align: inherit;'><i data-chavePrimaria='" + ChavePrimaria +"'  class='"+ Icon[i].Icone + " "+ Icon[i].NomeBotao + "_"+ this.ResultSet.Indexador + "' style='font-size:18px; cursor: pointer' title='"+ Icon[i].tooltip +"'></i></td>";
                 }else if(TipoIcone == "image"){
                     
                 }
@@ -381,7 +397,7 @@ class TabelaHTML extends JSController{
             var ThI = "";
             for(var i in ColumnsIcon){
                 if(!ColumnsIcon[i].Visible) continue;
-                ThI += "<th style='text-align: center; vertical-align: inherit;'>"+ ColumnsIcon[i].NomeColuna +"</th>";
+                ThI += "<th class='"+ this.CSSEspefTableBD[0].Cabecalho.th +"' style='text-align: center; vertical-align: inherit;'>"+ ColumnsIcon[i].NomeColuna +"</th>";
             }
             return ThI;
         }
@@ -400,13 +416,13 @@ class TabelaHTML extends JSController{
             ShowColunasIcons = "";
         
         if(GetCabecalho.Botoes["0"].Inserir || GetCabecalho.Botoes["1"].Editar || GetCabecalho.Botoes["2"].Delete){
-           var Auto = "<th  class='"+ this.GeralThClass +"'  style='text-align: center'>#</th>";
+           var Auto = "<th  class='"+ this.CSSTableGeral.GeralThClass + " " + this.CSSEspefTableBD[0].Cabecalho.th +"'  style='text-align: center'>#</th>";
         }else{
             var Auto = "";
         }
         
         if(GetCabecalho.ContadorLinha){
-            Numerador = "<th  class='"+ this.GeralThClass +"'  style='text-align: center'>N°</th>";
+            Numerador = "<th  class='"+ this.CSSTableGeral.GeralThClass +  " " + this.CSSEspefTableBD[0].Cabecalho.th +"'  style='text-align: center'>N°</th>";
         }
         
         if(GetCabecalho.ShowColumnsIcones[0]){
@@ -462,11 +478,11 @@ class TabelaHTML extends JSController{
                 }
                 FCampo = "<a href='#' onclick='"+ this.NomeInstancia +".gerarPopover(this)' data-OrdemBy='"+ GetCabecalho.OrdemBy[1] +"'  data-idn='"+ GetCabecalho.Campos[indx][0] +"' <span>"+ GetCabecalho.Campos[indx][1] + "</span></a>";
 
-                CabHTML += "<th  class='"+ this.GeralThClass +"'  style='text-align: center'>"+ FCampo + FFilter + Ordered + "</th>";
+                CabHTML += "<th  class='"+ this.CSSTableGeral.GeralThClass + " " + this.CSSEspefTableBD[0].Cabecalho.th +"'  style='text-align: center'>"+ FCampo + FFilter + Ordered + "</th>";
             
         }
 
-        Html = CabHTML === null ? "" : "<thead><tr>" + Auto + Numerador + ShowColunasIcons + CabHTML + "</tr></thead>" ;
+        Html = CabHTML === null ? "" : "<thead  class='  "+ this.CSSTableGeral.GeralTheadClass +  " " + this.CSSEspefTableBD[0].Cabecalho.thead +" '><tr  class='"+ this.CSSEspefTableBD[0].Cabecalho.tr +"'>" + Auto + Numerador + ShowColunasIcons + CabHTML + "</tr></thead>" ;
         
         return Html;
     }
@@ -474,16 +490,16 @@ class TabelaHTML extends JSController{
     getBotoes(){
         var Bt = "", GetBotoes = this.ResultSet;
         if(GetBotoes.Botoes["0"].Inserir){
-            Bt += "<td><center><button id='ButtonInserir_"+ GetBotoes.Indexador + "' class='"+ this.GeralButtonClass +"'  onclick='"+ this.NomeInstancia + ".showFormularioInserir()'>Inserir</button></center></td>";
+            Bt += "<td><center><button id='ButtonInserir_"+ GetBotoes.Indexador + "' class='"+ this.BTIEE[0].Inserir.Class +"'  onclick='"+ this.NomeInstancia + ".showFormularioInserir()'>Inserir</button></center></td>";
         }
         if(GetBotoes.Botoes["1"].Editar){
-            Bt += "<td><center><button id='ButtonEditar_"+ GetBotoes.Indexador + "' class='"+ this.GeralButtonClass +"' onclick='"+ this.NomeInstancia + ".showFormularioAtualizar()' disabled='true'>Editar</button></center></td>";
+            Bt += "<td><center><button id='ButtonEditar_"+ GetBotoes.Indexador + "' class='"+ this.BTIEE[1].Editar.Class +"' onclick='"+ this.NomeInstancia + ".showFormularioAtualizar()' disabled='true'>Editar</button></center></td>";
         }
         if(GetBotoes.Botoes["2"].Delete){
-            Bt += "<td><center><button id='ButtonExcluir_"+ GetBotoes.Indexador + "' class='"+ this.GeralButtonClass +"' onclick='"+ this.NomeInstancia + ".JanelaExcluirDados()' disabled='true'>Excluir</button></center></td>";
+            Bt += "<td><center><button id='ButtonExcluir_"+ GetBotoes.Indexador + "' class='"+ this.BTIEE[2].Excluir.Class +"' onclick='"+ this.NomeInstancia + ".JanelaExcluirDados()' disabled='true'>Excluir</button></center></td>";
         }
         
-        Bt = "<table class='"+ this.GeralTableClass +"' ><tr class='"+ this.GeralTrClass +"' >"+ Bt +"</tr></table>";
+        Bt = "<table class='"+ this.CSSTableGeral.GeralTableClass +"' ><tr class='"+ this.CSSTableGeral.GeralTrClass +"' >"+ Bt +"</tr></table>";
         
         return Bt;
     }
@@ -590,7 +606,7 @@ class TabelaHTML extends JSController{
 
             
         }
-        Tabela = "<table class='"+ this.GeralTableClass +"' style='margin-bottom:0px'>\n\
+        Tabela = "<table class='"+ this.CSSTableGeral.GeralTableClass +"' style='margin-bottom:0px'>\n\
                                     <tr>\n\
                                         "+ (InfPag.TituloTabela == false ? "" : "<th colspan='4' style='text-align: center'>"+ InfPag.TituloTabela) +"</th>\n\
                                     </tr>"+ TH + "<tr>"+ FindAll + Refresh +"</tr>"+
@@ -706,7 +722,7 @@ class TabelaHTML extends JSController{
         /**
          * Monta todos os botões relativos à paginação.
          */
-        CabHTML = "<center><div  class=' "+ this.GeralDivClass +" ' id='Rodape" + Indexador + "' style='display: inline-block;'>    \n\
+        CabHTML = "<center><div  class=' "+ this.CSSTableGeral.GeralDivClass +" ' id='Rodape" + Indexador + "' style='display: inline-block;'>    \n\
                     <ul class='"+ this.GeralUClass + "'>"+ PrimeiraPagina + RetroPagina + CabHTML + NextPagina + UltimaPagina +"</ul>                   \n\
                 </div>"+SaltoPagina+"</center>";
         
@@ -1232,18 +1248,18 @@ class TabelaHTML extends JSController{
         this.ChavesPrimarias = []; //Na mudança de página todas as chaves selecionadas são excluídas.
         
         ComponentCompleto = "\n\
-            <div class=' "+ this.GeralDivClass +" ' id='Componente_" + Indexador + "'>                  \n\
+            <div class=' "+ this.CSSTableGeral.GeralDivClass +" ' id='Componente_" + Indexador + "'>                  \n\
                 <div class='' id='Cabecalho_" + Indexador + "'>                                         \n\
                         "+ InfoP +"                                                                     \n\
                 </div>                                                                                  \n\
                                                                                                         \n\
-                <div  class='  "+ this.GeralDivClass +" ' id='Corpo_" + Indexador + "'>                 \n\
-                    <table class='"+ this.GeralTableClass +"' id='"+ NomeTabela +"'>                    \n\
+                <div  class='  "+ this.CSSTableGeral.GeralDivClass +" ' id='Corpo_" + Indexador + "'>                 \n\
+                    <table class='"+ this.CSSTableGeral.GeralTableClass +"' id='"+ NomeTabela +"'>                    \n\
                         "+ cabecalho +"                                                                 \n\
                         "+ Linhas +"                                                                    \n\
                     </table>                                                                            \n\
                 </div>                                                                                  \n\
-                <div class=' "+ this.GeralDivClass +" ' id='Botoes_" + Indexador + "'>"+ Botoes + "</div>" 
+                <div class=' "+ this.CSSTableGeral.GeralDivClass +" ' id='Botoes_" + Indexador + "'>"+ Botoes + "</div>" 
                      + Paginacao 
         $("#" + this.Recipiente).html(ComponentCompleto);
         //$("*").popover('hide');
@@ -1418,15 +1434,20 @@ class TabelaHTML extends JSController{
         this.FuncoesChvExt = []; //Armazena as funções para as chaves extrangeiras. São identificadas pelo numero da função. Esse número vem do ModeloTabela.php que fica no campo.
         this.StatusGeral = [];   //Amazena informações gerais como por exemplo se ja foi buscado os dados no banco. É a variável de estado do objeto.
         
-        this.GeralTableClass = "table",
-        this.GeralDivClass = "",
-        this.GeralThClass = "",
-        this.GeralTdClass = "",
-        this.GeralTrClass = "",
-        this.GeralLiClass = "page-item",
-        this.GeralAClass = "page-link",
-        this.GeralUClass = "pagination",
-        this.GeralButtonClass = "btn btn-primary",
+        this.CSSTableGeral = {
+                                "GeralDivClass":"table",
+                                "GeralTableClass":"",
+                                "GeralTheadClass":"",
+                                "GeralThClass":"",
+                                "GeralTbodyClass":"",
+                                "GeralTrClass":"",
+                                "GeralTdClass":"",
+                                "GeralLiClass":"page-item",
+                                "GeralAClass":"page-link",
+                                "GeralUClass":"pagination",
+                                "GeralButtonClass":"btn btn-primary",
+                            }
+
         this.visibleChavePrimaria = false,
         this.VisibleDetalhesUpdate = true;
 
