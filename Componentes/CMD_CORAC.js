@@ -12,7 +12,8 @@ class Commands extends JSController{
         this.Botao_Selecionado_GI = {Botao : null};
         this.Maquina = null;
         this.Comandos = null;
-        this.ScriptBD = false;
+        this.Tipo = "command";
+        this.Modo = "async";
         this.TempoResposta = null;
         this.AA = null;
     }
@@ -40,7 +41,8 @@ class Commands extends JSController{
  
         this.DadosEnvio.AA_CORAC = this.Maquina;
         this.DadosEnvio.Command = "get_InfoGeral";
-        this.DadosEnvio.ScriptBD = this.ScriptBD;
+        this.DadosEnvio.Tipo = this.Tipo;
+        this.DadosEnvio.Modo = this.Modo;
         
         let TratarResposta = await this.Atualizar();
         this.TempoResposta = TratarResposta.SistemaTempoTotal;

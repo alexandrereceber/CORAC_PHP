@@ -106,7 +106,7 @@ class Connect_AA {
      * @return type
      * @throws Exception
      */
-    public function Executar_CMD($CMD, $ScriptBD = false) {
+    public function Executar_CMD($CMD, $Tipo = false, $Modo = "sync") {
                 
         if($CMD == null|| $CMD == ""){
             throw new Exception("Não foi encontrado nenhum comando.", 34001);
@@ -121,7 +121,7 @@ class Connect_AA {
          * Formato: O formato de saída na resposta. Ex: json, xml, http e outros.
          * Chave: Identificador do usuário que está logado, o AA chegará se o usuário esta validado, bloqueado ou outro status.
          */
-        $Pacote_Comando = ["Pacote" => 3,"Comando" => $this->Comando, "ScriptBD" => $ScriptBD, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
+        $Pacote_Comando = ["Pacote" => 3,"Comando" => $this->Comando, "Tipo" => $Tipo, "Modo" => $Modo, "Resposta" => null, "Formato" => 1, "Chave" => $this->Key];
         $Pacote_Recebido_CORAC_Desk = $this->EnviarPacote($Pacote_Comando);
 
         $Normalizar = $this->Normalizar_Executar_CMD($this->Comando, $Pacote_Recebido_CORAC_Desk);

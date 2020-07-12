@@ -27,7 +27,7 @@ and open the template in the editor.
         <script  src="../../../Scripts/bootbox/bootbox.js?5aa" defer="defer"></script>
         <script  src="../../../Scripts/jsControlador/jsConstroller.js?ddf443ss3" defer="defer"></script>     
         <script  src="../../../Componentes/Tabelas.js?q=367s35s7s" defer="defer"></script>  
-        <script  src="index.js?q=ssd" defer="defer"></script>  
+        <script  src="index.js?q=sd" defer="defer"></script>  
         
     </head>
     <body>

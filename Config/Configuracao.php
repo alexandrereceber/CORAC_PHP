@@ -221,7 +221,7 @@ class TabelaBancoDadosMD5{
                                 ["e78169c2553f6f5abe6e35fe042b792a",["vagentesautonomos", false]],
                                 ["df6f026ac09d686436e9c5333c32503f",["TipoEquipamentos_VCplusplus", false]],
                                 ["334644edbd3aecbe746b32f4f2e8e5fb",["computadores", false]],
-                                ["5ca5579ec4bd2e5ca5d9608be68ae733",["scriptsbdcorac", false]],
+                                ["5ca5579ec4bd2e5ca5d9608be68ae733",["scriptsbdcorac", true]],
 
                             ];
     
@@ -353,7 +353,7 @@ class AmbienteCall {
  * Classe utilizada para enviar comandos e receber o resultaado.
  */
 class ConfigPowershell {
-    private static $Protocolo = "http", $Servidor = "192.168.15.250", $Porta = 1119, $Pasta = "Pacotes/";
+    private static $Protocolo = "http", $Servidor = "192.168.15.250", $Porta = 1119, $Pasta = "SYNCPCT/";
     
     public static function getProtocolo() {
         return self::$Protocolo;

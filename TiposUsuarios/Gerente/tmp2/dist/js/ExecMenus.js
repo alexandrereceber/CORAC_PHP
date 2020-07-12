@@ -7,7 +7,7 @@
 
 
 var Tabela_Computadores = new TabelaHTML("http://"+ Padrao.getHostServer() +"/CORAC/ControladorTabelas/");
-var Comandos_CORAC = new Commands("http://"+ Padrao.getHostServer() +"/CORAC/getInformacoesMaquinas/");
+var Comandos_CORAC = new Commands("http://"+ Padrao.getHostServer() +"/CORAC/ExecRMTCMD/");
 var AR_CORAC = new ControleRemoto("http://"+ Padrao.getHostServer() +"/CORAC/AA_AcessoRemoto_SYN/");
 
 let Origem = false;

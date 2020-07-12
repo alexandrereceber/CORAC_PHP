@@ -524,8 +524,12 @@ abstract class ModeloTabelas extends BDSQL{
         $this->obterPrivilegios();
         $this->getVerificarPrivilegios("Select");
         /**
-         * Executa funções anônimas no filtro.
+         * Executa funções anianhadas dentro da função Jobs.
          */
+        $this->Jobs(__FUNCTION__, $Dados, "BeforeSelect", null);
+        /**
+         * Executa funções anônimas no filtro.
+         */        
         $Filters = $this->NormalizarFiltro(__FUNCTION__);
         $Filtros = $Filters == null ? $this->Filtros : $Filters;
         $Filtro = $this->setPreparaFiltro($Filtros);

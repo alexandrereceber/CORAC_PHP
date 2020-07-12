@@ -2,8 +2,8 @@
 Options -Indexes
 
 #Proíbe acesso direto aos arquivos via URL. ex.: http://10.56.32.78/CORAC/AgentesCORAC/InfoAgentesCORAC.php
-RewriteCond %{QUERY_STRING} URL=getInformacoesMaquinas/
-RewriteRule (.*) InfoAgentesCORAC.php?p=%{QUERY_STRING} [L]
+RewriteCond %{QUERY_STRING} URL=ExecRMTCMD/
+RewriteRule (.*) CMD_CORAC.php?p=%{QUERY_STRING} [L]
 
 RewriteCond %{QUERY_STRING} URL=AA_AcessoRemoto_SYN/
 RewriteRule (.*) CAR_CORAC.php?p=%{QUERY_STRING} [L]
