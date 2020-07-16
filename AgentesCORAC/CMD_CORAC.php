@@ -52,7 +52,6 @@ $Formato        = $_REQUEST["sendRetorno"]  == "" ? "JSON" : $_REQUEST["sendReto
 $CMD            = $_REQUEST["Command"];
 $Tipo           = $_REQUEST["Tipo"]  == "" ? false : $_REQUEST["Tipo"]; //Atribui um formato padrão
 $Modo           = $_REQUEST["Modo"]  == "sync" ? false : $_REQUEST["Modo"]; //Atribui um formato padrão
-
 $AA_CORAC       = $_REQUEST["AA_CORAC"];
 
 ConfigPowershell::setServidor($AA_CORAC);

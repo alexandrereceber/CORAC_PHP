@@ -5,7 +5,7 @@ and open the template in the editor.
 */
 /* 
     Created on : 02/07/2020, 08:48:54
-    Author     : Alexandre JosÃ© da Silva Marques
+    Author     : Alexandre JosÃƒÂ© da Silva Marques
 */
 .Bt_InfoGerais{
     display: inline-block;
@@ -29,6 +29,21 @@ and open the template in the editor.
     background-color: #41a5d9 !important;
     color: whitesmoke !important;
 }
+
+.TCOLORUSER, .TCOLORUSER td{
+    background-color: transparent !important;
+    color: white;
+    border: 0px;
+}
+.TDCOLORTITULO{
+    font-size: 26px;
+    border-bottom: solid 1px !important;
+    color: #fff704 !important;
+}
+.table-hover:hover{
+    
+}
+
 #Barra_InfoContainer{
     display: flex;
     position: absolute;
@@ -93,7 +108,7 @@ and open the template in the editor.
     width: 100%;
 }
 
-#C_inf_C_Geral_botoes_Container{
+#C_inf_C_Geral_botoes_Container, #C_inf_C_Geral_botoesInterv_Container{
     display: flex;
     /* border: solid 1px; */
     height: 100%;
@@ -106,6 +121,7 @@ and open the template in the editor.
     /* border: solid 1px; */
     height: auto;
     width: 100%;
+    overflow: auto;
 }
 
 .RegulaWidth{

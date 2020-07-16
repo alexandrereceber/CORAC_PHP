@@ -34,7 +34,7 @@ var Padrao = function(){
             return Operacao.readyState;
         },
         getHostServer: function(){
-            return "192.168.15.10"
+            return "177.106.114.165"
         }
     }
 }()
@@ -63,8 +63,11 @@ class JSController{
          * Variável de uso geral e local, seus dados não são enviado para o servidor. 
          * O campo Load é utilizado para configurar se o ícone load será exibido e várias outras configurações,
          * vindas de outras classes.
+         * Background: sync - Significa que o carregamento será protegido por uma tela e bloqueia qualquer outra função ajax.
+         * Background async - sisnifica que o carregamento não serão precedido de uma tela e não haverá bloqueio de outra funções ajax.
          */
-        this.Config = {Load: true};
+        this.Config = {Load: true, Background: false};
+
         /**
          * Verifica a existência de uma chave secreta. É um prototype
          */
@@ -86,10 +89,16 @@ class JSController{
          */
         return new Promise((resolve, errors) => 
         {
-            if(Padrao.getAjax() == 1 ){
-                bootbox.alert("Já existe outro processo em andamento. Favor aguarde...");
-                return false;
+            if(this.Config.Background == false){
+                if(Padrao.getAjax() == 1 ){
+                    bootbox.alert("Já existe outro processo em andamento. Favor aguarde...");
+                    return false;
+                };
+                this.Config.Load = true;
+            }else{
+                this.Config.Load = false;
             }
+
             var op = $.ajax({
                         cache: false,
                         url: this.URL,

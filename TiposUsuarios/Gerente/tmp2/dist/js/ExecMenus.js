@@ -31,7 +31,7 @@ class MenuLateral{
     }
     
     MenuLateral_Computadores(){
-        $(".page-title").html("Computadores Gerenciados")
+        $(".page-title").html("INFORMAÇÕES GERAIS E ACESSO REMOTO")
         Tabela_Computadores.Destroy();
         Tabela_Computadores.setTabela = "bb22afd6fd3058670dbdf0bcc064ddde";
         Tabela_Computadores.setRecipiente = "Conteudo_1";
@@ -101,7 +101,9 @@ class MenuLateral{
                 callback: async function(result){
                 if(!result) return false;
                 try{
-
+                    $("#Container2-MenuInforFlash").remove();
+                    $("#Barra_InfoContainer").remove();
+                    
                     var Tbl_CPU = Args[0],
                     Idx = 0,
                     Maquina = null;
@@ -203,7 +205,7 @@ class MenuLateral{
         $(".page-title").html("Agentes Autônomos")
         Tabela_Computadores.setTabela = "e78169c2553f6f5abe6e35fe042b792a";
         Tabela_Computadores.setRecipiente = "Conteudo_1";
-        Tabela_Computadores.GeralDivClass = "Tabela_Geral table-striped table-bordered";
+        Tabela_Computadores.CSSTableGeral.GeralTableClass = "Tabela_Geral table-striped table-bordered";
         Tabela_Computadores.Name = "Tabela_Computadores";
         Tabela_Computadores.Configuracao.Tabela.Linha.Select_Color="#c3e6cb";
         Tabela_Computadores.Configuracao.Tabela.Linha.Unselect_Color="initial";
