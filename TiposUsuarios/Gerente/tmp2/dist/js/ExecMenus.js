@@ -218,3 +218,4 @@ class MenuLateral{
 }
 
 var MenusLaterais = new MenuLateral();
+MenusLaterais.MenuLateral_Computadores();

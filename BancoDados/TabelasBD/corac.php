@@ -1150,7 +1150,7 @@ class Computadores extends ModeloTabelas{
            ]
         ];
     //private $Privilegios = [["CORAC","Select/Insert/Update/Delete"]];
-    private $Privilegios = [["CORAC","Select/Insert/Update/Delete"]];
+    private $Privilegios = [["CORAC","Select///"]];
     private $TipoPaginacao = ["Simples"=>false, "SaltoPagina"=> true, "Filtros"=>true, "BRefresh"=>true];
     
     public function ModoPaginacao() {
