@@ -93,8 +93,13 @@ try {
                 [name=>"username",value=> $Usuario],
                 [name=>"password",value=> $Senha]
             ];
-    
-    $Result = $InserirDados->InserirDadosTabela($Dados);
+    try{
+        $Result = $InserirDados->InserirDadosTabela($Dados);
+    } catch (Exception $ex) {
+        $Numero = $InserirDados->getErros()[1];
+        $Mensagem = $InserirDados->getErros()[3];        
+        throw new PDOException($Mensagem, $Numero);
+    }
     
     if($Result == false) 
         throw new PDOException("Ocorreram erros ao cadastrar usuário. Favor entrar em contato com o administrador!", 8005);
@@ -103,6 +108,7 @@ try {
     $ResultRequest["Modo"]             = "Cadastro";
     $ResultRequest["Error"] = false;
     $ResultRequest["lastId"] = $InserirDados->lastInsertId();
+    $ResultRequest["Mensagem"] = "Usuário cadastrado com sucesso!. Favor requisitar habilitação.";
 
     /**
     * Armazena o tempo gasto com o processamento até esse ponto. Inserir dados

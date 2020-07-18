@@ -114,6 +114,10 @@ async function EnviarDados(obj){
             case 14007:
                 break;
 
+            case 23000:
+                Result.Mensagem = "Usuário já existe no sistema."
+                break;
+                
             default:
                 Result.Mensagem = "Error não tratado ou inesperado. Favor entrar em contato com o administrador."
                 break;
@@ -124,7 +128,8 @@ async function EnviarDados(obj){
         bootbox.alert({
             message: "<h4>" +  Result.Mensagem + "</h4>",
             className: 'rubberBand animated'
-        });
+        , callback: function(){location.reload()}});
+        
     }else{
         if(Result.Modo == "Login")
             window.location = Result.Header;
