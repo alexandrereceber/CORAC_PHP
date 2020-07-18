@@ -183,7 +183,7 @@ class AcessoBancoDados {
     private static $Host = "localhost";
     private static $NomeBancoDados = "corac";
     private static $Usuario = "root";
-    private static $Senha = "";
+    private static $Senha = "Al$#2810";
     private static $UTF = "utf8";
 
     /**
