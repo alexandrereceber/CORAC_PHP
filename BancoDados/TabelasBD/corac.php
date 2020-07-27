@@ -1243,16 +1243,23 @@ class Computadores extends ModeloTabelas{
                 if($Action == "AfterInsert"){
                     if($Resultado){
                         $lastID_Insert = $this->GetUltimoID();
-                        
-                        $SQLAgenteAutonomo = "INSERT INTO agentesautonomos SET idEquipamento = '$lastID_Insert'";
+                        $Registro = $ConjuntoDados[2]["value"];
+                        $SQLAgenteAutonomo = "INSERT INTO agentesautonomos SET idEquipamento = '$lastID_Insert', Registro = '$Registro'";
                         $Retorno = $this->query($SQLAgenteAutonomo);
                         if($Retorno){
                             $this->commit();
                         }else{
                             $this->rollBack();
                         }
-                        $t = $this->GetLinhasAtingidas();  
-
+                        
+                        $SQLAgenteAutonomo = "INSERT INTO controleequipamentos SET idEquipamento = '$lastID_Insert'";
+                        $Retorno = $this->query($SQLAgenteAutonomo);
+                        if($Retorno){
+                            $this->commit();
+                        }else{
+                            $this->rollBack();
+                        }
+                        $t = $this->GetLinhasAtingidas(); 
                     }else{
                         $this->rollBack();
                     }
@@ -1622,7 +1629,7 @@ class vagentesautonomos extends ModeloTabelas{
            ]
         ];
     //private $Privilegios = [["CORAC","Select/Insert/Update/Delete"]];
-    private $Privilegios = [["CORAC","Select//Update/Delete"]];
+    private $Privilegios = [["CORAC","Select/Update/Update/Delete"]];
     private $TipoPaginacao = ["Simples"=>false, "SaltoPagina"=> true, "Filtros"=>true, "BRefresh"=>true];
     
     public function ModoPaginacao() {

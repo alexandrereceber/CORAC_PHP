@@ -5,7 +5,7 @@ and open the template in the editor.
 */
 /* 
     Created on : 02/07/2020, 08:48:54
-    Author     : Alexandre JosÃƒÂ© da Silva Marques
+    Author     : Alexandre JosÃƒÆ’Ã‚Â© da Silva Marques
 */
 .Bt_InfoGerais{
     display: inline-block;
@@ -147,10 +147,10 @@ and open the template in the editor.
 #BarraContainer{
    height: inherit;
    overflow-y: auto;
-   display: block !important;
+   display: flex !important;
    padding-top: 3px;
    position: relative;
-   top: 105px;
+   /* top: 105px; */
 }
 
 #Barra_Icones_GetInfo{

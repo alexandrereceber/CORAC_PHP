@@ -161,7 +161,7 @@ class Commands extends JSController{
             this.TratarErros(TratarResposta);
             return false;
         }
-        $("#C_inf_C_Geral_AA").html(TratarResposta.RST_AG);
+        $("#C_inf_C_Geral_AA").html((TratarResposta.RST_AG).replace(/#/g,"\\"));
         //$("#C_inf_C_Geral_AA").html("Tempo: " + this.TempoResposta[5])
     }
      /**

@@ -68,6 +68,7 @@ try{
             echo json_encode($ResultRequest);
 
             break;
+        
         case "JSON":
             $ResultRequest["Modo"]             = "S";
             $ResultRequest["Error"]             = false;
