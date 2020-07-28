@@ -7,6 +7,10 @@ Options -Indexes
 RewriteCond %{QUERY_STRING} URL=ControladorTabelas/
 RewriteRule (.*) TBL/Tabelas.php?p=%{QUERY_STRING} [L]
 
+#Redireciona todas as requisições de store procedures para os arquivos Procedure.php
+RewriteCond %{QUERY_STRING} URL=ControladorProcedures/
+RewriteRule (.*) PCD/Procedures.php?p=%{QUERY_STRING} [L]
+
 RewriteCond %{QUERY_STRING} URL=ControladorPages/
 RewriteRule (.*) LP/LoadPages.php?p=%{QUERY_STRING} [L]
 

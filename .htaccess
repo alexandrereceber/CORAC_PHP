@@ -21,6 +21,9 @@ RewriteRule (.*) Login/login.php?D=%{REQUEST_URI}&URL=%{QUERY_STRING} [L]
 RewriteCond %{REQUEST_URI} /ControladorTabelas/$
 RewriteRule (.*) Controller/TBL/Tabelas.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
+RewriteCond %{REQUEST_URI} /ControladorProcedures/$
+RewriteRule (.*) Controller/PCD/Procedures.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
 #Realiza a verificação sobre a validade do login do usuário.
 RewriteCond %{REQUEST_URI} /ValidarLogin/$
 RewriteRule (.*) Credencial/ValidarLogin.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]

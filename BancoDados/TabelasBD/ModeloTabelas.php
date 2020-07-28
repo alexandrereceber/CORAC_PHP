@@ -420,15 +420,16 @@ abstract class ModeloTabelas extends BDSQL{
                 * 
      * TABELA PRECISA DA TABELA LOGIN ANTES DE SUA CRIAÇÃO.
      * CREATE TABLE `privilegios` (
-                `idPriv` int(11) NOT NULL AUTO_INCREMENT,
-                `idLogin` int(11) NOT NULL,
-                `Tabela` varchar(60) NOT NULL,
-                `Priv` enum('Select','Select/Insert','Select/Insert/Update','Select/Insert/Update/Delete') NOT NULL,
-                `dtCriado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                PRIMARY KEY (`idPriv`),
-                KEY `FK_IDLogin` (`idLogin`),
-                CONSTRAINT `FK_IDLogin` FOREIGN KEY (`idLogin`) REFERENCES `login` (`idLogin`)
-               ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+        `idPriv` int(11) NOT NULL AUTO_INCREMENT,
+        `idLogin` int(11) NOT NULL,
+        `Tabela` varchar(60) NOT NULL,
+        `Procedures` varchar(60) NOT NULL,
+        `Priv` enum('Select','Select/Insert','Select/Insert/Update','Select/Insert/Update/Delete') NOT NULL,
+        `dtCriado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (`idPriv`),
+        KEY `FK_IDLogin` (`idLogin`),
+        CONSTRAINT `FK_IDLogin` FOREIGN KEY (`idLogin`) REFERENCES `login` (`idLogin`)
+       ) ENGINE=InnoDB DEFAULT CHARSET=latin1
      * 
      * @throws PDOException
      */

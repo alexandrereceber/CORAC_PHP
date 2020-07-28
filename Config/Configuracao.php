@@ -274,6 +274,66 @@ class TabelaBancoDadosMD5{
     }
 }
 
+class ProcedureBancoDadosMD5{
+    /**
+     * Contém o nome das tabela e se possuem sessão ou não para visualizá-las.
+     * @var array Nome das tabela mapeadas no sistema 
+     */
+    private static $Procedures = [
+                                ["bb22afd6fd3058670dbdf0bcc064ddde",["Teste", false]],
+                                ["e78169c2553f6f5abe6e35fe042b792a",["vagentesautonomos", false]]
+
+                            ];
+    
+    /**
+     * Converte a string MD5 para o nome real da tabela.
+     * @param type $Tabela
+     * @return boolean | Nome da tabela em array
+     */
+    public static function getMD5ForProcedures($Procedure) {
+        foreach (self::$Procedures as $Chv => $Valor) {
+            if($Valor[0] === $Procedure){
+                return $Valor[1][0];
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Através do nome da tabela obtém-se seu respectivo hash.
+     * @param string $Tabela
+     * @return boolean
+     */
+    public static function getProcedureForMD5($Procedure) {
+        
+        foreach (self::$Procedures[0] as $Chv => $Vlr) {
+            if($Vlr == $Procedure){
+                return $Chv;
+            }
+        }
+        
+        return false;
+        
+    }
+    
+    /**
+     * Verifica se a tabela poderá ser visualizada sem um sessão definida.
+     * @param string $Tabela
+     * @return boolean
+     */
+    public static function getProcedureSessao($Procedure) {
+        /**
+         * Caso a tabela não esteja no array retorne true e existindo no arry retorna o valor de true ou false.
+         */
+        foreach (self::$Procedures as $Chv => $Valor) {
+            if($Valor[0] === $Procedure){
+                return $Valor[1][1];
+            }
+        }
+        return true;
+    }
+}
+
 class OperacaoTable{
     private static $Operacao = [
                                 ["ab58b01839a6d92154c615db22ea4b8f","Select"],

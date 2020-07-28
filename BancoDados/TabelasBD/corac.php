@@ -12,7 +12,19 @@ if(@!include_once ConfigSystema::get_Path_Systema() . '/BancoDados/TabelasBD/Mod
     $ResultRequest["Erros"]["Modo"]        = "Include";
     $ResultRequest["Erros"][0]             = true;
     $ResultRequest["Erros"][1]             = 7000;
-    $ResultRequest["Erros"][2]             = "O arquivo de configuração não foi encontrado.";
+    $ResultRequest["Erros"][2]             = "O arquivo de configuração do modelo de tabela não foi encontrado.";
+    
+    echo json_encode($ResultRequest);
+    exit;
+}; 
+/**
+ * Inclui o modelo abstrato de uma procedure no banco de dados.
+ */
+if(@!include_once ConfigSystema::get_Path_Systema() . '/BancoDados/TabelasBD/ModeloProcedures.php'){ 
+    $ResultRequest["Erros"]["Modo"]        = "Include";
+    $ResultRequest["Erros"][0]             = true;
+    $ResultRequest["Erros"][1]             = 8000;
+    $ResultRequest["Erros"][2]             = "O arquivo de configuração do modelo de procedures não foi encontrado.";
     
     echo json_encode($ResultRequest);
     exit;
@@ -2731,6 +2743,59 @@ class scriptsbdcorac extends ModeloTabelas{
 
     public function NormalizarFiltro($Tipo) {
         
+    }
+
+}
+
+class Teste extends ModeloProcedures{
+    /**
+     * Mapeia os campos da tabela - Muito importante caso se queira visualizar somente campo necessários
+     */
+    private $Saidas = "@Saida, @s2";
+    private $Privilegios = [["CORAC","Select/Execute"]];
+    private $StringSQL = null;
+    
+//
+//    public function getArrayDados() {
+//        $Preparacao = parent::query($this->StringSQL);
+//        $Preparacao = parent::query("SELECT $this->Saidas");
+//        return $Preparacao->fetch();
+//    }
+
+    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
+        
+    }
+
+    public function NormalizarFiltro($Func) {
+        
+    }
+
+    public function getNomeReal() {
+        return __CLASS__;
+    }
+
+    public function getPrivBD() {
+        return false;
+    }
+
+    public function getPrivilegios() {
+        return $this->Privilegios;
+    }
+
+    public function getVirtual() {
+        return false;
+    }
+
+    public function setNomeProcedure() {
+        $this->NomeProcedures = __CLASS__;
+    }
+
+    public function validarConteudoCampoRegex(&$Dados) {
+        
+    }
+
+    public function getSaidas() {
+        return $this->Saidas;
     }
 
 }

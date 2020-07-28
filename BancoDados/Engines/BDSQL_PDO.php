@@ -127,6 +127,7 @@ class BDSQL extends PDO{
             $this->Error[3] = $exc->getMessage();
             $this->Error[4] = $exc->getTraceAsString();
         }
+        
         /**
          * Apesar do erro ocorrer o mesmo não é lançado para outros métodos, ele é tratado dentro deste método
          * que armazena os dados dos erros.
@@ -136,7 +137,35 @@ class BDSQL extends PDO{
         if($this->StatusExecutarSQL == false) return false; else return true;
  
     }
-    
+    /**
+     * Executa a SQL da variável $this->SQLPrepare. Também obtém o total de linhas afetadas
+     * pela consulta.
+     * 
+     * @throws PDOException
+     */
+    protected function ExecutarProcedureSQL($Array = null){
+ 
+        if($this->SQLPrepare == false) throw new PDOException("A variável SQLPrepare não foi preparada.");
+        
+        try {
+            $this->StatusExecutarSQL = $this->query($this->SQLPrepare);
+        } catch (Exception $exc) {
+            $this->Error[0] = true;
+            $this->Error[1] = $exc->getCode();
+            $this->Error[2] = $exc->getFile();
+            $this->Error[3] = $exc->getMessage();
+            $this->Error[4] = $exc->getTraceAsString();
+        }
+        
+        /**
+         * Apesar do erro ocorrer o mesmo não é lançado para outros métodos, ele é tratado dentro deste método
+         * que armazena os dados dos erros.
+         * Essa instrução apenas retorna se foi concluída ou não a instrução SQL, pois o erro poderá ser resgatado pela função
+         * que chamou esse método através do método getErro().
+         */
+        if($this->StatusExecutarSQL == false) return false; else return true;
+ 
+    }
     /**
      * Retorna o conjunto de tuplas que a consulta obteve em forma de array.
      * Usando esse método os outros métodos que usam o método fetch não serão executado, pois o cursor da variável estará setado para o final.
@@ -144,6 +173,15 @@ class BDSQL extends PDO{
      */
     protected function getObjectResultado() {
         $this->Linhas = $this->Estado->fetchObject();
+        return $this->Linhas;
+    }
+    /**
+     * Retorna o conjunto de tuplas que a consulta obteve em forma de array.
+     * Usando esse método os outros métodos que usam o método fetch não serão executado, pois o cursor da variável estará setado para o final.
+     * @return Array
+     */
+    protected function getArrayResultadoProcedure() {
+        $this->Linhas = $this->StatusExecutarSQL->fetch(PDO::FETCH_NUM);
         return $this->Linhas;
     }
     
