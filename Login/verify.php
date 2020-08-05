@@ -117,29 +117,6 @@ try {
     $Saida = $SelecionarDados->getArrayDados()[0];
     
     if($Saida == null){
-        throw new Exception("Usuário ou senha inválidos.", 14006);
-        exit;
-    }
-    /**
-     * O sistema validará se o usuário esta habilitado ou não somente se a configuração, abaixo, estiver como true;
-     */
-    if(ConfigSystema::getValidarHabilitacao())
-        if($Saida[3] != 1){
-            throw new Exception("O usuário não existe ou não está habilitado no sistema. Favor entrar em contato com o administrador.", 14004);
-            exit;
-        }
-    
-    if(ConfigSystema::getValidarTentativas()){
-        if($Saida[4] >= ConfigSystema::getTentativasTotal()){
-            throw new Exception("Usuário bloqueado, favor entrar em contato com o administrador.", 14005);
-            exit;
-        }
-    }
-        
-    /**
-     * O Usuário ou a senha que foram informados estão incorretos.
-     */
-    if(count($Saida) == 0){
         if(ConfigSystema::getValidarTentativas()){
             /**
              * Garante que as tentativas, sem sucesso, serão registradas para uso futuro.
@@ -179,42 +156,60 @@ try {
                             ];
                 $SelecionarDados->AtualizarDadosTabela($ChavesAtualizacao,$Atualizar);
             }
-            
-        
-    }else{
-        if($Saida[4] > 0){
-           /**
-             * Garante que o contador será zerado, caso o usuário não bloquei por tentativas, ao efetivar o login.
-             */
-            $FiltroCampos = [
-                                [
-                                    [
-                                        0=>0,
-                                        1=>"=",
-                                        2=>$Usuario
-                                    ]
-                                ]
-                            ];
-
-                $SelecionarDados->setFiltros($FiltroCampos);
-                $SelecionarDados->Select();            
-                $UserPSError = $SelecionarDados->getArrayDados()[0];
-
-                $Tentativa = 0;
-                $ChavesAtualizacao = [
-                                        [
-                                            0=>5, 
-                                            1=>$UserPSError[5]]
-                                    ];
-                
-                $Atualizar = [
-                                [
-                                    "name"=>"Tentativa",
-                                    "value"=>$Tentativa]
-                            ];
-                $SelecionarDados->AtualizarDadosTabela($ChavesAtualizacao,$Atualizar);
-            }
+        throw new Exception("Usuário ou senha inválidos.", 14006);
+        exit;
     }
+    /**
+     * O sistema validará se o usuário esta habilitado ou não somente se a configuração, abaixo, estiver como true;
+     */
+    if(ConfigSystema::getValidarHabilitacao())
+        if($Saida[3] != 1){
+            throw new Exception("O usuário não existe ou não está habilitado no sistema. Favor entrar em contato com o administrador.", 14004);
+            exit;
+        }
+    
+    if(ConfigSystema::getValidarTentativas()){
+        if($Saida[4] >= ConfigSystema::getTentativasTotal()){
+            throw new Exception("Usuário bloqueado, favor entrar em contato com o administrador.", 14005);
+            exit;
+        }
+    }
+        
+    /**
+     * Verifica se houve autenticação e se houve excesso de tentativas.
+     */
+    if($Saida[4] > 0){
+       /**
+         * Garante que o contador será zerado, caso o usuário não bloquei por tentativas, ao efetivar o login.
+         */
+        $FiltroCampos = [
+                            [
+                                [
+                                    0=>0,
+                                    1=>"=",
+                                    2=>$Usuario
+                                ]
+                            ]
+                        ];
+
+            $SelecionarDados->setFiltros($FiltroCampos);
+            $SelecionarDados->Select();            
+            $UserPSError = $SelecionarDados->getArrayDados()[0];
+
+            $Tentativa = 0;
+            $ChavesAtualizacao = [
+                                    [
+                                        0=>5, 
+                                        1=>$UserPSError[5]]
+                                ];
+
+            $Atualizar = [
+                            [
+                                "name"=>"Tentativa",
+                                "value"=>$Tentativa]
+                        ];
+            $SelecionarDados->AtualizarDadosTabela($ChavesAtualizacao,$Atualizar);
+        }
     
     $SDados["Active"]   = true;
     $SDados["Username"] = $Usuario;
@@ -247,6 +242,9 @@ try {
          $ResultRequest["TipoUsuario"] = "Gerente";
          $ResultRequest["Tentativas"] = $SDados["Tentativas"];
          $ResultRequest["Header"] = ConfigSystema::getHttp_Systema(). $Saida[2] ."?s=" . $Chave;
+         $ResultRequest["Apelido"] = $Saida[6];
+         $ResultRequest["Imagem"] = $Saida[7];
+         
          echo json_encode($ResultRequest);
          break;
 
@@ -257,6 +255,9 @@ try {
          $ResultRequest["TipoUsuario"] = "Administrador";
          $ResultRequest["Tentativas"] = $SDados["Tentativas"];
          $ResultRequest["Header"] = ConfigSystema::getHttp_Systema(). $Saida[2] ."?s=" . $Chave;
+         $ResultRequest["Apelido"] = $Saida[6];
+         $ResultRequest["Imagem"] = $Saida[7];
+
          echo json_encode($ResultRequest);
          break;
      

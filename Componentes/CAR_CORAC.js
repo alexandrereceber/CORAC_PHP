@@ -10,7 +10,6 @@ class ControleRemoto extends JSController{
     
 constructor(Caminho_Config){
         super(Caminho_Config);
-        //this.CaminhoAcesso = Caminho_Acesso.replace("{PORTA}",":1199");
         this.Configuracoes = null;
         this.Servidor_AR = null;
 

@@ -28,6 +28,10 @@ RewriteRule (.*) Controller/PCD/Procedures.php?URL=$1&Req=%{HTTP_REFERER}&Metodo
 RewriteCond %{REQUEST_URI} /ValidarLogin/$
 RewriteRule (.*) Credencial/ValidarLogin.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
+#Realiza a verificação sobre a validade do login do usuário.
+RewriteCond %{REQUEST_URI} /ValidarLoginAA/$
+RewriteRule (.*) Credencial/ValidarLoginAA.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
 #Realiza a verificação do login de usuários através do CORAC.
 RewriteCond %{REQUEST_URI} /CheckedUser/$
 RewriteRule (.*) Credencial/CheckedUser.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]

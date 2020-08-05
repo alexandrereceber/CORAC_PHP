@@ -6180,3 +6180,56 @@ class paginawebeditar extends ModeloTabelas{
     }
 
 }
+
+class Teste extends ModeloProcedures{
+    /**
+     * Mapeia os campos da tabela - Muito importante caso se queira visualizar somente campo necessários
+     */
+    private $Saidas = "@Saida, @s2";
+    private $Privilegios = [["CORAC","Select/Execute"]];
+    private $StringSQL = null;
+    
+//
+//    public function getArrayDados() {
+//        $Preparacao = parent::query($this->StringSQL);
+//        $Preparacao = parent::query("SELECT $this->Saidas");
+//        return $Preparacao->fetch();
+//    }
+
+    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
+        
+    }
+
+    public function NormalizarFiltro($Func) {
+        
+    }
+
+    public function getNomeReal() {
+        return __CLASS__;
+    }
+
+    public function getPrivBD() {
+        return false;
+    }
+
+    public function getPrivilegios() {
+        return $this->Privilegios;
+    }
+
+    public function getVirtual() {
+        return false;
+    }
+
+    public function setNomeProcedure() {
+        $this->NomeProcedures = __CLASS__;
+    }
+
+    public function validarConteudoCampoRegex(&$Dados) {
+        
+    }
+
+    public function getSaidas() {
+        return $this->Saidas;
+    }
+
+}

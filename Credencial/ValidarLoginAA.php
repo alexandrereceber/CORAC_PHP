@@ -64,15 +64,6 @@ if(!@include_once ConfigSystema::get_Path_Systema() . '/BancoDados/TabelasBD/'. 
     exit;
 }
 
-if(@!include_once ConfigSystema::get_Path_Systema() .  "/Controller/SegurityPages/SecurityPgs.php"){ //Include que contém configurações padrões do sistema.
-    $ResultRequest["Erros"]["Modo"]        = "Include";
-    $ResultRequest["Erros"][0]             = true;
-    $ResultRequest["Erros"][1]             = 3588;
-    $ResultRequest["Erros"][2]             = "O arquivo de cabecalho não foi encontrado. Controller";
-    
-    echo json_encode($ResultRequest);
-    exit;
-};
 
 /**
  * Armazena o tempo inicial do processamento.
@@ -99,7 +90,14 @@ try {
         }
     }
     
- 
+     //obtém a chave que foi enviado pelo cliente.
+    $sendChave = empty($_POST["enviarChaves"]) == true ? substr($_REQUEST["sendChaves"], 2) : $_POST["enviarChaves"];
+
+    /**
+     * $Dados_Sessao["SDados"]["Chave"]
+     * 
+     */
+    $Dados_Sessao["Chave"] = $sendChave;
 
     $SD = new SessaoDados();
     $SD->setChaves($Dados_Sessao["Chave"]);

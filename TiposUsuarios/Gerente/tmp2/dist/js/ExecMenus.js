@@ -152,7 +152,6 @@ class MenuLateral{
                     Idx = Args[1].attributes["data-chaveprimaria"].nodeValue;
                     Tbl_CPU.setChavesPrimaria(Idx);
                     Maquina = Tbl_CPU.getObterValorCampos(3);
-                    //AR_CORAC.setPortaCORAC_Cliente(1199);
                     let Rst_AA =  await AR_CORAC.get_ControlAcessoRemoto(Maquina, 0);
 
 
@@ -168,10 +167,43 @@ class MenuLateral{
             
             
         }
-        Tabela_Computadores.FuncoesIcones[2] = function(){
-            AR_CORAC.setCriarMonitores();
-            AR_CORAC.setCriarChat();
+        Tabela_Computadores.FuncoesIcones[2] = async function(){
+             
+            var Args = arguments;
+            
+            bootbox.prompt({
+                title: "Enviar comandos powershell",
+                message: "<h3>Tem certeza que deseja executar essa operação?</h3>",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Não'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> OK'
+                    }
+                },
+                callback: async function(result){
+                if(!result) return false;
+                try{
+                    var Tbl_CPU = Args[0],
+                    Idx = 0,
+                    Maquina = null;
+
+                    Idx = Args[1].attributes["data-chaveprimaria"].nodeValue;
+                    Tbl_CPU.setChavesPrimaria(Idx);
+                    Maquina = Tbl_CPU.getObterValorCampos(3);
+                    Comandos_CORAC.Maquina = Maquina;
+                    
+                    await Comandos_CORAC.Bt_PowershellRemoto(result);
+                    
+                }catch(ex){
+                    bootbox.alert("<h3><i class='fas fa-times' style='color: red; font-size: 27px' data-original-title='' title=''></i> " + ex +"</h3>");
+                }
+            }
+            });
+            
         }
+        
         Tabela_Computadores.show();
         window.onscroll = function(){
             if(window.scrollY>70){

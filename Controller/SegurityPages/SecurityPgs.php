@@ -97,6 +97,8 @@ if($Sessao){
             $ResultRequest["Error"]    = true;
             $ResultRequest["Codigo"]   = $exc->getCode();
             $ResultRequest["Mensagem"] = $exc->getMessage();
+            $ResultRequest["File"] =  "";            
+            $ResultRequest["Tracer"] =  "";
             $ResultRequest["Dominio"] = ConfigSystema::getHttp_Systema();
             /**
              * Esse array armazena o endereço da página de login caso o usuário esteja tentando acesso sem esta logado via componente.

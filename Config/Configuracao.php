@@ -28,7 +28,8 @@ class ConfigSystema {
             $Dispositivos = [ //Tipos de dispositivos que são liberado no sistema, essa lista somente será utilizada, caso, 
                               //a variável $vrf_Dispositivo estive habilitada.
                                 "pc",
-                                "Movel"
+                                "Movel",
+                                "OutSystems"
                             ],
             $Email = true,
             $Mensagem = true;
@@ -413,7 +414,7 @@ class AmbienteCall {
  * Classe utilizada para enviar comandos e receber o resultaado.
  */
 class ConfigPowershell {
-    private static $Protocolo = "http", $Servidor = "192.168.15.250", $Porta = 1119, $Pasta = "SYNCPCT/";
+    private static $Protocolo = "http", $Servidor = "192.168.15.250", $Porta = 8081, $Pasta = "CORAC/SYNCPCT/";
     
     public static function getProtocolo() {
         return self::$Protocolo;
@@ -443,7 +444,7 @@ class ConfigPowershell {
  * Classe utilizada para enviar comandos e receber o resultaado.
  */
 class ConfigAcessoRemoto_Config {
-    private static $Protocolo = "http", $Servidor = "192.168.15.250", $Porta = 1199, $Pasta = "AA_AcessoRemoto_SYN/";
+    private static $Protocolo = "http", $Servidor = "192.168.15.250", $Porta = 8082, $Pasta = "CORAC/AA_AcessoRemoto_SYN/";
     
     public static function getProtocolo() {
         return self::$Protocolo;

@@ -528,7 +528,24 @@ class login extends ModeloTabelas{
     }
 
     public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
-        
+        switch ($Tipo) {
+            case "getArrayDados": //Outsystems
+                if($Action == "AfterSelect"){
+                    if(array_count_values($ConjuntoDados[0]) > 0){
+                        $ID = $ConjuntoDados[0][5];
+                        $SQLAgenteAutonomo = "SELECT Apelido, Imagem FROM ulogin where idULogin=$ID";
+                        $Retorno = $this->query($SQLAgenteAutonomo);
+                        $Dados = $Retorno->fetch(PDO::FETCH_OBJ);
+                        $ConjuntoDados[0][6] = $Dados->Apelido;
+                        $ConjuntoDados[0][7] = $Dados->Imagem;
+                    }
+                }
+
+                break;
+
+            default:
+                break;
+        }
     }
 
     public function getTotalPageVisible() {
@@ -1206,7 +1223,9 @@ class Computadores extends ModeloTabelas{
         $Icones = [
                         ["Visible"=>true,"NomeColuna"=> "<i class='mdi mdi-information-outline' style='font-size:20px'></i>","NomeBotao"=>"IMaquinas", "Icone" => "mdi mdi-information-variant", "Func" => 0, "Tipo" => "Bootstrap", "tooltip"=> "Informações da Máquina"],
                         ["Visible"=>true,"NomeColuna"=> "<i class='mdi mdi-monitor' style='font-size:20px'></i>","NomeBotao"=>"IACR", "Icone" => "mdi mdi-monitor-multiple", "Func" => 1, "Tipo" => "Bootstrap", "tooltip"=> "Acesso Remoto"],
-                    ];
+                        ["Visible"=>true,"NomeColuna"=> "<i class='mdi mdi-dialpad' style='font-size:20px'></i>","NomeBotao"=>"CMDRMT", "Icone" => "mdi mdi-dialpad", "Func" => 2, "Tipo" => "Bootstrap", "tooltip"=> "Comandos Powershell Remoto"],
+
+            ];
         $ShowColumns[0] = $Habilitar;
         $ShowColumns[1] = $Icones;
 
@@ -2747,55 +2766,3 @@ class scriptsbdcorac extends ModeloTabelas{
 
 }
 
-class Teste extends ModeloProcedures{
-    /**
-     * Mapeia os campos da tabela - Muito importante caso se queira visualizar somente campo necessários
-     */
-    private $Saidas = "@Saida, @s2";
-    private $Privilegios = [["CORAC","Select/Execute"]];
-    private $StringSQL = null;
-    
-//
-//    public function getArrayDados() {
-//        $Preparacao = parent::query($this->StringSQL);
-//        $Preparacao = parent::query("SELECT $this->Saidas");
-//        return $Preparacao->fetch();
-//    }
-
-    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
-        
-    }
-
-    public function NormalizarFiltro($Func) {
-        
-    }
-
-    public function getNomeReal() {
-        return __CLASS__;
-    }
-
-    public function getPrivBD() {
-        return false;
-    }
-
-    public function getPrivilegios() {
-        return $this->Privilegios;
-    }
-
-    public function getVirtual() {
-        return false;
-    }
-
-    public function setNomeProcedure() {
-        $this->NomeProcedures = __CLASS__;
-    }
-
-    public function validarConteudoCampoRegex(&$Dados) {
-        
-    }
-
-    public function getSaidas() {
-        return $this->Saidas;
-    }
-
-}

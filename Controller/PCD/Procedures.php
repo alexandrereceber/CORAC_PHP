@@ -22,19 +22,21 @@ if(@!include_once "./Cabecalho_Procedures.php"){ //Include que contém configura
     exit;
 }; 
 $Entradas = ($_REQUEST["sendEntradas"] == "") ? false : $_REQUEST["sendEntradas"];
+$Entradas = preg_replace("/-/", ",", $Entradas);
 
 try{
     $StoreProcedure = new $Procedure($Entradas);
+    $StoreProcedure->StartClock();
     $StoreProcedure->setEntrada($Entradas);
     $StoreProcedure->setUsuario("CORAC");
     $StoreProcedure->Execute();
+    $StoreProcedure->EndClock();
     
     $ResultRequest["Modo"]             = "S";
     $ResultRequest["Error"]             = false;
     $ResultRequest["NomeProcedure"]     = ProcedureBancoDadosMD5::getProcedureForMD5($Procedure);
     $ResultRequest["ResultDados"]       = $StoreProcedure->getArrayDados();
     $ResultRequest["Campos"]            = $StoreProcedure->getInfoCampos();
-    $ResultRequest["ChavesPrimarias"]   = $StoreProcedure->getChaves();
     $ResultRequest["Formato"]          = "JSON";
     $ResultRequest["Indexador"]         = time();
 

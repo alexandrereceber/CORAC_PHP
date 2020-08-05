@@ -11,6 +11,10 @@ RewriteRule (.*) Checked.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}
 RewriteCond %{QUERY_STRING} URL=ValidarLogin/
 RewriteRule (.*) ValidarLogin.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
+#Realiza a verificação sobre a validade do login do usuário.
+RewriteCond %{QUERY_STRING} URL=ValidarLoginAA/
+RewriteRule (.*) ValidarLoginAA.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
 #Realiza a verificação do login de usuários através do banco de dados do CORAC.
 RewriteCond %{QUERY_STRING} URL=CheckedUser/
 RewriteRule (.*) CheckedUser.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]

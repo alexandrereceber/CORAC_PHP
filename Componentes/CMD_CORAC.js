@@ -303,7 +303,29 @@ class Commands extends JSController{
             this.Menu_Geral.Min = true;
         }
     }
+     /**
+     * Busca informações relativas ao processador da máquina do AA.
+     * Tipo: SVG
+     */
+    async Bt_PowershellRemoto(Command){
+        
+        if(this.Maquina == null){
+            throw "O nome da máquina não foi definido!";
+        }
+        
+        this.DadosEnvio.AA_CORAC = this.Maquina;
+        this.DadosEnvio.Command = Command;
 
+        let TratarResposta = await this.Atualizar();
+        this.TempoResposta = TratarResposta.SistemaTempoTotal;
+        this.AA = TratarResposta.AA;
+        
+        if(TratarResposta.Error != false){
+            this.TratarErros(TratarResposta);
+            return false;
+        }
+        bootbox.alert(TratarResposta.RST_AG);
+    }
      /**
      * Maximiza ou minimiza a caixa lateral que apresenta detalhes de cadas item selecionado.
      */

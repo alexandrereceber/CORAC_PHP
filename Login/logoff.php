@@ -21,14 +21,33 @@ if(@!include_once ConfigSystema::get_Path_Systema() .  "/Controller/SegurityPage
     echo json_encode($ResultRequest);
     exit;
 };
-
-$SD->DestruirSessao();
-
-$ResultRequest["Modo"]      = "VL"; //Validação
-$ResultRequest["Error"]     = false;
-
+try{
+    $SD->DestruirSessao();
+    
+    $ResultRequest["Modo"]      = "LOGOFF"; //Validação
+    $ResultRequest["Error"]     = false;
+    $ResultRequest["Codigo"]    = "";
+    $ResultRequest["Mensagem"]  = "";
+    $ResultRequest["File"]      = "";            
+    $ResultRequest["Tracer"]    = "";
+    $ResultRequest["Dominio"]   = ConfigSystema::getHttp_Systema();
 /**
  * Esse array armazena o endereço da página de login caso o usuário esteja tentando acesso sem esta logado via componente.
  */
-echo json_encode($ResultRequest); 
+    echo json_encode($ResultRequest); 
+} catch (Exception $ex) {
+    $ResultRequest["Modo"]      = "LOGOFF"; //Validação
+    $ResultRequest["Error"]     = true;
+    $ResultRequest["Codigo"]    = $ex->getCode();
+    $ResultRequest["Mensagem"]  = $ex->getMessage();
+    $ResultRequest["File"]      =  $ex->getFile();            
+    $ResultRequest["Tracer"]    =  "";
+    $ResultRequest["Dominio"]   = ConfigSystema::getHttp_Systema();
+/**
+ * Esse array armazena o endereço da página de login caso o usuário esteja tentando acesso sem esta logado via componente.
+ */
+    echo json_encode($ResultRequest); 
+}
+
+
 exit;
