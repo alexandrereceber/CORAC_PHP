@@ -22,7 +22,8 @@ if(@!include_once "./Cabecalho_Procedures.php"){ //Include que contém configura
     exit;
 }; 
 $Entradas = ($_REQUEST["sendEntradas"] == "") ? false : $_REQUEST["sendEntradas"];
-$Entradas = preg_replace("/-/", ",", $Entradas);
+if($Entradas != "")
+    $Entradas = preg_replace("/-/", ",", $Entradas);
 
 try{
     $StoreProcedure = new $Procedure($Entradas);

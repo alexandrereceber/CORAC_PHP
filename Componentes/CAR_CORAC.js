@@ -401,6 +401,11 @@ constructor(Caminho_Config){
                         return false;
                     break;
 
+                    case 25: //Pacote Mensagens
+                        Configuracoes.InstaladorRemoto(Resultado);
+                        return false;
+                    break;
+                    
                     default:
 
                         break;
@@ -421,7 +426,15 @@ constructor(Caminho_Config){
 
         }
     }
-
+    InstaladorRemoto(Pacote){
+        switch(Pacote.Tipo){
+            case 60000:
+                $("#id_container-RdeskView-Primario").append("<img style='positon: absolute; top:0px;right:0px' id='CarregandoInstalador' src='66'/>");
+                break;
+            case 60001:
+                $("#CarregandoInstalador").remove();
+                break;        }
+    }
     setON_Open(){
         var Canal = this;
         this.ServidorCorac.onopen = function(dados){
@@ -908,7 +921,7 @@ constructor(Caminho_Config){
      * @returns {void}
      */
     TratarErros(Erros){
-
+        $("#CarregandoInstalador").remove();
         switch(Erros.Numero){
             case 11005:
             case 12006:

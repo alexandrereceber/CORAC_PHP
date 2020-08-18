@@ -181,7 +181,7 @@ class BDSQL extends PDO{
      * @return Array
      */
     protected function getArrayResultadoProcedure() {
-        $this->Linhas = $this->StatusExecutarSQL->fetch(PDO::FETCH_NUM);
+        $this->Linhas = $this->StatusExecutarSQL->fetch(PDO::FETCH_OBJ);
         return $this->Linhas;
     }
     

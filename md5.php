@@ -1,29 +1,46 @@
-<table class="table TCOLORUSER">
-                                <tbody>
-                                    <tr><td id="TituloNetwordProfile" class="TDCOLORTIT
-ULO">Informações do perfil de rede</td></tr>
-                                    <tr><td id="NetworkProfile"> <table class="table TC
-OLORUSER">
-                                            <tbody><tr><td>Alarme: </td><td></td></tr><
-tr><td>Descrição: </td><td></td></tr><tr><td>CableManagementStrategy: </td><td></td></t
-r><tr><td>Nome Completo: </td><td>Compartimento do Sistema</td></tr><tr><td>Tipo Chassi
-: </td><td>10</td></tr><tr><td>Produto: </td><td></td></tr><tr><td>Profundidade: </td><
-td></td></tr><tr><td>Descrição: </td><td>Compartimento do Sistema</td></tr><tr><td>Heat
-Generation: </td><td></td></tr><tr><td>Altura: </td><td></td></tr><tr><td>HotSwappable:
- </td><td></td></tr><tr><td>Data Instalação: </td><td></td></tr><tr><td>Lock: </td><td>
-False</td></tr><tr><td>Placa Mãe: </td><td>LENOVO</td></tr><tr><td>Modelo: </td><td></t
-d></tr><tr><td>Nome: </td><td>Compartimento do Sistema</td></tr><tr><td>Núcleo Processa
-dores: </td><td></td></tr><tr><td>Outras Informações: </td><td></td></tr><tr><td>PartNu
-mber: </td><td></td></tr><tr><td>PoweredOn: </td><td></td></tr><tr><td>Removable: </td>
-<td></td></tr><tr><td>Replaceable: </td><td></td></tr><tr><td>SecurityBreach: </td><td>
-</td></tr><tr><td>SecurityStatus: </td><td>3</td></tr><tr><td>Serial: </td><td>PE03Y6UT
-</td></tr><tr><td>ServiceDescriptions: </td><td></td></tr><tr><td>ServicePhilosophy: </
-td><td></td></tr><tr><td>SKU: </td><td></td></tr><tr><td>SMBIOSAssetTag: </td><td>NO As
-set Tag</td></tr><tr><td>Status: </td><td></td></tr><tr><td>Tag: </td><td>System Enclos
-ure 0</td></tr><tr><td>TypeDescriptions: </td><td></td></tr><tr><td>Versão: </td><td>Le
-novo ideapad 330-15IKB</td></tr><tr><td>Alarme: </td><td></td></tr><tr><td>Largura: </t
-d><td></td></tr><tr><td>Comprimento: </td><td></td></tr></tbody>
-                                        </table></td></tr>
+<?php
+$arrContextOptions=array(
+    "http" => array(
+        "method" => "POST",
+        "header" => 
+            "Content-Type: application/xml; charset=utf-8;\r\n".
+            "Connection: close\r\n",
+            "ignore_errors" => true,
+            "timeout" => (float)30.0,
+            "Host"=> "www.sccdtk.serpro",
+            "Connection"=> "keep-alive",
+            "User-Agent"=>" Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+            "X-Requested-With"=> "XMLHttpRequest",
+            "Content-Type"=> "application/x-www-form-urlencoded",
+            "Accept"=>" */*",
+            "Sec-Fetch-Site"=> "same-origin",
+            "Sec-Fetch-Mode"=>" cors",
+            "Sec-Fetch-Dest"=> "empty",
+            "Referer"=> "https://www.sccdtk.serpro/maximo/ui/?event=loadapp&value=startcntr&uniqueid=23865&uisessionid=575&csrftoken=ca67br9s2sqcck8tknnhnrv5n2",
+            "Accept-Encoding"=>" gzip, deflate, br",
+            "Accept-Language"=>" pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Cookie"=>" TJE=; TE3=; JSESSIONID=0000FC7miwp87KQJYTjYHvfyLdw:1cm2up393",
+    ),
+    "ssl"=>array(
+        "allow_self_signed"=>true,
+        "verify_peer"=>false,
+    ),
+    
+);
+function file_get_contents_curl( $url ) {
 
-                                </tbody>
-                             </table>
+  $ch = curl_init();
+
+  curl_setopt( $ch, CURLOPT_URL, $url );
+
+
+  $data = curl_exec( $ch );
+  curl_close( $ch );
+
+  return $data;
+
+}
+
+$Result = file_get_contents_curl("https://www.sccdtk.serpro/maximo/ui/?event=loadapp&value=startcntr&uniqueid=23865&uisessionid=675&csrftoken=oe0lclcii6gk1d0flgk3oe7713", false, stream_context_create($arrContextOptions));
+echo $Result;
+?>

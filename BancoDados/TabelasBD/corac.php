@@ -1277,20 +1277,21 @@ class Computadores extends ModeloTabelas{
                         $Registro = $ConjuntoDados[2]["value"];
                         $SQLAgenteAutonomo = "INSERT INTO agentesautonomos SET idEquipamento = '$lastID_Insert', Registro = '$Registro'";
                         $Retorno = $this->query($SQLAgenteAutonomo);
+                        
                         if($Retorno){
-                            $this->commit();
+                            $SQLAgenteAutonomo = "INSERT INTO controleequipamentos SET idEquipamento = '$lastID_Insert'";
+                            $Retorno = $this->query($SQLAgenteAutonomo);
+                            if($Retorno){
+                                $this->commit();
+                            }else{
+                                $this->rollBack();
+                            }
                         }else{
                             $this->rollBack();
                         }
                         
-                        $SQLAgenteAutonomo = "INSERT INTO controleequipamentos SET idEquipamento = '$lastID_Insert'";
-                        $Retorno = $this->query($SQLAgenteAutonomo);
-                        if($Retorno){
-                            $this->commit();
-                        }else{
-                            $this->rollBack();
-                        }
-                        $t = $this->GetLinhasAtingidas(); 
+
+
                     }else{
                         $this->rollBack();
                     }
@@ -2766,3 +2767,108 @@ class scriptsbdcorac extends ModeloTabelas{
 
 }
 
+class Teste extends ModeloProcedures{
+    /**
+     * Mapeia os campos da tabela - Muito importante caso se queira visualizar somente campo necessários
+     */
+    private $Saidas = "@Saida, @s2";
+    private $Privilegios = [["CORAC","Select/Execute"]];
+    private $StringSQL = null;
+    
+//
+//    public function getArrayDados() {
+//        $Preparacao = parent::query($this->StringSQL);
+//        $Preparacao = parent::query("SELECT $this->Saidas");
+//        return $Preparacao->fetch();
+//    }
+
+    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
+        
+    }
+
+    public function NormalizarFiltro($Func) {
+        
+    }
+
+    public function getNomeReal() {
+        return __CLASS__;
+    }
+
+    public function getPrivBD() {
+        return false;
+    }
+
+    public function getPrivilegios() {
+        return $this->Privilegios;
+    }
+
+    public function getVirtual() {
+        return false;
+    }
+
+    public function setNomeProcedure() {
+        $this->NomeProcedures = __CLASS__;
+    }
+
+    public function validarConteudoCampoRegex(&$Dados) {
+        
+    }
+
+    public function getSaidas() {
+        return $this->Saidas;
+    }
+
+}
+
+class Contagem extends ModeloProcedures{
+    /**
+     * Mapeia os campos da tabela - Muito importante caso se queira visualizar somente campo necessários
+     */
+    private $Saidas = "@ttEquip, @ttCPU, @ttNOT, @ttIMP";
+    private $Privilegios = [["CORAC","Select/Execute"]];
+    private $StringSQL = null;
+    
+//
+//    public function getArrayDados() {
+//        $Preparacao = parent::query($this->StringSQL);
+//        $Preparacao = parent::query("SELECT $this->Saidas");
+//        return $Preparacao->fetch();
+//    }
+
+    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
+        
+    }
+
+    public function NormalizarFiltro($Func) {
+        
+    }
+
+    public function getNomeReal() {
+        return __CLASS__;
+    }
+
+    public function getPrivBD() {
+        return false;
+    }
+
+    public function getPrivilegios() {
+        return $this->Privilegios;
+    }
+
+    public function getVirtual() {
+        return false;
+    }
+
+    public function setNomeProcedure() {
+        $this->NomeProcedures = __CLASS__;
+    }
+
+    public function validarConteudoCampoRegex(&$Dados) {
+        
+    }
+
+    public function getSaidas() {
+        return $this->Saidas;
+    }
+
+}
