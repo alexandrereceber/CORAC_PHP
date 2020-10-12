@@ -219,12 +219,12 @@ class MenuLateral{
             }else{
                 if(window.scrollY<70){
                     if(Origem){
-                        $("#Container1-MenuInforFlash").css("position","absolute");
-                        $("#Container1-MenuInforFlash").css("left","initial");
-                        $("#Container1-MenuInforFlash").css("top","initial");
+                        $("#Container1-MenuInforFlash").css("position","fixed");
+                        $("#Container1-MenuInforFlash").css("top","0px");
+                        $("#Container1-MenuInforFlash").css("left","0px");
                         $("#Container1-MenuInforFlash").css("display","none");
-                        $("#Container1-MenuInforFlash").fadeIn("slow"); 
-                        Origem = false
+                        $("#Container1-MenuInforFlash").fadeIn("slow");  
+                        Origem = false;
                     }
                     
                 }

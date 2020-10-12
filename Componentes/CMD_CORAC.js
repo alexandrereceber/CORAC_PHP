@@ -298,6 +298,7 @@ class Commands extends JSController{
             $(p).removeClass("fa-arrow-circle-up");
             $(p).addClass("fa-arrow-alt-circle-down");
             $(p).css("font-size","25px")
+
             
             $(".menu-navigation-dark").fadeOut();
             this.Menu_Geral.Min = true;
@@ -345,7 +346,11 @@ class Commands extends JSController{
             $("#Container1-MenuInforFlash").css("display","none");
             $("#Container1-MenuInforFlash").fadeIn("slow");
             $(".menu-navigation-dark a").css("padding","3px").css("font-size","27px");
+            $("#Barra_Icones_Interv").css("display","block");
+            
         }else{
+            
+            $("#Barra_Icones_Interv").css("display","none");
             let ant = $("#Regulador_Info").parent();
             $(ant).animate({width:"14px"})
             let Depois = $("#Regulador_Info").children();
@@ -382,6 +387,7 @@ class Commands extends JSController{
                                             </div>\n\
                                         </div>\n\
                                         <div id='C_inf_C_Geral_Desc_Container'>\n\
+                                            <nav id='Barra_Icones_Interv' class='menu-navigation-claro'></nav>\n\
                                             <div id='C_info_Cabecalho'>\n\
                                                 <div id='C_inf_Desc'>\n\
                                                     <div id='C_Inf_Cab_NomeMaquina'>"+ this.DadosEnvio.AA_CORAC +"</div>\n\
@@ -391,11 +397,7 @@ class Commands extends JSController{
                                             <div id='C_inf_C_Geral_Img'></div>\n\
                                             <div id='C_inf_C_Geral_AA'></div>\n\
                                         </div>\n\
-                                        <div id='C_inf_C_Geral_botoesInterv_Container'>\n\
-                                            <div id='BarraContainer' class='col-12 d-flex no-block align-items-center' data-original-title='' title=''>\n\
-                                                <nav id='Barra_Icones_Interv' class='menu-navigation-claro'></nav>\n\
-                                            </div>\n\
-                                        </div>\n\                                  </div>\n\
+                                  </div>\n\
                                 </div>\n\
                             </div>");
 
