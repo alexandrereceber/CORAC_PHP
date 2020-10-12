@@ -2767,520 +2767,108 @@ class scriptsbdcorac extends ModeloTabelas{
 
 }
 
-class assinatura_aa_externos extends ModeloTabelas{
+class Teste extends ModeloProcedures{
     /**
      * Mapeia os campos da tabela - Muito importante caso se queira visualizar somente campo necessários
      */
-    private $Campos =  [
-                       
-            [
-               "Index"          => 0,                                   //Ordem dos campos
-               "Field"          => "idChave",                       //Nome original do campo (String)
-               "CodNome"        => "idChave",                       //Codnome do campo, o que será visualizado pelo usuário (String)
-               "TypeConteudo"   => ["text"],                           //Tipo de conteudo exibido na tabela HTML
-               "Filter"         => false,                               //Habilita a visualização da caixa popv para filtro e classificação
-               "Key"            => [true, true],                       //Chave primária (boolean)
-               "ChvExt"         => [        
-                                        "TExt" => false,                 //Indica que existe chave extrangeira
-                                        "Tabela"=> "",  //nome da tabela extrangeira
-                                        /**
-                                         * Informa o índice do campo que será utilizado para recuperar o valor que será enviado para armazenamento
-                                         * na chave extrangeira. 
-                                         */
-                                        "IdxCampoVinculado"=> 0,
-                                        /*
-                                         * Campo que desempenha uma função muito importante em relação às chaves extrangeiras.
-                                         * Caso esteja com seu valor false, significa que os dados da tabela extrangeira serão
-                                         * resgatadas por uma função interna a classe ModeloTabelas.php e disponibilizado´s em um variável interna de
-                                         * Nome: DadosTblExt.
-                                         * Caso sejá informado um número inteiro, será utilizada uma função pré-definada no componente tabelas.js.
-                                         */
-                                        "Funcao"=> false,                   
-                                        "NomeBotao"=> "",            //texto do botão que será visualizado na página
-                                        /**
-                                         * Informa o nome real dos campos da tabela extrangeira que serão recuperados para envio
-                                         * à tabela html.
-                                         */
-                                        "CamposTblExtrangeira"=>[""]
-                                    ],
-               "Mask"           => false,                               // Máscara (String) Contém a máscara que será utilizada pelo campo
-               "Editar"         => false,                               //Editável - (boolean)  
-               "Visible"        => true,                                //Mostrar na tabela HTML (boolean)
-               "Regex"          => [Exist=> false, Regx=> ""],                               //Regex que será utilizada.
-               "Formulario"     => [
-                                        "Exibir"=> false,
-                                        "Placeholder"=> "", 
-                                        "TypeComponente"=>"inputbox", 
-                                        "TypeConteudo"=> ["text"], 
-                                        "Name" => "dtCriado", 
-                                        "Patterns"=> "", 
-                                        "Titles" => "",
-                                        "Required" => "",
-                                        "width" => "",
-                                        "height"=>"",
-                                        "step"=>"",
-                                        "size"=>"",
-                                        "min"=>"",
-                                        "max"=>"",
-                                        "maxlength"=>"",
-                                        "form"=>"",
-                                        "formaction"=>"",
-                                        "formenctype"=>"",
-                                        "formmethod"=>"",
-                                        "formnovalidate"=>"",
-                                        "formtarget"=>"",
-                                        "align"=>"",
-                                        "alt"=>"",
-                                        "autocomplete"=>"",
-                                        "autofocus"=>"",
-                                        "checked"=>"",
-                                        "dirname"=>"",
-                                        "readonly"=>""
-                                    ],                                  //Informa se o campo fará parte do formulários
-               "OrdemBY"        => false
-           ],
-            [
-               "Index"          => 1,                                   //Ordem dos campos
-               "Field"          => "Maquina",                       //Nome original do campo (String)
-               "CodNome"        => "Maquina",                       //Codnome do campo, o que será visualizado pelo usuário (String)
-               "TypeConteudo"   => ["text"],                           //Tipo de conteudo exibido na tabela HTML
-               "Filter"         => false,                               //Habilita a visualização da caixa popv para filtro e classificação
-               "Key"            => [false, false],                       //Chave primária (boolean)
-               "ChvExt"         => [        
-                                        "TExt" => false,                 //Indica que existe chave extrangeira
-                                        "Tabela"=> "",  //nome da tabela extrangeira
-                                        /**
-                                         * Informa o índice do campo que será utilizado para recuperar o valor que será enviado para armazenamento
-                                         * na chave extrangeira. 
-                                         */
-                                        "IdxCampoVinculado"=> 0,
-                                        /*
-                                         * Campo que desempenha uma função muito importante em relação às chaves extrangeiras.
-                                         * Caso esteja com seu valor false, significa que os dados da tabela extrangeira serão
-                                         * resgatadas por uma função interna a classe ModeloTabelas.php e disponibilizado´s em um variável interna de
-                                         * Nome: DadosTblExt.
-                                         * Caso sejá informado um número inteiro, será utilizada uma função pré-definada no componente tabelas.js.
-                                         */
-                                        "Funcao"=> false,                   
-                                        "NomeBotao"=> "",            //texto do botão que será visualizado na página
-                                        /**
-                                         * Informa o nome real dos campos da tabela extrangeira que serão recuperados para envio
-                                         * à tabela html.
-                                         */
-                                        "CamposTblExtrangeira"=>[""]
-                                    ],
-               "Mask"           => false,                               // Máscara (String) Contém a máscara que será utilizada pelo campo
-               "Editar"         => false,                               //Editável - (boolean)  
-               "Visible"        => true,                                //Mostrar na tabela HTML (boolean)
-               "Regex"          => [Exist=> false, Regx=> ""],                               //Regex que será utilizada.
-               "Formulario"     => [
-                                        "Exibir"=> false,
-                                        "Placeholder"=> "", 
-                                        "TypeComponente"=>"", 
-                                        "TypeConteudo"=> ["text"], 
-                                        "Name" => "", 
-                                        "Patterns"=> "", 
-                                        "Titles" => "",
-                                        "Required" => "",
-                                        "width" => "",
-                                        "height"=>"",
-                                        "step"=>"",
-                                        "size"=>"",
-                                        "min"=>"",
-                                        "max"=>"",
-                                        "maxlength"=>"",
-                                        "form"=>"",
-                                        "formaction"=>"",
-                                        "formenctype"=>"",
-                                        "formmethod"=>"",
-                                        "formnovalidate"=>"",
-                                        "formtarget"=>"",
-                                        "align"=>"",
-                                        "alt"=>"",
-                                        "autocomplete"=>"",
-                                        "autofocus"=>"",
-                                        "checked"=>"",
-                                        "dirname"=>"",
-                                        "readonly"=>""
-                                    ],                                  //Informa se o campo fará parte do formulários
-               "OrdemBY"        => false
-           ],
-            [
-               "Index"          => 2,                                   //Ordem dos campos
-               "Field"          => "Empresa",                       //Nome original do campo (String)
-               "CodNome"        => "Empresa",                       //Codnome do campo, o que será visualizado pelo usuário (String)
-               "TypeConteudo"   => ["text"],                           //Tipo de conteudo exibido na tabela HTML
-               "Filter"         => false,                               //Habilita a visualização da caixa popv para filtro e classificação
-               "Key"            => [false, false],                       //Chave primária (boolean)
-               "ChvExt"         => [        
-                                        "TExt" => false,                 //Indica que existe chave extrangeira
-                                        "Tabela"=> "",  //nome da tabela extrangeira
-                                        /**
-                                         * Informa o índice do campo que será utilizado para recuperar o valor que será enviado para armazenamento
-                                         * na chave extrangeira. 
-                                         */
-                                        "IdxCampoVinculado"=> 0,
-                                        /*
-                                         * Campo que desempenha uma função muito importante em relação às chaves extrangeiras.
-                                         * Caso esteja com seu valor false, significa que os dados da tabela extrangeira serão
-                                         * resgatadas por uma função interna a classe ModeloTabelas.php e disponibilizado´s em um variável interna de
-                                         * Nome: DadosTblExt.
-                                         * Caso sejá informado um número inteiro, será utilizada uma função pré-definada no componente tabelas.js.
-                                         */
-                                        "Funcao"=> false,                   
-                                        "NomeBotao"=> "",            //texto do botão que será visualizado na página
-                                        /**
-                                         * Informa o nome real dos campos da tabela extrangeira que serão recuperados para envio
-                                         * à tabela html.
-                                         */
-                                        "CamposTblExtrangeira"=>[""]
-                                    ],
-               "Mask"           => false,                               // Máscara (String) Contém a máscara que será utilizada pelo campo
-               "Editar"         => false,                               //Editável - (boolean)  
-               "Visible"        => true,                                //Mostrar na tabela HTML (boolean)
-               "Regex"          => [Exist=> false, Regx=> ""],                               //Regex que será utilizada.
-               "Formulario"     => [
-                                        "Exibir"=> false,
-                                        "Placeholder"=> "", 
-                                        "TypeComponente"=>"", 
-                                        "TypeConteudo"=> ["text"], 
-                                        "Name" => "", 
-                                        "Patterns"=> "", 
-                                        "Titles" => "",
-                                        "Required" => "",
-                                        "width" => "",
-                                        "height"=>"",
-                                        "step"=>"",
-                                        "size"=>"",
-                                        "min"=>"",
-                                        "max"=>"",
-                                        "maxlength"=>"",
-                                        "form"=>"",
-                                        "formaction"=>"",
-                                        "formenctype"=>"",
-                                        "formmethod"=>"",
-                                        "formnovalidate"=>"",
-                                        "formtarget"=>"",
-                                        "align"=>"",
-                                        "alt"=>"",
-                                        "autocomplete"=>"",
-                                        "autofocus"=>"",
-                                        "checked"=>"",
-                                        "dirname"=>"",
-                                        "readonly"=>""
-                                    ],                                  //Informa se o campo fará parte do formulários
-               "OrdemBY"        => false
-           ],
-            [
-               "Index"          => 3,                                   //Ordem dos campos
-               "Field"          => "Signacture",                       //Nome original do campo (String)
-               "CodNome"        => "Signacture",                       //Codnome do campo, o que será visualizado pelo usuário (String)
-               "TypeConteudo"   => ["text"],                           //Tipo de conteudo exibido na tabela HTML
-               "Filter"         => false,                               //Habilita a visualização da caixa popv para filtro e classificação
-               "Key"            => [false, false],                       //Chave primária (boolean)
-               "ChvExt"         => [        
-                                        "TExt" => false,                 //Indica que existe chave extrangeira
-                                        "Tabela"=> "",  //nome da tabela extrangeira
-                                        /**
-                                         * Informa o índice do campo que será utilizado para recuperar o valor que será enviado para armazenamento
-                                         * na chave extrangeira. 
-                                         */
-                                        "IdxCampoVinculado"=> 0,
-                                        /*
-                                         * Campo que desempenha uma função muito importante em relação às chaves extrangeiras.
-                                         * Caso esteja com seu valor false, significa que os dados da tabela extrangeira serão
-                                         * resgatadas por uma função interna a classe ModeloTabelas.php e disponibilizado´s em um variável interna de
-                                         * Nome: DadosTblExt.
-                                         * Caso sejá informado um número inteiro, será utilizada uma função pré-definada no componente tabelas.js.
-                                         */
-                                        "Funcao"=> false,                   
-                                        "NomeBotao"=> "",            //texto do botão que será visualizado na página
-                                        /**
-                                         * Informa o nome real dos campos da tabela extrangeira que serão recuperados para envio
-                                         * à tabela html.
-                                         */
-                                        "CamposTblExtrangeira"=>[""]
-                                    ],
-               "Mask"           => false,                               // Máscara (String) Contém a máscara que será utilizada pelo campo
-               "Editar"         => false,                               //Editável - (boolean)  
-               "Visible"        => true,                                //Mostrar na tabela HTML (boolean)
-               "Regex"          => [Exist=> false, Regx=> ""],                               //Regex que será utilizada.
-               "Formulario"     => [
-                                        "Exibir"=> false,
-                                        "Placeholder"=> "", 
-                                        "TypeComponente"=>"", 
-                                        "TypeConteudo"=> ["text"], 
-                                        "Name" => "", 
-                                        "Patterns"=> "", 
-                                        "Titles" => "",
-                                        "Required" => "",
-                                        "width" => "",
-                                        "height"=>"",
-                                        "step"=>"",
-                                        "size"=>"",
-                                        "min"=>"",
-                                        "max"=>"",
-                                        "maxlength"=>"",
-                                        "form"=>"",
-                                        "formaction"=>"",
-                                        "formenctype"=>"",
-                                        "formmethod"=>"",
-                                        "formnovalidate"=>"",
-                                        "formtarget"=>"",
-                                        "align"=>"",
-                                        "alt"=>"",
-                                        "autocomplete"=>"",
-                                        "autofocus"=>"",
-                                        "checked"=>"",
-                                        "dirname"=>"",
-                                        "readonly"=>""
-                                    ],                                  //Informa se o campo fará parte do formulários
-               "OrdemBY"        => false
-           ],
-            [
-               "Index"          => 4,                                   //Ordem dos campos
-               "Field"          => "Habilitada",                       //Nome original do campo (String)
-               "CodNome"        => "Habilitada",                       //Codnome do campo, o que será visualizado pelo usuário (String)
-               "TypeConteudo"   => ["text"],                           //Tipo de conteudo exibido na tabela HTML
-               "Filter"         => false,                               //Habilita a visualização da caixa popv para filtro e classificação
-               "Key"            => [false, false],                       //Chave primária (boolean)
-               "ChvExt"         => [        
-                                        "TExt" => false,                 //Indica que existe chave extrangeira
-                                        "Tabela"=> "",  //nome da tabela extrangeira
-                                        /**
-                                         * Informa o índice do campo que será utilizado para recuperar o valor que será enviado para armazenamento
-                                         * na chave extrangeira. 
-                                         */
-                                        "IdxCampoVinculado"=> 0,
-                                        /*
-                                         * Campo que desempenha uma função muito importante em relação às chaves extrangeiras.
-                                         * Caso esteja com seu valor false, significa que os dados da tabela extrangeira serão
-                                         * resgatadas por uma função interna a classe ModeloTabelas.php e disponibilizado´s em um variável interna de
-                                         * Nome: DadosTblExt.
-                                         * Caso sejá informado um número inteiro, será utilizada uma função pré-definada no componente tabelas.js.
-                                         */
-                                        "Funcao"=> false,                   
-                                        "NomeBotao"=> "",            //texto do botão que será visualizado na página
-                                        /**
-                                         * Informa o nome real dos campos da tabela extrangeira que serão recuperados para envio
-                                         * à tabela html.
-                                         */
-                                        "CamposTblExtrangeira"=>[""]
-                                    ],
-               "Mask"           => false,                               // Máscara (String) Contém a máscara que será utilizada pelo campo
-               "Editar"         => false,                               //Editável - (boolean)  
-               "Visible"        => true,                                //Mostrar na tabela HTML (boolean)
-               "Regex"          => [Exist=> false, Regx=> ""],                               //Regex que será utilizada.
-               "Formulario"     => [
-                                        "Exibir"=> false,
-                                        "Placeholder"=> "", 
-                                        "TypeComponente"=>"", 
-                                        "TypeConteudo"=> ["text"], 
-                                        "Name" => "", 
-                                        "Patterns"=> "", 
-                                        "Titles" => "",
-                                        "Required" => "",
-                                        "width" => "",
-                                        "height"=>"",
-                                        "step"=>"",
-                                        "size"=>"",
-                                        "min"=>"",
-                                        "max"=>"",
-                                        "maxlength"=>"",
-                                        "form"=>"",
-                                        "formaction"=>"",
-                                        "formenctype"=>"",
-                                        "formmethod"=>"",
-                                        "formnovalidate"=>"",
-                                        "formtarget"=>"",
-                                        "align"=>"",
-                                        "alt"=>"",
-                                        "autocomplete"=>"",
-                                        "autofocus"=>"",
-                                        "checked"=>"",
-                                        "dirname"=>"",
-                                        "readonly"=>""
-                                    ],                                  //Informa se o campo fará parte do formulários
-               "OrdemBY"        => false
-           ],
-            [
-               "Index"          => 5,                                   //Ordem dos campos
-               "Field"          => "Tempo",                       //Nome original do campo (String)
-               "CodNome"        => "Tempo",                       //Codnome do campo, o que será visualizado pelo usuário (String)
-               "TypeConteudo"   => ["text"],                           //Tipo de conteudo exibido na tabela HTML
-               "Filter"         => false,                               //Habilita a visualização da caixa popv para filtro e classificação
-               "Key"            => [false, false],                       //Chave primária (boolean)
-               "ChvExt"         => [        
-                                        "TExt" => false,                 //Indica que existe chave extrangeira
-                                        "Tabela"=> "",  //nome da tabela extrangeira
-                                        /**
-                                         * Informa o índice do campo que será utilizado para recuperar o valor que será enviado para armazenamento
-                                         * na chave extrangeira. 
-                                         */
-                                        "IdxCampoVinculado"=> 0,
-                                        /*
-                                         * Campo que desempenha uma função muito importante em relação às chaves extrangeiras.
-                                         * Caso esteja com seu valor false, significa que os dados da tabela extrangeira serão
-                                         * resgatadas por uma função interna a classe ModeloTabelas.php e disponibilizado´s em um variável interna de
-                                         * Nome: DadosTblExt.
-                                         * Caso sejá informado um número inteiro, será utilizada uma função pré-definada no componente tabelas.js.
-                                         */
-                                        "Funcao"=> false,                   
-                                        "NomeBotao"=> "",            //texto do botão que será visualizado na página
-                                        /**
-                                         * Informa o nome real dos campos da tabela extrangeira que serão recuperados para envio
-                                         * à tabela html.
-                                         */
-                                        "CamposTblExtrangeira"=>[""]
-                                    ],
-               "Mask"           => false,                               // Máscara (String) Contém a máscara que será utilizada pelo campo
-               "Editar"         => false,                               //Editável - (boolean)  
-               "Visible"        => true,                                //Mostrar na tabela HTML (boolean)
-               "Regex"          => [Exist=> false, Regx=> ""],                               //Regex que será utilizada.
-               "Formulario"     => [
-                                        "Exibir"=> false,
-                                        "Placeholder"=> "", 
-                                        "TypeComponente"=>"inputbox", 
-                                        "TypeConteudo"=> ["text"], 
-                                        "Name" => "", 
-                                        "Patterns"=> "", 
-                                        "Titles" => "",
-                                        "Required" => "",
-                                        "width" => "",
-                                        "height"=>"",
-                                        "step"=>"",
-                                        "size"=>"",
-                                        "min"=>"",
-                                        "max"=>"",
-                                        "maxlength"=>"",
-                                        "form"=>"",
-                                        "formaction"=>"",
-                                        "formenctype"=>"",
-                                        "formmethod"=>"",
-                                        "formnovalidate"=>"",
-                                        "formtarget"=>"",
-                                        "align"=>"",
-                                        "alt"=>"",
-                                        "autocomplete"=>"",
-                                        "autofocus"=>"",
-                                        "checked"=>"",
-                                        "dirname"=>"",
-                                        "readonly"=>""
-                                    ],                                  //Informa se o campo fará parte do formulários
-               "OrdemBY"        => false
-           ]
-        ];
-    //private $Privilegios = [["CORAC","Select/Insert/Update/Delete"]];
-    private $Privilegios = [["CORAC","Select"]];
-    private $TipoPaginacao = ["Simples"=>false, "SaltoPagina"=> true, "Filtros"=>true, "BRefresh"=>true];
+    private $Saidas = "@Saida, @s2";
+    private $Privilegios = [["CORAC","Select/Execute"]];
+    private $StringSQL = null;
     
-    public function ModoPaginacao() {
-        return $this->TipoPaginacao;
+//
+//    public function getArrayDados() {
+//        $Preparacao = parent::query($this->StringSQL);
+//        $Preparacao = parent::query("SELECT $this->Saidas");
+//        return $Preparacao->fetch();
+//    }
+
+    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
+        
     }
-    
-    public function getVirtual() {
-        return true;
+
+    public function NormalizarFiltro($Func) {
+        
     }
 
     public function getNomeReal() {
         return __CLASS__;
     }
 
-    public function setNomeTabela() {
-        $this->NomeTabela = __CLASS__ ;
-    }
-
-    public function getCampos() {
-        return $this->Campos;
+    public function getPrivBD() {
+        return false;
     }
 
     public function getPrivilegios() {
         return $this->Privilegios;
     }
 
-    public function getTituloTabela() {
+    public function getVirtual() {
         return false;
     }
 
-    public function getLimite() {
-        return 30;
-    }
-
-    public function getMostrarContador() {
-        return false;
-    }
-
-    public function showColumnsIcones() {
-        $Habilitar = false;
-        $Icones = [
-                        //["NomeColuna"=> "<i class='fa fa-bluetooth' style='font-size:20px'></i>","NomeBotao"=>"Localizar", "Icone" => "fa fa-search", "Func" => 0, "Tipo" => "Bootstrap", "tooltip"=> "busca"]
-                    ];
-        $ShowColumns[0] = $Habilitar;
-        $ShowColumns[1] = $Icones;
-        
-        return $ShowColumns;
-        
-    }
-    /**
-     * A idéia do método é possibilitar o retorno de valor padrão baseado em qualquer outro método.
-     * @param int $idx
-     * @return boolean
-     */
-    public function getValorPadrao($idx) {
-        $ValorPadraoCampos[0] = [Exist=>false, Valor=>""];
-        $ValorPadraoCampos[1] = [Exist=>false, Valor=>""];
-        $ValorPadraoCampos[2] = [Exist=>false, Valor=>""];
-        $ValorPadraoCampos[3] = [Exist=>false, Valor=>""];
-        $ValorPadraoCampos[4] = [Exist=>false, Valor=>""];
-        $ValorPadraoCampos[5] = [Exist=>false, Valor=>""];
-        $ValorPadraoCampos[6] = [Exist=>false, Valor=>""];
-        $ValorPadraoCampos[7] = [Exist=>false, Valor=>""];
-        $ValorPadraoCampos[8] = [Exist=>false, Valor=>""];
-        $ValorPadraoCampos[9] = [Exist=>false, Valor=>""];
-
-        return $ValorPadraoCampos[$idx];
-    }
-
-    public function getPrivBD() {
-        
-    }
-    /**
-     * Método muito importante para o sistema. 
-     * Através deste método, podemos criar os filtros padrões de cada campo.
-     * O método foi criado com o intuito de se poder criar qualquer tipo de filtro padrão.
-     * Ex.: return [[[8,"like",1]]]
-     */
-    public function getFiltrosCampo() {
-
-    }
-
-    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
-        switch ($Action) {
-            case "AfterSelect":
-                $Count = count($ConjuntoDados);
-                if($Count == 0){
-                    $SQLAgenteAutonomo = "INSERT INTO " . __CLASS__ ." SET idChave = '" . $this->Filtros[0][0][2] ."', Maquina = '" . $this->Filtros[0][1][2] ."', Empresa = '" . $this->Filtros[0][2][2] ."', Signacture = '" . $this->Filtros[0][3][2] ."'";
-                    $Retorno = $this->query($SQLAgenteAutonomo);
-
-                }
-
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    public function getTotalPageVisible() {
-        
+    public function setNomeProcedure() {
+        $this->NomeProcedures = __CLASS__;
     }
 
     public function validarConteudoCampoRegex(&$Dados) {
-
+        
     }
 
-    public function NormalizarFiltro($Tipo) {
+    public function getSaidas() {
+        return $this->Saidas;
+    }
+
+}
+
+class Contagem extends ModeloProcedures{
+    /**
+     * Mapeia os campos da tabela - Muito importante caso se queira visualizar somente campo necessários
+     */
+    private $Saidas = "@ttEquip, @ttCPU, @ttNOT, @ttIMP";
+    private $Privilegios = [["CORAC","Select/Execute"]];
+    private $StringSQL = null;
+    
+//
+//    public function getArrayDados() {
+//        $Preparacao = parent::query($this->StringSQL);
+//        $Preparacao = parent::query("SELECT $this->Saidas");
+//        return $Preparacao->fetch();
+//    }
+
+    public function Jobs($Tipo, &$ConjuntoDados, $Action, $Resultado) {
         
+    }
+
+    public function NormalizarFiltro($Func) {
+        
+    }
+
+    public function getNomeReal() {
+        return __CLASS__;
+    }
+
+    public function getPrivBD() {
+        return false;
+    }
+
+    public function getPrivilegios() {
+        return $this->Privilegios;
+    }
+
+    public function getVirtual() {
+        return false;
+    }
+
+    public function setNomeProcedure() {
+        $this->NomeProcedures = __CLASS__;
+    }
+
+    public function validarConteudoCampoRegex(&$Dados) {
+        
+    }
+
+    public function getSaidas() {
+        return $this->Saidas;
     }
 
 }

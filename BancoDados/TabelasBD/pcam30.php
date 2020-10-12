@@ -1091,8 +1091,8 @@ class Exemplo2 extends ModeloTabelas{
      * @param type $idx
      */
     public function getFiltrosCampo() {
-        //$Campo[0] = [[1,"like","rf06104%"]];
-        //$Campo[1] = [[2,"like","259%"]];
+        //return [[[1,"like","rf06104%"]]];
+
         
         
         return $Campo;

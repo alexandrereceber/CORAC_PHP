@@ -36,6 +36,10 @@ RewriteRule (.*) Credencial/ValidarLoginAA.php?URL=$1&Req=%{HTTP_REFERER}&Metodo
 RewriteCond %{REQUEST_URI} /CheckedUser/$
 RewriteRule (.*) Credencial/CheckedUser.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
 
+#Realiza a verificação do login de usuários através do CORAC.
+RewriteCond %{REQUEST_URI} /ValidarAAExterno/
+RewriteRule (.*) Credencial/Validar_AA_Externo.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
+
 #Realiza a verificação do sistema CORAC nos clientes desktops.
 RewriteCond %{REQUEST_URI} /Checked/$
 RewriteRule (.*) Credencial/Checked.php?URL=$1&Req=%{HTTP_REFERER}&Metodo=%{REQUEST_METHOD}&SSL=%{HTTPS} [L]
